@@ -6,6 +6,7 @@ const client = new Discord.Client();
 whospracticing = {}
 //Paste in IDs of your voice channels that you want the bot to manage. 
 //Make sure that it is a string. 
+
 APPLIED_CHANNELS = [
 	"691725669326913747", 
 	"691719071619874816", 
@@ -16,6 +17,8 @@ BROADCAST_CHANNELS = {
 	"691719071619874816": "691808874910449734",
 	"692002216957051030": "691808874910449734"
 }
+
+
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
 });
@@ -58,6 +61,60 @@ client.on('message', async msg => {
 			msg.reply("(X) You're not the one practicing!")
 		}
 	};
+	if (msg.content.startsWith('!forcepractice')) {
+		//USE msg.content !! msg is not a string. it's a discord.js MESSAGE object. 
+		cmd = msg.content.split(" ")
+		console.log(cmd)
+		if (cmd.length > 2) {
+			msg.reply("(X) You have specified too many arguments. ")
+		} else if (msg.member.voice.channel == null) {
+			msg.reply("(X) You aren't in a voice channel")
+		} else if (msg.member.permissions.has(['MANAGE_GUILD'])) {
+			cmd[1] = cmd[1].slice(3,21)
+			const usermentioned = msg.member.guild.members.cache.find(mem => mem.id === cmd[1]);
+			modvoicech = msg.member.voice.channel;
+			if (usermentioned == null) {
+				msg.reply("(X) Invalid user. ")
+			} else {
+				usermentionedch = usermentioned.voice;
+				if (usermentionedch.channel == null) {
+					msg.reply("(X) The user you mentioned isn't in a voice channel")
+				} else {
+					// all checks completed. 
+					usercurpracticing = whospracticing[modvoicech.id]
+					const userplaying = msg.member.guild.members.cache.find(mem => mem.id === usercurpracticing);
+					// DO IT
+					whospracticing[modvoicech.id] = usermentionedch.id
+					userplaying.voice.setMute(true, "operation performed by moderator")
+					usermentionedch.setMute(false, "operation performed by moderator")
+					msg.reply("Done. ")
+					
+				}
+			}
+		} else {
+			msg.reply("(X) You do not have permission. ")
+		}
+	}
+	if (msg.content === "!forcestop") {
+		
+		if (msg.member.voice.channel == null) {
+			msg.reply("(X) You aren't in a channel")
+		} else if (msg.member.permissions.has(['MANAGE_GUILD']) == false) {
+			msg.reply("(X) You don't have permission")
+		} else if (whospracticing[msg.member.voice.channel.id] == null) {
+			msg.reply("(X) No one is currently practicing in your channel. ")
+		} else {
+			currentpracticingid = whospracticing[msg.member.voice.channel.id]
+			userpracticing = msg.member.guild.members.cache.find(mem => mem.id == currentpracticingid);
+			voicechannel = userpracticing.voice;
+			voicechannel.setMute(true, "moderator executed command. ")
+			whospracticing[voicechannel.channel.id] = "upforgrabs"
+			sendingchannelid = BROADCAST_CHANNELS[voicechannel.channel.id]
+			const msgchannel = msg.member.guild.channels.cache.find(ch => ch.id === sendingchannelid);
+			msgchannel.send("A mod has stopped the user currently playing. The first person to say '!practice' will be able to practice. Room Name: " + voicechannel.channel.name) 
+			msg.reply("Done. ")
+		}
+	}
 	
 	
 });
