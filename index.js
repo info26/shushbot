@@ -24,7 +24,6 @@ client.on('ready', () => {
 });
 client.on('message', async msg => {
 	if (msg.content === '!practice') {
-		console.log(whospracticing)
 		// send a message.
 		if (msg.member.voice.channel == null){
 			msg.reply("(X) You aren't in a voice channel")
@@ -46,6 +45,7 @@ client.on('message', async msg => {
 		}
 	};
 	if (msg.content === '!nomore') {
+		
 		voicechannel = msg.member.voice;
 		if (voicechannel.channel == null){
 			msg.reply("(X) You aren't in a voice channel")
@@ -70,15 +70,24 @@ client.on('message', async msg => {
 		} else if (msg.member.voice.channel == null) {
 			msg.reply("(X) You aren't in a voice channel")
 		} else if (msg.member.permissions.has(['MANAGE_GUILD'])) {
-			cmd[1] = cmd[1].slice(3,21)
+			
+			
+			cmd[1] = cmd[1].match(/(\d+)/)[0]
+			console.log(cmd)
 			const usermentioned = msg.member.guild.members.cache.find(mem => mem.id === cmd[1]);
+			
 			modvoicech = msg.member.voice.channel;
 			if (usermentioned == null) {
 				msg.reply("(X) Invalid user. ")
 			} else {
 				usermentionedch = usermentioned.voice;
-				if (usermentionedch.channel == null) {
+				if (usermentionedch.channel == null & whospracticing[modvoicech.id] != "upforgrabs") {
 					msg.reply("(X) The user you mentioned isn't in a voice channel")
+				} else if (whospracticing[modvoicech.id] == "upforgrabs") {
+					usermentionedch.setMute(false, "operation performed by moderator")
+					//update whospracticing
+					whospracticing[modvoicech.id] = usermentionedch.id
+					msg.reply("Done. ")
 				} else {
 					// all checks completed. 
 					usercurpracticing = whospracticing[modvoicech.id]
@@ -96,12 +105,11 @@ client.on('message', async msg => {
 		}
 	}
 	if (msg.content === "!forcestop") {
-		
 		if (msg.member.voice.channel == null) {
 			msg.reply("(X) You aren't in a channel")
 		} else if (msg.member.permissions.has(['MANAGE_GUILD']) == false) {
 			msg.reply("(X) You don't have permission")
-		} else if (whospracticing[msg.member.voice.channel.id] == null) {
+		} else if (whospracticing[msg.member.voice.channel.id] == null || whospracticing[msg.member.voice.channel.id] == "upforgrabs") {
 			msg.reply("(X) No one is currently practicing in your channel. ")
 		} else {
 			currentpracticingid = whospracticing[msg.member.voice.channel.id]
@@ -114,6 +122,9 @@ client.on('message', async msg => {
 			msgchannel.send("A mod has stopped the user currently playing. The first person to say '!practice' will be able to practice. Room Name: " + voicechannel.channel.name) 
 			msg.reply("Done. ")
 		}
+	};
+	if (msg.content == "!dump") {
+		console.log(whospracticing)
 	}
 	
 	
