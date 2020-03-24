@@ -123,8 +123,21 @@ client.on('message', async msg => {
 			msg.reply("Done. ")
 		}
 	};
-	if (msg.content == "!dump") {
-		console.log(whospracticing)
+	if (msg.content == "!np") {
+		if (msg.member.voice.channel == null) {
+			msg.reply("(X) You aren't in a voice channel");
+		} else {
+			voicechid = msg.member.voice.channel.id;
+			userplaying = whospracticing[voicechid]
+			if (userplaying == null || userplaying == "upforgrabs") {
+				msg.reply("No one is practicing at the moment. ")
+			}
+				userobject = msg.member.guild.members.cache.find(mem => mem.id == userplaying);
+				console.log(userobject)
+				// user object is the User object. and the userplaying is the user's id. 
+				msg.reply(userobject.user.username + " is currently playing")
+		}
+		
 	}
 	
 	
