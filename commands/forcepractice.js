@@ -11,7 +11,13 @@ function forcepractice(msg) {
     } else if (msg.member.voice.channel == null) {
         msg.reply("(X) You aren't in a voice channel")
     } else if (msg.member.permissions.has(['MANAGE_GUILD'])) {
-        cmd[1] = cmd[1].match(/(\d+)/)[0]
+        match = cmd[1].match(/(\d+)/)
+        if (match == null) {
+            //null check
+            msg.reply("(X) Invalid user. ")
+            return;
+        }
+        cmd[1] = [0]
         console.log(cmd)
         const usermentioned = msg.member.guild.members.cache.find(mem => mem.id === cmd[1]);
 
