@@ -157,7 +157,7 @@ client.on('voiceStateUpdate', async (oldMember, newMember) => {
 					if (whospracticing[newMember.channel.id] == "upforgrabs"){
 						newMember.member.voice.setMute(false, "unmute because the channel is up for grabs. (no one is practicing)")
 						console.log(newUserChannel.member.id + " unmute because the channel is up for grabs. (no one is practicing)")
-						whospracticing[newMember.channel.id] = newUserchannel.member.id;
+						whospracticing[newMember.channel.id] = newUserChannel.member.id;
 					} else {
 						newMember.member.voice.setMute(false, "unmute because he/she is the only user in the channel.")
 						whospracticing[newMember.channel.id] = newMember.member.id;
