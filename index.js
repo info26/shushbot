@@ -57,6 +57,7 @@ client.on('message', async msg => {
 			const msgchannel = msg.member.guild.channels.cache.find(ch => ch.id === sendingchannelid);
 			
 			msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '!practice' will be able to practice. Room Name: " + voicechannel.channel.name) 
+			whospracticing[voicechannel.channel.id + "piece"] = "User has not input piece. ";
 		} else {
 			msg.reply("(X) You're not the one practicing!")
 		}
@@ -121,6 +122,7 @@ client.on('message', async msg => {
 			const msgchannel = msg.member.guild.channels.cache.find(ch => ch.id === sendingchannelid);
 			msgchannel.send("A mod has stopped the user currently playing. The first person to say '!practice' will be able to practice. Room Name: " + voicechannel.channel.name) 
 			msg.reply("Done. ")
+			whospracticing[voicechannel.channel.id] = "User has not input piece. "
 		}
 	};
 	if (msg.content == "!np") {
@@ -183,6 +185,7 @@ client.on('voiceStateUpdate', async (oldMember, newMember) => {
 				if (oldMember.channel.members.size > 0){
 					msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '!practice' will be able to practice. Room Name: " + oldMember.channel.name) 
 				}
+				whospracticing[oldMember.channel.id] = "User has not input piece. "
 			}
 			console.log("new user joined")
 			console.log(newMember.channel.id)
@@ -223,6 +226,7 @@ client.on('voiceStateUpdate', async (oldMember, newMember) => {
 			if (oldMember.channel.members.size > 0){
 				msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '!practice' will be able to practice. Room Name: " + oldMember.channel.name) 
 			}
+			whospracticing[oldMember.channel.id] = "User has not input piece. "
 		}
 	}
 })
