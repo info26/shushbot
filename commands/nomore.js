@@ -6,7 +6,7 @@ async function nomore(msg) {
     if (voiceObject.channel == null) {
         msg.reply("(X) You aren't in a voice channel")
     } else if (msg.author.id == whospracticing[voiceObject.channel.id]) {
-        // msg.reply("Ok, you're no longer practicing.")
+        msg.reply("Ok, you're no longer practicing.")
 
         //this is required. 
         msg.member.voice.setMute(true, "user is no longer practicing")

@@ -17,7 +17,7 @@ function forcestop(msg) {
             // sendingchannelid = BROADCAST_CHANNELS[voicechannel.channel.id]
             // const msgchannel = msg.member.guild.channels.cache.find(ch => ch.id === sendingchannelid);
             // msgchannel.send("A mod has stopped the user currently playing. The first person to say '!practice' will be able to practice. Room Name: " + voicechannel.channel.name)
-            // msg.reply("Done. ")
+        msg.reply("Done. ")
             // whospracticing[voicechannel.channel.id + "piece"] = null
         userLeftorNoMore(voicechannel);
 

@@ -17,13 +17,16 @@ function forcepractice(msg) {
             msg.reply("(X) Invalid user. ")
             return;
         }
-        cmd[1] = [0]
+        cmd[1] = match[0]
         console.log(cmd)
         const usermentioned = msg.member.guild.members.cache.find(mem => mem.id === cmd[1]);
 
         modvoicech = msg.member.voice.channel;
         if (usermentioned == null) {
             msg.reply("(X) Invalid user. ")
+        } else if (modvoicech.id != usermentioned.voice.channel.id) {
+            //HEY! these users are in different channels. 
+            msg.reply("(X) The user that you referred to is in a different channel. ")
         } else {
             usermentionedch = usermentioned.voice;
             if (usermentionedch.channel == null & whospracticing[modvoicech.id] != "upforgrabs") {

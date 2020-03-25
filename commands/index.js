@@ -4,6 +4,7 @@ const { forcepractice } = require('./forcepractice')
 const { forcestop } = require('./forcestop')
 const { np } = require('./np')
 const { song } = require('./song')
+const { excuse } = require('./excuse')
 
 module.exports = {
     practice,
@@ -11,5 +12,6 @@ module.exports = {
     forcepractice,
     forcestop,
     np,
-    song
+    song,
+    excuse
 }
