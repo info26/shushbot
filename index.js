@@ -41,7 +41,7 @@ client.on('message', async msg => {
 				msg.reply("Ok, you're now practicing. ")
 				msg.member.voice.setMute(false, "user requested to be practicing. ")
 				whospracticing[msg.member.voice.channel.id] = msg.author.id;
-				whospracticing[newMember.channel.id+"piece"] = null
+				whospracticing[msg.member.voice.channel.id+"piece"] = null
 			}
 		}
 	};
@@ -125,7 +125,7 @@ client.on('message', async msg => {
 			const msgchannel = msg.member.guild.channels.cache.find(ch => ch.id === sendingchannelid);
 			msgchannel.send("A mod has stopped the user currently playing. The first person to say '!practice' will be able to practice. Room Name: " + voicechannel.channel.name) 
 			msg.reply("Done. ")
-			whospracticing[voicechannel.channel.id] = null
+			whospracticing[voicechannel.channel.id + "piece"] = null
 		}
 	};
 	if (msg.content == "!np") {
@@ -143,7 +143,7 @@ client.on('message', async msg => {
 				if (piecename == null) {
 					msg.reply(userobject.user.username + " is currently playing ")
 				} else {
-					msg.reply(userobject.user.username + " is currently playing " + piecename)
+					msg.reply(userobject.user.username + " is currently playing" + piecename)
 				}
 		}
 		
@@ -161,6 +161,9 @@ client.on('message', async msg => {
 			whospracticing[msg.member.voice.channel.id + "piece"] = msg.content.replace("!song", "");
 			msg.reply("Done. ");
 		}
+	}
+	if (msg.content == "!dump"){
+		console.log(whospracticing);
 	}
 	
 	
