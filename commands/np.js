@@ -8,6 +8,7 @@ function np(msg) {
         userplaying = whospracticing[voicechid]
         if (userplaying == null || userplaying == "upforgrabs") {
             msg.reply("No one is practicing at the moment. ")
+            return;
         }
         userobject = msg.member.guild.members.cache.find(mem => mem.id == userplaying);
         piecename = whospracticing[voicechid + "piece"]

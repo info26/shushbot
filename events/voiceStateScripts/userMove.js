@@ -15,6 +15,14 @@ function userMove(newMember, oldMember) {
             // whospracticing[oldMember.channel.id] = null
             userLeftorNoMore(oldMember);
         }
+        // was this member excused? 
+        if (typeof whospracticing[oldMember.channel.id + "excused"] !== 'undefined') {
+            if (whospracticing[oldMember.channel.id + "excused"].includes(oldMember.member.id)) {
+                //remove user from list. 
+                whospracticing[oldMember.channel.id + "excused"].remove(oldMember.member.id);
+                console.log("removed member from excused list: " + oldMember.member.id)
+            }
+        }
         console.log("new user joined")
         console.log(newMember.channel.id)
         if (APPLIED_CHANNELS.includes(newMember.channel.id) == false) {

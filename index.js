@@ -50,6 +50,21 @@ client.on('message', async msg => {
 
 });
 
+//helper function. Thanks Stack Overflow!
+Array.prototype.remove = function() {
+    var what, a = arguments,
+        L = a.length,
+        ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
+//END HELPER FUNCTION.
+
 
 //UPDATE YOUR TOKEN HERE. 
 client.login('NTU3Mjk1MjUxNzA3MTMzOTYy.Xnlk_w.nNrLLgCyJZ9zzBj2vCBrjMb_PR0');
