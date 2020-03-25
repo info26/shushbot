@@ -41,6 +41,7 @@ client.on('message', async msg => {
 				msg.reply("Ok, you're now practicing. ")
 				msg.member.voice.setMute(false, "user requested to be practicing. ")
 				whospracticing[msg.member.voice.channel.id] = msg.author.id;
+				whospracticing[newMember.channel.id+"piece"] = null
 			}
 		}
 	};
@@ -57,7 +58,7 @@ client.on('message', async msg => {
 			const msgchannel = msg.member.guild.channels.cache.find(ch => ch.id === sendingchannelid);
 			
 			msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '!practice' will be able to practice. Room Name: " + voicechannel.channel.name) 
-			whospracticing[voicechannel.channel.id + "piece"] = "User has not input piece. ";
+			whospracticing[voicechannel.channel.id + "piece"] = null;
 		} else {
 			msg.reply("(X) You're not the one practicing!")
 		}
@@ -89,6 +90,7 @@ client.on('message', async msg => {
 					//update whospracticing
 					whospracticing[modvoicech.id] = usermentionedch.id
 					msg.reply("Done. ")
+					whospracticing[modvoicech.id + "piece"] = null;
 				} else {
 					// all checks completed. 
 					usercurpracticing = whospracticing[modvoicech.id]
@@ -98,6 +100,7 @@ client.on('message', async msg => {
 					userplaying.voice.setMute(true, "operation performed by moderator")
 					usermentionedch.setMute(false, "operation performed by moderator")
 					msg.reply("Done. ")
+					whospracticing[modvoicech.id + "piece"] = null;
 					
 				}
 			}
@@ -122,7 +125,7 @@ client.on('message', async msg => {
 			const msgchannel = msg.member.guild.channels.cache.find(ch => ch.id === sendingchannelid);
 			msgchannel.send("A mod has stopped the user currently playing. The first person to say '!practice' will be able to practice. Room Name: " + voicechannel.channel.name) 
 			msg.reply("Done. ")
-			whospracticing[voicechannel.channel.id] = "User has not input piece. "
+			whospracticing[voicechannel.channel.id] = null
 		}
 	};
 	if (msg.content == "!np") {
@@ -135,11 +138,29 @@ client.on('message', async msg => {
 				msg.reply("No one is practicing at the moment. ")
 			}
 				userobject = msg.member.guild.members.cache.find(mem => mem.id == userplaying);
-				console.log(userobject)
+				piecename = whospracticing[voicechid + "piece"]
 				// user object is the User object. and the userplaying is the user's id. 
-				msg.reply(userobject.user.username + " is currently playing")
+				if (piecename == null) {
+					msg.reply(userobject.user.username + " is currently playing ")
+				} else {
+					msg.reply(userobject.user.username + " is currently playing " + piecename)
+				}
 		}
 		
+	}
+	if (msg.content.startsWith('!song')) {
+		//USE msg.content !! msg is not a string. it's a discord.js MESSAGE object. 
+		cmd = msg.content.split(" ")
+		console.log(cmd)
+		if (msg.member.voice.channel == null) {
+			msg.reply("(X) You aren't in a voice channel")
+		} else if (msg.member.id != whospracticing[msg.member.voice.channel.id]) {
+			// check if user is the user practicing. 
+			msg.reply("(X) You aren't practicing. ")
+		} else {
+			whospracticing[msg.member.voice.channel.id + "piece"] = msg.content.replace("!song", "");
+			msg.reply("Done. ");
+		}
 	}
 	
 	
@@ -160,11 +181,13 @@ client.on('voiceStateUpdate', async (oldMember, newMember) => {
 						newMember.member.voice.setMute(false, "unmute because the channel is up for grabs. (no one is practicing)")
 						console.log(newUserChannel.member.id + " unmute because the channel is up for grabs. (no one is practicing)")
 						whospracticing[newMember.channel.id] = newUserChannel.member.id;
+						whospracticing[newMember.channel.id+"piece"] = null
 					} else {
 						newMember.member.voice.setMute(false, "unmute because he/she is the only user in the channel.")
 						whospracticing[newMember.channel.id] = newMember.member.id;
 						console.log(whospracticing)
 						console.log(newUserChannel.member.id + " unmute because he/she is the only user in the channel.")
+						whospracticing[newMember.channel.id+"piece"] = null
 					}
 
 				} else {
@@ -185,7 +208,7 @@ client.on('voiceStateUpdate', async (oldMember, newMember) => {
 				if (oldMember.channel.members.size > 0){
 					msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '!practice' will be able to practice. Room Name: " + oldMember.channel.name) 
 				}
-				whospracticing[oldMember.channel.id] = "User has not input piece. "
+				whospracticing[oldMember.channel.id] = null
 			}
 			console.log("new user joined")
 			console.log(newMember.channel.id)
@@ -199,11 +222,13 @@ client.on('voiceStateUpdate', async (oldMember, newMember) => {
 						newMember.member.voice.setMute(false, "unmute because the channel is up for grabs. (no one is practicing)")
 						console.log(newUserChannel.member.id + " unmute because the channel is up for grabs. (no one is practicing)")
 						whospracticing[newMember.channel.id] = newUserChannel.member.id;
+						whospracticing[newMember.channel.id+"piece"] = null
 					} else {
 						newMember.member.voice.setMute(false, "unmute because the channel is up for grabs. (no one is practicing)")
 						whospracticing[newMember.channel.id] = newMember.member.id;
 						console.log(whospracticing)
 						console.log(newUserChannel.member.id + " unmute because he/she is the only user in the channel.")
+						whospracticing[newMember.channel.id+"piece"] = null
 					}
 				} else {
 					//member is listening
@@ -226,7 +251,7 @@ client.on('voiceStateUpdate', async (oldMember, newMember) => {
 			if (oldMember.channel.members.size > 0){
 				msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '!practice' will be able to practice. Room Name: " + oldMember.channel.name) 
 			}
-			whospracticing[oldMember.channel.id] = "User has not input piece. "
+			whospracticing[oldMember.channel.id] = null
 		}
 	}
 })
