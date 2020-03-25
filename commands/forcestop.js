@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const { userLeftorNoMore } = require('./../helpers/userLeftorNoMore')
 
 function forcestop(msg) {
     if (msg.member.voice.channel == null) {
@@ -12,12 +13,14 @@ function forcestop(msg) {
         userpracticing = msg.member.guild.members.cache.find(mem => mem.id == currentpracticingid);
         voicechannel = userpracticing.voice;
         voicechannel.setMute(true, "moderator executed command. ")
-        whospracticing[voicechannel.channel.id] = "upforgrabs"
-        sendingchannelid = BROADCAST_CHANNELS[voicechannel.channel.id]
-        const msgchannel = msg.member.guild.channels.cache.find(ch => ch.id === sendingchannelid);
-        msgchannel.send("A mod has stopped the user currently playing. The first person to say '!practice' will be able to practice. Room Name: " + voicechannel.channel.name)
-        msg.reply("Done. ")
-        whospracticing[voicechannel.channel.id + "piece"] = null
+            // whospracticing[voicechannel.channel.id] = "upforgrabs"
+            // sendingchannelid = BROADCAST_CHANNELS[voicechannel.channel.id]
+            // const msgchannel = msg.member.guild.channels.cache.find(ch => ch.id === sendingchannelid);
+            // msgchannel.send("A mod has stopped the user currently playing. The first person to say '!practice' will be able to practice. Room Name: " + voicechannel.channel.name)
+            // msg.reply("Done. ")
+            // whospracticing[voicechannel.channel.id + "piece"] = null
+        userLeftorNoMore(voicechannel);
+
     }
 }
 module.exports = {

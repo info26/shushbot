@@ -32,6 +32,9 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
 client.on('message', async msg => {
+    if (msg.content == "!dump") {
+        console.log(whospracticing)
+    }
     if (msg.content.startsWith(BOT_PREFIX)) {
         //fix for cmds with args. 
         cmd = msg.content.split(" ")
@@ -43,6 +46,7 @@ client.on('message', async msg => {
         }
         client.commands[cmd[0].replace(BOT_PREFIX, "")](msg)
     }
+
 
 });
 
