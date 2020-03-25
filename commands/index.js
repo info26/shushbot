@@ -3,11 +3,13 @@ const { nomore } = require('./nomore')
 const { forcepractice } = require('./forcepractice')
 const { forcestop } = require('./forcestop')
 const { np } = require('./np')
+const { song } = require('./song')
 
 module.exports = {
     practice,
     nomore,
     forcepractice,
     forcestop,
-    np
+    np,
+    song
 }
