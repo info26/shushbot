@@ -1,4 +1,4 @@
-const { TimeCalc } = require('TimeCalc');
+const { TimeCalc } = require('./TimeCalc');
 
 function userLeftorNoMore(member) {
     //calc time. 
