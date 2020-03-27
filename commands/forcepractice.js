@@ -47,6 +47,19 @@ function forcepractice(msg) {
                 usermentionedch.setMute(false, "operation performed by moderator")
                 msg.reply("Done. ")
                 whospracticing[modvoicech.id + "piece"] = null;
+                //ok we need to update who is unmuted. aka excused people. 
+                if (typeof whospracticing[modvoicech.id + "excused"] !== 'undefined') {
+                    dat = whospracticing[modvoicech.id + "excused"]
+                    guild = msg.member.guild;
+                    dat.forEach(memid => {
+                        const user = guild.members.cache.find(mem => mem.id === memid);
+                        //don't mute the user who is practicing. 
+                        if (user.voice.channel != null && usermentionedch.member.id != user.id) {
+                            //user still in vc
+                            user.voice.setMute(true, "was excused, but the person practicing quit. ")
+                        }
+                    })
+                }
 
             }
         }

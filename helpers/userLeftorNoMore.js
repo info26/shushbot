@@ -9,8 +9,9 @@ function userLeftorNoMore(member) {
         //time to mute everyone who was excused by the user.
     if (typeof whospracticing[member.channel.id + "excused"] !== 'undefined') {
         dat = whospracticing[member.channel.id + "excused"]
+        guild = member.member.guild;
         dat.forEach(memid => {
-            const user = member.member.guild.members.cache.find(mem => mem.id === memid);
+            const user = guild.members.cache.find(mem => mem.id === memid);
             if (user.voice.channel != null) {
                 //user still in vc
                 user.voice.setMute(true, "was excused, but the person practicing quit. ")
