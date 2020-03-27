@@ -31,18 +31,9 @@ function userMove(newMember, oldMember) {
         } else {
             //MANAGE THIS USER
             if (newMember.channel.members.size == 1 && APPLIED_CHANNELS.includes(newMember.channel.id)) {
-                if (whospracticing[newMember.channel.id] == "upforgrabs") {
-                    newMember.member.voice.setMute(false, "unmute because the channel is up for grabs. (no one is practicing)")
-                    console.log(newMember.member.id + " unmute because the channel is up for grabs. (no one is practicing)")
-                    whospracticing[newMember.channel.id] = newMember.member.id;
-                    whospracticing[newMember.channel.id + "piece"] = null
-                } else {
-                    newMember.member.voice.setMute(false, "unmute because the channel is up for grabs. (no one is practicing)")
-                    whospracticing[newMember.channel.id] = newMember.member.id;
-                    console.log(whospracticing)
-                    console.log(newMember.member.id + " unmute because he/she is the only user in the channel.")
-                    whospracticing[newMember.channel.id + "piece"] = null
-                }
+                newMember.member.voice.setMute(false, "unmute because the channel is up for grabs. (no one is practicing)")
+                whospracticing[newMember.channel.id] = newMember.member.id;
+                whospracticing[newMember.channel.id + "piece"] = null
             } else {
                 //member is listening
                 newMember.member.voice.setMute(true, "auto mute")
