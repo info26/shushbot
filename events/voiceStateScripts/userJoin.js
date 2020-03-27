@@ -9,7 +9,9 @@ async function userJoin(newMember, oldmember) {
         if (newMember.channel.members.size == 1 && APPLIED_CHANNELS.includes(newMember.channel.id)) {
             newMember.member.voice.setMute(false, "unmute because he/she is the only user in the channel.")
             whospracticing[newMember.channel.id] = newMember.member.id;
-            whospracticing[newMember.channel.id + "piece"] = null
+            whospracticing[newMember.channel.id + "piece"] = null;
+            //set the starting time. 
+            whospracticing[newMember.channel.id + "starttime"] = Date.now();
         } else {
             //member is listening
             newMember.member.voice.setMute(true, "mute because he/she is listening")

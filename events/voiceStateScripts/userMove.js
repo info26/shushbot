@@ -31,9 +31,11 @@ function userMove(newMember, oldMember) {
         } else {
             //MANAGE THIS USER
             if (newMember.channel.members.size == 1 && APPLIED_CHANNELS.includes(newMember.channel.id)) {
-                newMember.member.voice.setMute(false, "unmute because the channel is up for grabs. (no one is practicing)")
+                newMember.member.voice.setMute(false, "unmute")
                 whospracticing[newMember.channel.id] = newMember.member.id;
                 whospracticing[newMember.channel.id + "piece"] = null
+                    //set the starting time. 
+                whospracticing[newMember.channel.id + "starttime"] = Date.now();
             } else {
                 //member is listening
                 newMember.member.voice.setMute(true, "auto mute")
