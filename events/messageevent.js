@@ -1,7 +1,8 @@
 const Discord = require('discord.js')
 
 client.on('message', async msg => {
-    if (msg.content == "!dump") {
+    //for debug 
+    if (msg.content == "!dump" && DEBUG_ENABLED == true) {
         console.log(whospracticing)
     }
     if (msg.content.startsWith(BOT_PREFIX)) {

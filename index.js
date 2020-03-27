@@ -3,21 +3,24 @@
 
 const Discord = require('discord.js');
 client = new Discord.Client();
+//for commands. 
 client.commands = new Discord.Collection();
-console.log("Starting bot ...");
 //register events. 
-console.log("Registering events ...");
 require('./events');
 //done! waaaw11!
 
 //Paste in IDs of your voice channels that you want the bot to manage. 
 //Make sure that it is a string. 
-whospracticing = {}
+//DEBUG MODE enabled the !dump cmd. it prints the whospracticing variable to console. 
+DEBUG_ENABLED = true;
+//specified which channel(s) the bot manages. 
 APPLIED_CHANNELS = [
     "691725669326913747",
     "691719071619874816",
     "692002216957051030"
 ];
+
+//VOICECHANNEL : TEXT CHANNEL
 BROADCAST_CHANNELS = {
     "691725669326913747": "691808798817517600",
     "691719071619874816": "691808874910449734",
@@ -29,7 +32,7 @@ BOT_PREFIX = "!";
 client.commands = require('./commands')
 console.log(client.commands)
 
-
+whospracticing = {}
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
