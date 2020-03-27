@@ -5,7 +5,7 @@ function userMove(newMember, oldMember) {
     // user has switched channels // or unrelated update. 
     if (newMember.channel.id != oldMember.channel.id) {
         //for if this user WAS practicing. 
-        if (whospracticing[oldMember.channel.id] != null & oldMember.member.id == whospracticing[oldMember.channel.id]) {
+        if (whospracticing[oldMember.channel.id] != null && oldMember.member.id == whospracticing[oldMember.channel.id]) {
             // whospracticing[oldMember.channel.id] = "upforgrabs"
             // sendingchannelid = BROADCAST_CHANNELS[oldMember.channel.id]
             // const msgchannel = oldMember.channel.guild.channels.cache.find(ch => ch.id === sendingchannelid);
@@ -30,7 +30,7 @@ function userMove(newMember, oldMember) {
             console.log(newMember.member.id + " unmute because he/she is in a channel which the bot doesn't manage. ")
         } else {
             //MANAGE THIS USER
-            if (newMember.channel.members.size == 1 & APPLIED_CHANNELS.includes(newMember.channel.id)) {
+            if (newMember.channel.members.size == 1 && APPLIED_CHANNELS.includes(newMember.channel.id)) {
                 if (whospracticing[newMember.channel.id] == "upforgrabs") {
                     newMember.member.voice.setMute(false, "unmute because the channel is up for grabs. (no one is practicing)")
                     console.log(newMember.member.id + " unmute because the channel is up for grabs. (no one is practicing)")

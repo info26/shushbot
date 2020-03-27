@@ -4,8 +4,9 @@
 const Discord = require('discord.js');
 client = new Discord.Client();
 client.commands = new Discord.Collection();
-
+console.log("Starting bot ...");
 //register events. 
+console.log("Registering events ...");
 require('./events');
 //done! waaaw11!
 
@@ -28,27 +29,11 @@ BOT_PREFIX = "!";
 client.commands = require('./commands')
 console.log(client.commands)
 
+
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
-client.on('message', async msg => {
-    if (msg.content == "!dump") {
-        console.log(whospracticing)
-    }
-    if (msg.content.startsWith(BOT_PREFIX)) {
-        //fix for cmds with args. 
-        cmd = msg.content.split(" ")
 
-        console.log(cmd[0].replace(BOT_PREFIX, ""))
-        if (client.commands[cmd[0].replace(BOT_PREFIX, "")] == null) {
-            //this cmd does not exist. send no reply
-            return;
-        }
-        client.commands[cmd[0].replace(BOT_PREFIX, "")](msg)
-    }
-
-
-});
 
 //helper function. Thanks Stack Overflow!
 Array.prototype.remove = function() {

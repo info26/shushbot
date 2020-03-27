@@ -6,7 +6,7 @@ async function userJoin(newMember, oldmember) {
         console.log(newMember.member.id + " unmute because he/she is in a channel which the bot doesn't manage. ")
     } else {
         //MANAGE THIS USER
-        if (newMember.channel.members.size == 1 & APPLIED_CHANNELS.includes(newMember.channel.id)) {
+        if (newMember.channel.members.size == 1 && APPLIED_CHANNELS.includes(newMember.channel.id)) {
             if (whospracticing[newMember.channel.id] == "upforgrabs") {
                 newMember.member.voice.setMute(false, "unmute because the channel is up for grabs. (no one is practicing)")
                 console.log(newMember.member.id + " unmute because the channel is up for grabs. (no one is practicing)")

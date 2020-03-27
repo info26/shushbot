@@ -29,7 +29,7 @@ function forcepractice(msg) {
             msg.reply("(X) The user that you referred to is in a different channel. ")
         } else {
             usermentionedch = usermentioned.voice;
-            if (usermentionedch.channel == null & whospracticing[modvoicech.id] != "upforgrabs") {
+            if (usermentionedch.channel == null && whospracticing[modvoicech.id] != "upforgrabs") {
                 msg.reply("(X) The user you mentioned isn't in a voice channel")
             } else if (whospracticing[modvoicech.id] == "upforgrabs") {
                 usermentionedch.setMute(false, "operation performed by moderator")
