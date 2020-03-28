@@ -22,7 +22,9 @@ DEBUG_ENABLED = true;
 BUILD_PROFILE = "PROD";
 APPLIED_CHANNELS = [];
 BROADCAST_CHANNELS = {};
+BOT_TOKEN = '';
 
+//production grade: initialized with channels on live server
 if(BUILD_PROFILE == "PROD"){
     APPLIED_CHANNELS = [
         "690498106046939166",
@@ -55,7 +57,10 @@ if(BUILD_PROFILE == "PROD"){
         "691762889773547550": "691763754370859069",
         "691763054253178890": "691763754370859069"
     };
+
+    BOT_TOKEN = 'NjkyMTg3OTcyMTQwOTI0OTY5.Xn61Ww.XTmiL78XU3pkXBO4chhWX6WcJ-A';
 }
+//development/quality assurance grade: initialized with channels on test server
 else if(BUILD_PROFILE == "DEV"){
     APPLIED_CHANNELS = [
         "691725669326913747",
@@ -68,6 +73,11 @@ else if(BUILD_PROFILE == "DEV"){
         "691719071619874816": "691808874910449734",
         "692002216957051030": "691808874910449734"
     };
+
+    BOT_TOKEN = 'NjkyMTMyODE5MjYyMjQyODM3.XnqhsQ.wCv-O4OrMZuwl866jsRIoY4mrtY';
+}
+else {
+    console.log("unknown build profile, please use DEV or PROD")
 }
 
 
@@ -112,4 +122,4 @@ process.on('SIGINT', function() {
 
 
 //UPDATE YOUR TOKEN HERE. 
-client.login('NjkyMTg3OTcyMTQwOTI0OTY5.Xn61Ww.XTmiL78XU3pkXBO4chhWX6WcJ-A');
+client.login(BOT_TOKEN);
