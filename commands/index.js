@@ -6,6 +6,7 @@ const { np } = require('./np')
 const { song } = require('./song')
 const { excuse } = require('./excuse')
 const { unexcuse } = require('./unexcuse')
+const { help } = require('./help')
 
 module.exports = {
     practice,
@@ -15,5 +16,6 @@ module.exports = {
     np,
     song,
     excuse,
-    unexcuse
+    unexcuse,
+    help
 }

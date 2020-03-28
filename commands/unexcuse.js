@@ -11,7 +11,8 @@ async function unexcuse(msg) {
         msg.reply("(X) You are not in a voice channel. ")
         return;
     }
-    if (whospracticing[msg.member.voice.channel.id] != msg.member.id) {
+    // mod bypass for cmd. 
+    if ((whospracticing[msg.member.voice.channel.id] != msg.member.id) && (msg.member.permissions.has(['MANAGE_GUILD']) == false)) {
         msg.reply("(X) You are not the one practicing! ")
         return;
     }
@@ -38,8 +39,12 @@ async function unexcuse(msg) {
         msg.reply("(X) You are not in the same channel as the user that you referred to. ")
         return;
     }
-    if (usertomute.id == msg.member.id) {
+    if (usertomute.id == msg.member.id && (msg.member.permissions.has(['MANAGE_GUILD']) == false)) {
         msg.reply("(X) You can't mute yourself. ")
+        return;
+    }
+    if (whospracticing[msg.member.voice.channel.id] == usertomute.id) {
+        msg.reply("(X) You are practicing. ");
         return;
     }
     //this massive if statement basically tests if the user is excused. . 

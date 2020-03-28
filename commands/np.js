@@ -1,4 +1,5 @@
 const Discord = require('discord.js')
+const { TimeCalc } = require('./../helpers/TimeCalc')
 
 function np(msg) {
     if (msg.member.voice.channel == null) {
@@ -11,12 +12,15 @@ function np(msg) {
             return;
         }
         userobject = msg.member.guild.members.cache.find(mem => mem.id == userplaying);
-        piecename = whospracticing[voicechid + "piece"]
-            // user object is the User object. and the userplaying is the user's id. 
+        piecename = whospracticing[voicechid + "piece"];
+
+
+
+        result = TimeCalc(voicechid);
         if (piecename == null) {
-            msg.reply(userobject.user.username + " is currently playing ")
+            msg.reply(userobject.user.username + " has played for " + result[0] + ":" + result[1] + ".")
         } else {
-            msg.reply(userobject.user.username + " is currently playing" + piecename)
+            msg.reply(userobject.user.username + " is currently playing" + piecename + " and has played for " + result[1] + ":" + result[0] + ".")
         }
     }
 }

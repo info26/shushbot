@@ -11,7 +11,9 @@ async function excuse(msg) {
         msg.reply("(X) You are not in a voice channel. ")
         return;
     }
-    if (whospracticing[msg.member.voice.channel.id] != msg.member.id) {
+    //mod bypass for command. 
+    console.log("statement result: " + msg.member.permissions.has(['MANAGE_GUILD']))
+    if ((whospracticing[msg.member.voice.channel.id] != msg.member.id) && (msg.member.permissions.has(['MANAGE_GUILD']) == false)) {
         msg.reply("(X) You are not the one practicing! ")
         return;
     }
@@ -38,13 +40,17 @@ async function excuse(msg) {
         msg.reply("(X) You are not in the same channel as the user that you referred to. ")
         return;
     }
+    if (whospracticing[msg.member.voice.channel.id] == usertounmute.id) {
+        msg.reply("(X) You are practicing. ");
+        return;
+    }
     if (typeof whospracticing[msg.member.voice.channel.id + "excused"] !== 'undefined') {
         if (whospracticing[msg.member.voice.channel.id + "excused"].includes(usertounmute.id)) {
             msg.reply("(X) This user is already excused");
             return;
         }
     }
-    if (usertounmute.id == msg.member.id) {
+    if (usertounmute.id == msg.member.id && (msg.member.permissions.has(['MANAGE_GUILD']) == false)) {
         msg.reply("(X) You can't excuse yourself. ")
         return;
     }
