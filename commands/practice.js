@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 
 
 async function practice(msg) {
-    if (msg.member.voice.channel == null) {
+    if (msg.member.voice.channel == null || !msg.member.voice.channel.id in APPLIED_CHANNELS) {
         msg.reply("(X) You aren't in a voice channel")
     } else {
         // user is in a voice channel.
