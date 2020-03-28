@@ -6,8 +6,8 @@ function TimeCalc(voicechid) {
     //convert to seconds. 
     diff = diff / 1000;
     //get minutes
-    minutes = Math.round(diff / 60);
-    hours = Math.round(minutes / 60)
+    hours = Math.round(diff / 60 / 60)
+    minutes = Math.round((diff - (hours * 60)) / 60);
     return [minutes, hours];
 }
 
