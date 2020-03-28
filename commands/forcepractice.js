@@ -31,7 +31,7 @@ function forcepractice(msg) {
             usermentionedch = usermentioned.voice;
             if (usermentionedch.channel == null && whospracticing[modvoicech.id] != "upforgrabs") {
                 msg.reply("(X) The user you mentioned isn't in a voice channel")
-            } else if (whospracticing[modvoicech.id] == "upforgrabs") {
+            } else if (whospracticing[modvoicech.id] == "upforgrabs" || whospracticing[modvoicech.id] == null) {
                 usermentionedch.setMute(false, "operation performed by moderator")
                     //update whospracticing
                 whospracticing[modvoicech.id] = usermentionedch.id

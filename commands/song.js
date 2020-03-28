@@ -10,7 +10,7 @@ function song(msg) {
         // check if user is the user practicing. 
         msg.reply("(X) You aren't practicing. ")
     } else {
-        whospracticing[msg.member.voice.channel.id + "piece"] = msg.content.replace("!song", "");
+        whospracticing[msg.member.voice.channel.id + "piece"] = msg.content.replace("$song", "");
         msg.reply("Done. ");
     }
 }

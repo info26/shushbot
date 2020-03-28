@@ -27,7 +27,7 @@ function userMove(newMember, oldMember) {
         console.log(newMember.channel.id)
         if (APPLIED_CHANNELS.includes(newMember.channel.id) == false) {
             newMember.member.voice.setMute(false, "unmute because he/she is in a channel which the bot doesn't manage. ")
-            console.log(newMember.member.id + " unmute because he/she is in a channel which the bot doesn't manage. ")
+            console.log(newMember.member.id + " unmute because he/she is in a channel which the bot doesn't manage. " + newMember.channel.id)
         } else {
             //MANAGE THIS USER
             if (newMember.channel.members.size == 1 && APPLIED_CHANNELS.includes(newMember.channel.id)) {
