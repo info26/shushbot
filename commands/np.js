@@ -18,9 +18,9 @@ function np(msg) {
 
         result = TimeCalc(voicechid);
         if (piecename == null) {
-            msg.reply(userobject.user.username + " is currently playing " + " for " + result[0] + ":" + result[1] + ".")
+            msg.reply(userobject.user.username + " has played for " + result[0] + ":" + result[1] + ".")
         } else {
-            msg.reply(userobject.user.username + " is currently playing" + piecename + " for " + result[1] + ":" + result[0] + ".")
+            msg.reply(userobject.user.username + " is currently playing" + piecename + " and has played for " + result[1] + ":" + result[0] + ".")
         }
     }
 }
