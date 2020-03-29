@@ -52,12 +52,16 @@ async function excuse(msg) {
             return;
         }
     }
+    if (whospracticing[guildMember.voice.channel.id] == "upforgrabs") {
+        msg.reply("(X) No one is practicing, therefore no one can be excused. ")
+        return;
+    }
     if (userToUnmute.id == guildMember.id && (guildMember.permissions.has(['MANAGE_GUILD']) == false)) {
         msg.reply("(X) You can't excuse yourself. ")
         return;
     }
     //all checks have passed.
-    strUserExcused =  "Okay, " + getNick(userToUnmute) + " has been excused";
+    strUserExcused = "Okay, " + getNick(userToUnmute) + " has been excused";
     userToUnmute.voice.setMute(false, strUserExcused)
     msg.reply(strUserExcused)
     AddOrRemoveExcused("add", guildMember.voice.channel.id, userToUnmute.id);
