@@ -8,6 +8,10 @@ async function unexcuse(msg) {
         msg.reply("(X) You have specified too many arguments. ")
         return;
     }
+    if (cmd.size == 1) {
+        msg.reply("(X) You have specified not enough arguments. ")
+        return;
+    }
     if (guildMember.voice.channel == null) {
         msg.reply("(X) You are not in a voice channel. ")
         return;
@@ -56,7 +60,7 @@ async function unexcuse(msg) {
         }
     }
     //all checks have passed.
-    strUserUnexcused =  "Okay, " + getNick(userToMute) + " has been unexcused";
+    strUserUnexcused = "Okay, " + getNick(userToMute) + " has been unexcused";
     userToMute.voice.setMute(true, strUserUnexcused)
     msg.reply(strUserUnexcused)
 
