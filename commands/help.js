@@ -51,11 +51,11 @@ function help(msg) {
         files: [{
             attachment:'../shushbot/resources/IMG_1553.jpg',
             name:'IMG_1553.jpg'
-        }]
+        }],  
+    })
         .then(msg => {
             msg.delete({timeout: 20000})
-        })
-    });
+        }),
 
     module.exports = {
         help
