@@ -41,16 +41,16 @@ function help(msg) {
             }
         ],
         timestamp: new Date(),
-        /*thumbnail: {
-            "url": "attachments://Shush.jpg",
+        thumbnail: {
+            "url": "attachment://Shush.jpg",
 
-        }*/
+        }
     };
     msg.channel.send({
         embed: helpEmbed,
         files: [{
-            attachment: '/shushbot/resources/IMG_1553.jpg',
-            name: 'Shush.jpg'
+            attachment:'../resources/IMG_1553.jpg',
+            name:'IMG_1553.jpg'
         }]
     });
 
