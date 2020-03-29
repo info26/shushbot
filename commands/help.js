@@ -42,14 +42,14 @@ function help(msg) {
         ],
         timestamp: new Date(),
         thumbnail: {
-            "url": "attachment://Shush.jpg",
+            "url": "attachment://IMG_1553.jpg",
 
         }
     };
     msg.channel.send({
         embed: helpEmbed,
         files: [{
-            attachment:'/resources/IMG_1553.jpg',
+            attachment:'../shushbot/resources/IMG_1553.jpg',
             name:'IMG_1553.jpg'
         }]
     });
