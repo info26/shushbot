@@ -6,13 +6,6 @@ function userMove(newMember, oldMember) {
     if (newMember.channel.id != oldMember.channel.id) {
         //for if this user WAS practicing. 
         if (whospracticing[oldMember.channel.id] != null && oldMember.member.id == whospracticing[oldMember.channel.id]) {
-            // whospracticing[oldMember.channel.id] = "upforgrabs"
-            // sendingchannelid = BROADCAST_CHANNELS[oldMember.channel.id]
-            // const msgchannel = oldMember.channel.guild.channels.cache.find(ch => ch.id === sendingchannelid);
-            // if (oldMember.channel.members.size > 0) {
-            //     msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '!practice' will be able to practice. Room Name: " + oldMember.channel.name)
-            // }
-            // whospracticing[oldMember.channel.id] = null
             userLeftorNoMore(oldMember);
         }
         // was this member excused? 
@@ -23,6 +16,9 @@ function userMove(newMember, oldMember) {
                 console.log("removed member from excused list: " + oldMember.member.id)
             }
         }
+
+
+
         console.log("new user joined")
         console.log(newMember.channel.id)
         if (APPLIED_CHANNELS.includes(newMember.channel.id) == false) {

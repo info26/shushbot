@@ -1,6 +1,5 @@
 const Discord = require('discord.js')
-
-
+const { getNick } = require('./../helpers/getNick')
 
 function forcepractice(msg) {
     //USE msg.content !! msg is not a string. it's a discord.js MESSAGE object. 
@@ -11,50 +10,53 @@ function forcepractice(msg) {
     } else if (msg.member.voice.channel == null) {
         msg.reply("(X) You aren't in a voice channel")
     } else if (msg.member.permissions.has(['MANAGE_GUILD'])) {
-        match = cmd[1].match(/(\d+)/)
+        // matches all numbers from the string. 
+        match = cmd[1].match(/(\d+)/);
         if (match == null) {
             //null check
-            msg.reply("(X) Invalid user. ")
+            msg.reply("(X) Invalid user. ");
             return;
-        }
-        cmd[1] = match[0]
-        console.log(cmd)
-        const usermentioned = msg.member.guild.members.cache.find(mem => mem.id === cmd[1]);
-
-        modvoicech = msg.member.voice.channel;
-        if (usermentioned == null) {
+        };
+        cmd[1] = match[0];
+        console.log(cmd);
+        const userMentioned = msg.member.guild.members.cache.find(mem => mem.id === cmd[1]);
+        // mod's voice channel
+        modVoiceCh = msg.member.voice.channel;
+        if (userMentioned == null) {
             msg.reply("(X) Invalid user. ")
-        } else if (modvoicech.id != usermentioned.voice.channel.id) {
+        } else if (modVoiceCh.id != userMentioned.voice.channel.id) {
             //HEY! these users are in different channels. 
             msg.reply("(X) The user that you referred to is in a different channel. ")
         } else {
-            usermentionedch = usermentioned.voice;
-            if (usermentionedch.channel == null && whospracticing[modvoicech.id] != "upforgrabs") {
+            userMentionedCh = userMentioned.voice;
+            if (userMentionedCh.channel == null && whospracticing[modVoiceCh.id] != "upforgrabs") {
                 msg.reply("(X) The user you mentioned isn't in a voice channel")
-            } else if (whospracticing[modvoicech.id] == "upforgrabs" || whospracticing[modvoicech.id] == null) {
-                usermentionedch.setMute(false, "operation performed by moderator")
+            } else if (whospracticing[modVoiceCh.id] == "upforgrabs" || whospracticing[modVoiceCh.id] == null) {
+                userMentionedCh.setMute(false, "operation performed by moderator")
                     //update whospracticing
-                whospracticing[modvoicech.id] = usermentionedch.id
+                whospracticing[modVoiceCh.id] = userMentionedCh.id
                 msg.reply("Done. ")
-                whospracticing[modvoicech.id + "piece"] = null;
+                whospracticing[modVoiceCh.id + "piece"] = null;
             } else {
                 // all checks completed. 
-                usercurpracticing = whospracticing[modvoicech.id]
-                const userplaying = msg.member.guild.members.cache.find(mem => mem.id === usercurpracticing);
-                // DO IT
-                whospracticing[modvoicech.id] = usermentionedch.id
-                userplaying.voice.setMute(true, "operation performed by moderator")
-                usermentionedch.setMute(false, "operation performed by moderator")
-                msg.reply("Done. ")
-                whospracticing[modvoicech.id + "piece"] = null;
+                userCurrPracticingId = whospracticing[modVoiceCh.id]
+                const userPlaying = msg.member.guild.members.cache.find(mem => mem.id === userCurrPracticingId);
+                whospracticing[modVoiceCh.id] = userMentionedCh.id
+                userPlaying.voice.setMute(true, "operation performed by moderator")
+                userMentionedCh.setMute(false, "operation performed by moderator")
+                nickUserP = getNick(userPlaying)
+                msg.reply("Done. " + nickUserP + " is now practicing because of a mod's request. ")
+                whospracticing[modVoiceCh.id + "piece"] = null;
+                whospracticing[modVoiceCh.id + "starttime"] = Date.now();
+
                 //ok we need to update who is unmuted. aka excused people. 
-                if (typeof whospracticing[modvoicech.id + "excused"] !== 'undefined') {
-                    dat = whospracticing[modvoicech.id + "excused"]
+                if (typeof whospracticing[modVoiceCh.id + "excused"] !== 'undefined') {
+                    excusedUserIds = whospracticing[modVoiceCh.id + "excused"]
                     guild = msg.member.guild;
-                    dat.forEach(memid => {
+                    excusedUserIds.forEach(memid => {
                         const user = guild.members.cache.find(mem => mem.id === memid);
                         //don't mute the user who is practicing. 
-                        if (user.voice.channel != null && usermentionedch.member.id != user.id) {
+                        if (user.voice.channel != null && userMentionedCh.member.id != user.id) {
                             //user still in vc
                             user.voice.setMute(true, "was excused, but the person practicing quit. ")
                         }

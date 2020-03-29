@@ -1,36 +1,34 @@
 const { TimeCalc } = require('./TimeCalc');
 
-function userLeftorNoMore(member) {
-    //calc time. 
+function userLeftorNoMore(voiceState) {
+    whospracticing[voiceState.channel.id] = "upforgrabs"
+    sendingchannelid = BROADCAST_CHANNELS[voiceState.channel.id]
+    const msgchannel = voiceState.channel.guild.channels.cache.find(ch => ch.id === sendingchannelid);
 
-
-
-    //END CALC TIME. 
-    whospracticing[member.channel.id] = "upforgrabs"
-    sendingchannelid = BROADCAST_CHANNELS[member.channel.id]
-    const msgchannel = member.channel.guild.channels.cache.find(ch => ch.id === sendingchannelid);
-    result = TimeCalc(member.channel.id);
-    if (member.channel.members.size > 0) {
-        msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '!practice' will be able to practice. Room Name: " + member.channel.name)
-        msgchannel.send("They practiced for " + result[1] + ":" + result[0]);
+    //time calc
+    result = TimeCalc(voiceState.channel.id);
+    if (voiceState.channel.members.size > 0) {
+        msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '$practice' will be able to practice. Room Name: " + voiceState.channel.name)
+        msgchannel.send("They practiced for " + result[1] + " hours and " + result[0] + " minutes");
     }
-    whospracticing[member.channel.id + "piece"] = null
-        //time to mute everyone who was excused by the user.
-    if (typeof whospracticing[member.channel.id + "excused"] !== 'undefined') {
-        dat = whospracticing[member.channel.id + "excused"]
-        guild = member.member.guild;
-        dat.forEach(memid => {
+    whospracticing[voiceState.channel.id + "piece"] = null
+
+    //time to mute everyone who was excused by the user.
+    if (typeof whospracticing[voiceState.channel.id + "excused"] !== 'undefined') {
+        membersExcused = whospracticing[voiceState.channel.id + "excused"]
+        //finds server of the current user
+        guild = voiceState.member.guild;
+        membersExcused.forEach(memid => {
+            //find user associated with that id in that server
             const user = guild.members.cache.find(mem => mem.id === memid);
             if (user.voice.channel != null) {
                 //user still in vc
                 user.voice.setMute(true, "was excused, but the person practicing quit. ")
             }
-
-
         })
     }
 
-    whospracticing[member.channel.id + "excused"] = [];
+    whospracticing[voiceState.channel.id + "excused"] = [];
     // once you're done muting everybody, clear the list.  ^^^
 
 }

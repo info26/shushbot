@@ -1,7 +1,7 @@
 const Discord = require('discord.js')
 
 
-async function practice(msg) {
+function practice(msg) {
     if (msg.member.voice.channel == null || !msg.member.voice.channel.id in APPLIED_CHANNELS) {
         msg.reply("(X) You aren't in a voice channel")
     } else {
@@ -18,10 +18,12 @@ async function practice(msg) {
             msg.reply("Ok, you're now practicing. ")
             msg.member.voice.setMute(false, "user requested to be practicing. ")
             whospracticing[msg.member.voice.channel.id] = msg.author.id;
-            whospracticing[msg.member.voice.channel.id + "piece"] = null
+            whospracticing[msg.member.voice.channel.id + "piece"] = null;
+            whospracticing[msg.member.voice.channel.id + "starttime"] = Date.now();
         }
     }
 };
+
 
 module.exports = {
     practice

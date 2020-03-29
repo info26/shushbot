@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const { userLeftorNoMore } = require('./../helpers/userLeftorNoMore')
+const { getNick } = require('./../helpers/getNick')
 
 function forcestop(msg) {
     if (msg.member.voice.channel == null) {
@@ -9,17 +10,14 @@ function forcestop(msg) {
     } else if (whospracticing[msg.member.voice.channel.id] == null || whospracticing[msg.member.voice.channel.id] == "upforgrabs") {
         msg.reply("(X) No one is currently practicing in your channel. ")
     } else {
-        currentpracticingid = whospracticing[msg.member.voice.channel.id]
-        userpracticing = msg.member.guild.members.cache.find(mem => mem.id == currentpracticingid);
-        voicechannel = userpracticing.voice;
-        voicechannel.setMute(true, "moderator executed command. ")
-            // whospracticing[voicechannel.channel.id] = "upforgrabs"
-            // sendingchannelid = BROADCAST_CHANNELS[voicechannel.channel.id]
-            // const msgchannel = msg.member.guild.channels.cache.find(ch => ch.id === sendingchannelid);
-            // msgchannel.send("A mod has stopped the user currently playing. The first person to say '!practice' will be able to practice. Room Name: " + voicechannel.channel.name)
-        msg.reply("Done. ")
-            // whospracticing[voicechannel.channel.id + "piece"] = null
-        userLeftorNoMore(voicechannel);
+        currPracticingId = whospracticing[msg.member.voice.channel.id]
+        userPracticing = msg.member.guild.members.cache.find(mem => mem.id == currPracticingId);
+        userVoice = userPracticing.voice;
+        userVoice.setMute(true, "moderator executed command to forcestop. ")
+        const userPlaying = msg.member.guild.members.cache.find(mem => mem.id === whospracticing[msg.member.voice.channel.id]);
+        nickUserP = getNick(userPlaying)
+        msg.reply("Done. " + nickUserP + " has stopped practicing by mod's command");
+        userLeftorNoMore(userVoice);
 
     }
 }

@@ -10,11 +10,12 @@ function song(msg) {
         // check if user is the user practicing. 
         msg.reply("(X) You aren't practicing. ")
     } else {
-        whospracticing[msg.member.voice.channel.id + "piece"] = msg.content.replace("$song", "");
+        whospracticing[msg.member.voice.channel.id + "piece"] = msg.content.replace(BOT_PREFIX + "song", "");
+        //store a start time for each song. 
         msg.reply("Done. ");
     }
-}
+};
 
 module.exports = {
     song
-}
+};

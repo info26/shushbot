@@ -18,14 +18,13 @@ filesystem.readFile('./store', (err, data) => {
 DEBUG_ENABLED = true;
 //specified which channel(s) the bot manages. 
 
-
-BUILD_PROFILE = "PROD";
+BUILD_PROFILE = "DEV";
 APPLIED_CHANNELS = [];
 BROADCAST_CHANNELS = {};
 BOT_TOKEN = '';
 
 //production grade: initialized with channels on live server
-if(BUILD_PROFILE == "PROD"){
+if (BUILD_PROFILE == "PROD") {
     APPLIED_CHANNELS = [
         "690498106046939166",
         "691174956389892116",
@@ -39,7 +38,7 @@ if(BUILD_PROFILE == "PROD"){
         "691482513192779816",
         "691762889773547550",
         "691763054253178890",
-    
+
     ];
 
     //VOICECHANNEL : TEXT CHANNEL
@@ -61,7 +60,7 @@ if(BUILD_PROFILE == "PROD"){
     BOT_TOKEN = 'NjkyMTg3OTcyMTQwOTI0OTY5.Xn61Ww.XTmiL78XU3pkXBO4chhWX6WcJ-A';
 }
 //development/quality assurance grade: initialized with channels on test server
-else if(BUILD_PROFILE == "DEV"){
+else if (BUILD_PROFILE == "DEV") {
     APPLIED_CHANNELS = [
         "691725669326913747",
         "691719071619874816",
@@ -74,13 +73,10 @@ else if(BUILD_PROFILE == "DEV"){
         "692002216957051030": "691808874910449734"
     };
 
-    BOT_TOKEN = 'NjkyMTMyODE5MjYyMjQyODM3.XnqhsQ.wCv-O4OrMZuwl866jsRIoY4mrtY';
-}
-else {
+    BOT_TOKEN = 'NjkxODIyNzIwMjkxMTc2NDU4.Xn_yNQ.Y431wr0ah6cTXKBoI6vxMMC_8_g';
+} else {
     console.log("unknown build profile, please use DEV or PROD")
 }
-
-
 
 BOT_PREFIX = "$";
 
@@ -119,7 +115,6 @@ process.on('SIGINT', function() {
     });
 
 });
-
 
 //UPDATE YOUR TOKEN HERE. 
 client.login(BOT_TOKEN);
