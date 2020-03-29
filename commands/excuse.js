@@ -8,6 +8,10 @@ async function excuse(msg) {
         msg.reply("(X) You have specified too many arguments. ")
         return;
     }
+    if (msg.content == "$excuse") {
+        msg.reply("(X) You have specified not enough arguments. ")
+        return;
+    }
     if (guildMember.voice.channel == null) {
         msg.reply("(X) You are not in a voice channel. ")
         return;

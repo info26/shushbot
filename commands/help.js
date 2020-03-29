@@ -17,11 +17,11 @@ function help(msg) {
             },
             {
                 name: BOT_PREFIX + "forcepractice",
-                value: "This command is mod only. "
+                value: "This command is mod only. For case by case scenarios when a mod wants to force someone to practice. "
             },
             {
                 name: BOT_PREFIX + "forcestop",
-                value: "This command is mod only. "
+                value: "This command is mod only. For case by case scenarios when a mod wants to force someone to stop practice."
             },
             {
                 name: BOT_PREFIX + "np",
@@ -51,8 +51,11 @@ function help(msg) {
         files: [{
             attachment:'../shushbot/resources/IMG_1553.jpg',
             name:'IMG_1553.jpg'
-        }]
-    });
+        }],  
+    })
+        .then(msg => {
+            msg.delete({timeout: 20000})
+        }),
 
     module.exports = {
         help
