@@ -41,17 +41,18 @@ function help(msg) {
             }
         ],
         timestamp: new Date(),
-        thumbnail: {
+        /*thumbnail: {
             "url": "attachments://Shush.jpg",
 
-        }
+        }*/
     };
     msg.channel.send({
-        embed: helpEmbed,
-        files: [{
-            attachment: '../resources/IMG_1553.jpg',
-            name: 'Shush.jpg'
-        }]
+        embed: helpEmbed
+            /*,
+                    files: [{
+                        attachment: '../resources/IMG_1553.jpg',
+                        name: 'Shush.jpg'
+                    }]*/
     });
 
     module.exports = {
