@@ -41,10 +41,10 @@ function help(msg) {
             }
         ],
         timestamp: new Date(),
-        /*thumbnail: {
+        thumbnail: {
             "url": "attachments://Shush.jpg",
 
-        }*/
+        }
     };
     msg.channel.send({
         embed: helpEmbed,
