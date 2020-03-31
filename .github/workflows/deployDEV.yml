@@ -13,4 +13,8 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.PORT }}
-        script: ls
+        script: |
+          cd shushbotDEV
+          cd shushbot
+          git pull origin dev
+          pm2 restart shushbotDEV
