@@ -57,7 +57,7 @@ if (BUILD_PROFILE == "PROD") {
         "691763054253178890": "691763754370859069"
     };
 
-    filesystem.readFile('./../prodToken.txt', (err, data) => {
+    filesystem.readFile('./../prodToken.txt', 'utf-8', (err, data) => {
         if(err) throw err;
         console.log(data);
         BOT_TOKEN = data;
@@ -78,7 +78,7 @@ else if (BUILD_PROFILE == "DEV") {
         "692002216957051030": "691808874910449734"
     };
 
-    filesystem.readFile('./../devToken.txt', (err, data) => {
+    filesystem.readFile('./../devToken.txt',  'utf-8', (err, data) => {
         if(err) throw err;
         console.log(data);
         BOT_TOKEN = data;      
