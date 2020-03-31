@@ -57,7 +57,10 @@ if (BUILD_PROFILE == "PROD") {
         "691763054253178890": "691763754370859069"
     };
 
-    BOT_TOKEN = 'NjkyMTg3OTcyMTQwOTI0OTY5.Xn61Ww.XTmiL78XU3pkXBO4chhWX6WcJ-A';
+    filesystem.readFile('./../prodToken.txt', (err, data) => {
+        if(err) throw err;
+        BOT_TOKEN = data;
+    })
 }
 //development/quality assurance grade: initialized with channels on test server
 else if (BUILD_PROFILE == "DEV") {
@@ -73,7 +76,11 @@ else if (BUILD_PROFILE == "DEV") {
         "692002216957051030": "691808874910449734"
     };
 
-    BOT_TOKEN = 'NjkxODIyNzIwMjkxMTc2NDU4.Xn_yNQ.Y431wr0ah6cTXKBoI6vxMMC_8_g';
+    filesystem.readFile('./../devToken.txt', (err, data) => {
+        if(err) throw err;
+        BOT_TOKEN = data;
+    })
+
 } else {
     console.log("unknown build profile, please use DEV or PROD")
 }
