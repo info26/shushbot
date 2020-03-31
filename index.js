@@ -59,8 +59,10 @@ if (BUILD_PROFILE == "PROD") {
 
     filesystem.readFile('./../prodToken.txt', (err, data) => {
         if(err) throw err;
+        console.log(data);
         BOT_TOKEN = data;
     })
+    console.log(BOT_TOKEN);
 }
 //development/quality assurance grade: initialized with channels on test server
 else if (BUILD_PROFILE == "DEV") {
@@ -78,8 +80,10 @@ else if (BUILD_PROFILE == "DEV") {
 
     filesystem.readFile('./../devToken.txt', (err, data) => {
         if(err) throw err;
-        BOT_TOKEN = data;
+        console.log(data);
+        BOT_TOKEN = data;      
     })
+    console.log(BOT_TOKEN);
 
 } else {
     console.log("unknown build profile, please use DEV or PROD")
