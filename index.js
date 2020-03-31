@@ -57,14 +57,14 @@ if (BUILD_PROFILE == "PROD") {
         "691763054253178890": "691763754370859069"
     };
 
-    /*var temp = '';
+    var temp = '';
     filesystem.readFile('./../prodToken.txt', 'utf-8', (err, data) => {
         if(err) throw err;
         console.log(data);
         temp = data;
     })
-    BOT_TOKEN = temp;*/
-    BOT_TOKEN = 'NjkyMTg3OTcyMTQwOTI0OTY5.XoO0tg.-c7gv4dDHafh1V34CxctMsAWHG8';
+    BOT_TOKEN = temp;
+    //BOT_TOKEN = 'NjkyMTg3OTcyMTQwOTI0OTY5.XoO0tg.-c7gv4dDHafh1V34CxctMsAWHG8';
 }
 //development/quality assurance grade: initialized with channels on test server
 else if (BUILD_PROFILE == "DEV") {
@@ -80,14 +80,16 @@ else if (BUILD_PROFILE == "DEV") {
         "692002216957051030": "691808874910449734"
     };
 
-    /*var temp = '';
+    var temp = '';
     filesystem.readFile('./../devToken.txt',  'utf8', (err, data) => {
         if(err) throw err;
         console.log(data);
-        temp = data;      
+        temp = data;    
+        console.log(temp);  
     })
-    BOT_TOKEN = temp;*/
-    BOT_TOKEN = 'NjkxODIyNzIwMjkxMTc2NDU4.XoOylw.ji0cxtndSADxERngvlbPKKyNgr8';
+    BOT_TOKEN = temp;
+    console.log(BOT_TOKEN)
+    //BOT_TOKEN = 'NjkxODIyNzIwMjkxMTc2NDU4.XoOylw.ji0cxtndSADxERngvlbPKKyNgr8';
 
 } else {
     console.log("unknown build profile, please use DEV or PROD")
