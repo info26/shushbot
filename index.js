@@ -60,7 +60,7 @@ if (BUILD_PROFILE == "PROD") {
     //var temp = '';
     filesystem.readFileSync('./../prodToken.txt', 'utf-8', (err, data) => {
         if(err) throw err;
-       //console.log(data);
+        console.log(data);
        // temp = data;
        client.login(data);
     })
@@ -84,6 +84,7 @@ else if (BUILD_PROFILE == "DEV") {
     //var temp = '';
     filesystem.readFileSync('./../devToken.txt',  'utf8', (err, data) => {
         if(err) throw err;
+        console.log(data);
         client.login(data);
     })
     //BOT_TOKEN = temp;
