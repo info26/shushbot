@@ -58,7 +58,7 @@ if (BUILD_PROFILE == "PROD") {
     };
 
     var temp = '';
-    filesystem.readFile('./../prodToken.txt', 'utf-8', (err, data) => {
+    filesystem.readFileSync('./../prodToken.txt', 'utf-8', (err, data) => {
         if(err) throw err;
         console.log(data);
         temp = data;
@@ -81,7 +81,7 @@ else if (BUILD_PROFILE == "DEV") {
     };
 
     var temp = '';
-    filesystem.readFile('./../devToken.txt',  'utf8', (err, data) => {
+    filesystem.readFileSync('./../devToken.txt',  'utf8', (err, data) => {
         if(err) throw err;
         console.log(data);
         temp = data;    
