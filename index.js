@@ -26,6 +26,7 @@ BOT_TOKEN = '';
 //production grade: initialized with channels on live server
 if (BUILD_PROFILE == "PROD") {
     APPLIED_CHANNELS = [
+        "691237976923176990",
         "690498106046939166",
         "691174956389892116",
         "691176415424675872",
