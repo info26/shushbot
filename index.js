@@ -43,6 +43,7 @@ if (BUILD_PROFILE == "PROD") {
 
     //VOICECHANNEL : TEXT CHANNEL
     BROADCAST_CHANNELS = {
+        "691237976923176990": "691811634666012793",
         "690498106046939166": "691194463250546709",
         "691174956389892116": "691194463250546709",
         "691176415424675872": "691194463250546709",
@@ -57,7 +58,7 @@ if (BUILD_PROFILE == "PROD") {
         "691763054253178890": "691763754370859069"
     };
 
-    BOT_TOKEN = 'NjkyMTg3OTcyMTQwOTI0OTY5.Xn61Ww.XTmiL78XU3pkXBO4chhWX6WcJ-A';
+    BOT_TOKEN = 'NjkyMTg3OTcyMTQwOTI0OTY5.XoO39A.cdL-nTJJ6oTWeJuqBHZcIeEmi5c';
 }
 //development/quality assurance grade: initialized with channels on test server
 else if (BUILD_PROFILE == "DEV") {
@@ -73,7 +74,7 @@ else if (BUILD_PROFILE == "DEV") {
         "692002216957051030": "691808874910449734"
     };
 
-    BOT_TOKEN = 'NjkxODIyNzIwMjkxMTc2NDU4.Xn_yNQ.Y431wr0ah6cTXKBoI6vxMMC_8_g';
+    BOT_TOKEN = 'NjkxODIyNzIwMjkxMTc2NDU4.XoO3zw.YpDpbeh4tzqhtF3cNVLVtlGRo3M';
 } else {
     console.log("unknown build profile, please use DEV or PROD")
 }
