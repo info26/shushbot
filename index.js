@@ -18,7 +18,7 @@ filesystem.readFile('./store', (err, data) => {
 DEBUG_ENABLED = true;
 //specified which channel(s) the bot manages. 
 
-BUILD_PROFILE = "DEV";
+BUILD_PROFILE = "PROD";
 APPLIED_CHANNELS = [];
 BROADCAST_CHANNELS = {};
 BOT_TOKEN = '';
