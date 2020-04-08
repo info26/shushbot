@@ -6,7 +6,7 @@ function help(msg) {
     const helpEmbed = {
         color: "#F99806",
         title: 'Shushbot help page',
-        description: "Documentation available [here](https://shush-bot.firebaseapp.com/). Report bugs [here](https://forms.gle/A4mA6AYJQFdDm62N9)",
+        description: "Documentation available [here](https://shush-bot.firebaseapp.com/). Report bugs [here](https://forms.gle/A4mA6AYJQFdDm62N9). Click [here](https://discordapp.com/channels/690354771189825547/692130803437535232/693200528988962816) for optimal Discord audio settings", 
         fields: [{ //kay im gonna start copying the stuff from the website. 
                 name: BOT_PREFIX + "practice",
                 value: "If your channel has no one practicing, use $practice to start practicing. The bot will announce when it is looking for people to practice."
