@@ -108,6 +108,13 @@ console.log(client.commands)
 whospracticing = {}
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
+    client.user.setPresence({
+        status: "online",
+        game: {
+            name: "Type $help for more info",
+            type: "LISTENING"
+        }
+    })
 });
 
 
@@ -136,6 +143,8 @@ process.on('SIGINT', function() {
     });
 
 });
+
+
 
 //UPDATE YOUR TOKEN HERE. 
 client.login(BOT_TOKEN);
