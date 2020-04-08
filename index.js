@@ -18,7 +18,7 @@ filesystem.readFile('./store', (err, data) => {
 DEBUG_ENABLED = true;
 //specified which channel(s) the bot manages. 
 
-BUILD_PROFILE = "PROD";
+BUILD_PROFILE = "DEV";
 APPLIED_CHANNELS = [];
 BROADCAST_CHANNELS = {};
 BOT_TOKEN = '';
@@ -59,6 +59,14 @@ if (BUILD_PROFILE == "PROD") {
         "691763054253178890": "691763754370859069"
     };
 
+    /*var temp = '';
+    filesystem.readFile('./../prodToken.txt', 'utf-8', (err, data) => {
+        if(err) throw err;
+        console.log(data);
+        temp = data;
+    })
+    BOT_TOKEN = temp;*/
+
     BOT_TOKEN = 'NjkyMTg3OTcyMTQwOTI0OTY5.XoO39A.cdL-nTJJ6oTWeJuqBHZcIeEmi5c';
 }
 //development/quality assurance grade: initialized with channels on test server
@@ -75,7 +83,18 @@ else if (BUILD_PROFILE == "DEV") {
         "692002216957051030": "691808874910449734"
     };
 
+    /*var temp = '';
+    filesystem.readFile('./../devToken.txt',  'utf8', (err, data) => {
+        if(err) throw err;
+        console.log(data);
+        temp = data;    
+        console.log(temp);  
+    })
+    BOT_TOKEN = temp;
+    console.log(BOT_TOKEN)*/
     BOT_TOKEN = 'NjkxODIyNzIwMjkxMTc2NDU4.XoO3zw.YpDpbeh4tzqhtF3cNVLVtlGRo3M';
+
+
 } else {
     console.log("unknown build profile, please use DEV or PROD")
 }
