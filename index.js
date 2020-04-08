@@ -26,6 +26,7 @@ BOT_TOKEN = '';
 //production grade: initialized with channels on live server
 if (BUILD_PROFILE == "PROD") {
     APPLIED_CHANNELS = [
+        "691237976923176990",
         "690498106046939166",
         "691174956389892116",
         "691176415424675872",
@@ -43,6 +44,7 @@ if (BUILD_PROFILE == "PROD") {
 
     //VOICECHANNEL : TEXT CHANNEL
     BROADCAST_CHANNELS = {
+        "691237976923176990": "691811634666012793",
         "690498106046939166": "691194463250546709",
         "691174956389892116": "691194463250546709",
         "691176415424675872": "691194463250546709",
@@ -64,6 +66,7 @@ if (BUILD_PROFILE == "PROD") {
         temp = data;
     })
     BOT_TOKEN = temp;*/
+
     BOT_TOKEN = 'NjkyMTg3OTcyMTQwOTI0OTY5.XoO39A.cdL-nTJJ6oTWeJuqBHZcIeEmi5c';
 }
 //development/quality assurance grade: initialized with channels on test server
@@ -90,6 +93,7 @@ else if (BUILD_PROFILE == "DEV") {
     BOT_TOKEN = temp;
     console.log(BOT_TOKEN)*/
     BOT_TOKEN = 'NjkxODIyNzIwMjkxMTc2NDU4.XoO3zw.YpDpbeh4tzqhtF3cNVLVtlGRo3M';
+
 
 } else {
     console.log("unknown build profile, please use DEV or PROD")
