@@ -44,7 +44,7 @@ function forcepractice(msg) {
                 whospracticing[modVoiceCh.id] = userMentionedCh.id
                 userPlaying.voice.setMute(true, "operation performed by moderator")
                 userMentionedCh.setMute(false, "operation performed by moderator")
-                nickUserP = getNick(userPlaying)
+                nickUserP = getNick(userMentioned)
                 msg.reply("Done. " + nickUserP + " is now practicing because of a mod's request. ")
                 whospracticing[modVoiceCh.id + "piece"] = null;
                 whospracticing[modVoiceCh.id + "starttime"] = Date.now();
