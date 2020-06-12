@@ -139,6 +139,14 @@ process.on('SIGINT', function() {
 });
 
 
-
-//UPDATE YOUR TOKEN HERE. 
-client.login(BOT_TOKEN);
+// read token from fs
+token = require("./token.json");
+console.log(token);
+switch(BUILD_PROFILE) {
+	case("DEV"):
+		client.login(token.devToken);
+		break;
+	case("PROD"):
+		client.login(token.prodToken);
+		break;
+}
