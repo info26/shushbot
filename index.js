@@ -60,12 +60,12 @@ if (BUILD_PROFILE == "PROD") {
     };
 
     /*var temp = '';
-    filesystem.readFile('./../prodToken.txt', 'utf-8', (err, data) => {
+    filesystem.readFile('./token.json', (err, data) => {
         if(err) throw err;
         console.log(data);
-        temp = data;
+        temp = JSON.parse(data);
     })
-    BOT_TOKEN = temp;*/
+    BOT_TOKEN = temp.prodToken;*/
 
     BOT_TOKEN = 'NjkyMTg3OTcyMTQwOTI0OTY5.XoO39A.cdL-nTJJ6oTWeJuqBHZcIeEmi5c';
 }
@@ -84,13 +84,13 @@ else if (BUILD_PROFILE == "DEV") {
     };
 
     /*var temp = '';
-    filesystem.readFile('./../devToken.txt',  'utf8', (err, data) => {
+    filesystem.readFile('./token.json', (err, data) => {
         if(err) throw err;
         console.log(data);
-        temp = data;    
+        temp = JSON.parse(data);    
         console.log(temp);  
     })
-    BOT_TOKEN = temp;
+    BOT_TOKEN = temp.devToken;
     console.log(BOT_TOKEN)*/
     BOT_TOKEN = 'NjkxODIyNzIwMjkxMTc2NDU4.XoO3zw.YpDpbeh4tzqhtF3cNVLVtlGRo3M';
 

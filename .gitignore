@@ -1,2 +1,4 @@
 node_modules/
 store
+config.json
+token.json
