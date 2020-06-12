@@ -53,7 +53,7 @@ function update(userid, table, additionalTime){
         Key: {
             "id": userid
         },
-        UpdateExpression: "set info.timePracticed = info,timePracticed + :val",
+        UpdateExpression: "set info.timePracticed = info.timePracticed + :val",
         ExpressionAttributeValues: {
             ":val:": additionalTime
         }
