@@ -58,16 +58,6 @@ if (BUILD_PROFILE == "PROD") {
         "691762889773547550": "691763754370859069",
         "691763054253178890": "691763754370859069"
     };
-
-    /*var temp = '';
-    filesystem.readFile('./token.json', (err, data) => {
-        if(err) throw err;
-        console.log(data);
-        temp = JSON.parse(data);
-    })
-    BOT_TOKEN = temp.prodToken;*/
-
-    BOT_TOKEN = 'NjkyMTg3OTcyMTQwOTI0OTY5.XoO39A.cdL-nTJJ6oTWeJuqBHZcIeEmi5c';
 }
 //development/quality assurance grade: initialized with channels on test server
 else if (BUILD_PROFILE == "DEV") {
@@ -82,19 +72,6 @@ else if (BUILD_PROFILE == "DEV") {
         "691719071619874816": "691808874910449734",
         "692002216957051030": "691808874910449734"
     };
-
-    /*var temp = '';
-    filesystem.readFile('./token.json', (err, data) => {
-        if(err) throw err;
-        console.log(data);
-        temp = JSON.parse(data);    
-        console.log(temp);  
-    })
-    BOT_TOKEN = temp.devToken;
-    console.log(BOT_TOKEN)*/
-    BOT_TOKEN = 'NjkxODIyNzIwMjkxMTc2NDU4.XoO3zw.YpDpbeh4tzqhtF3cNVLVtlGRo3M';
-
-
 } else {
     console.log("unknown build profile, please use DEV or PROD")
 }
@@ -140,7 +117,7 @@ process.on('SIGINT', function() {
 
 
 // read token from fs
-token = require("./token.json");
+var token = require("./token.json");
 console.log(token);
 switch(BUILD_PROFILE) {
 	case("DEV"):
