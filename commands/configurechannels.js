@@ -1,5 +1,3 @@
-const Discord = require('discord.js')
-
 function enablechs(msg) {
     var cmd = msg.content.split(", ");
     console.log(cmd);
