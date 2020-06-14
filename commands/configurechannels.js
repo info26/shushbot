@@ -1,5 +1,4 @@
 const Discord = require('discord.js')
-const { getNick } = require('../helpers/getNick')
 
 function activate(msg) {
     var cmd = msg.content.split(", ");
