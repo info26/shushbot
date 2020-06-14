@@ -7,6 +7,7 @@ const { song } = require('./song')
 const { excuse } = require('./excuse')
 const { unexcuse } = require('./unexcuse')
 const { help } = require('./help')
+const {activate, deactivate} = require('./configurechannels')
 
 module.exports = {
     practice,
@@ -17,5 +18,7 @@ module.exports = {
     song,
     excuse,
     unexcuse,
-    help
+    help,
+    activate,
+    deactivate
 }

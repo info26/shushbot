@@ -21,7 +21,6 @@ DEBUG_ENABLED = true;
 BUILD_PROFILE = "DEV";
 APPLIED_CHANNELS = [];
 BROADCAST_CHANNELS = {};
-BOT_TOKEN = '';
 
 //production grade: initialized with channels on live server
 if (BUILD_PROFILE == "PROD") {
