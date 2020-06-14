@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 
-function activate(msg) {
+function enablechs(msg) {
     var cmd = msg.content.split(", ");
     console.log(cmd);
 
@@ -30,7 +30,7 @@ function activate(msg) {
     }
 }
 
-function deactivate(msg) {
+function disablechs(msg) {
     var cmd = msg.content.split(", ");
     console.log(cmd);
 
@@ -61,6 +61,6 @@ function deactivate(msg) {
 }
 
 module.exports = {
-    activate,
-    deactivate
+    enablechs,
+    disablechs
 }
