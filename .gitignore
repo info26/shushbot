@@ -1,4 +1,6 @@
 node_modules/
 store
-config.json
-token.json
+# local .env* files
+.env.local
+.env.*.local
+.env.*

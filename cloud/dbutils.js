@@ -1,12 +1,18 @@
 var AWS = require("aws-sdk");
+require('dotenv-flow').config();
 
-AWS.config.loadFromPath('./config.json');
+
+AWS.Config ({
+    accessKeyId: process.env.accessKeyId,
+    secretAccessKey: process.env.secretAccessKey,
+    region: process.env.region
+});
 
 var docClient = new AWS.DynamoDB.DocumentClient();
 
-function insert(userid, table, time){
+function insert(userid, time){
     var insertDoc = {
-        TableName: table,
+        TableName: process.env.table,
         Item: {
             "id": userid,
             "info": {
@@ -24,12 +30,12 @@ function insert(userid, table, time){
         }
     };
 
-    return docClient.put(insertDoc, insertCallBack);
+    return docClient.put(insertDoc, insertCallback);
 }
 
-function get(userid, table){
+function get(userid){
     var queryDoc = {
-        TableName: table,
+        TableName: process.env.table,
         Key: {
             "id": userid
         }
@@ -44,12 +50,12 @@ function get(userid, table){
         }
     };
 
-    return docClient.get(queryDoc, getCallBack);
+    return docClient.get(queryDoc, getCallback);
 }
 
-function update(userid, table, additionalTime){
+function update(userid, additionalTime){
     var updateDoc = {
-        TableName: table,
+        TableName: process.env.table,
         Key: {
             "id": userid
         },
@@ -68,7 +74,7 @@ function update(userid, table, additionalTime){
         }
     };
 
-    return docClient.put(updateDoc, updateCallBack);
+    return docClient.put(updateDoc, updateCallback);
 }
 
 module.exports= {

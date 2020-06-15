@@ -1,8 +1,9 @@
 //custom discord bot for managing server unmutes and mutes. 
-
-
 const Discord = require('discord.js');
 const filesystem = require('fs');
+require('dotenv-flow').config();
+
+
 client = new Discord.Client();
 //for commands. 
 client.commands = new Discord.Collection();
@@ -18,12 +19,11 @@ filesystem.readFile('./store', (err, data) => {
 DEBUG_ENABLED = true;
 //specified which channel(s) the bot manages. 
 
-BUILD_PROFILE = "DEV";
 APPLIED_CHANNELS = [];
 BROADCAST_CHANNELS = {};
 
 //production grade: initialized with channels on live server
-if (BUILD_PROFILE == "PROD") {
+if (process.env.build_profile == "PROD") {
     APPLIED_CHANNELS = [
         "691237976923176990",
         "690498106046939166",
@@ -59,7 +59,7 @@ if (BUILD_PROFILE == "PROD") {
     };
 }
 //development/quality assurance grade: initialized with channels on test server
-else if (BUILD_PROFILE == "DEV") {
+else if (process.env.build_profile == "DEV") {
     APPLIED_CHANNELS = [
         "691725669326913747",
         "691719071619874816",
@@ -114,15 +114,4 @@ process.on('SIGINT', function() {
 
 });
 
-
-// read token from fs
-var token = require("./token.json");
-console.log(token);
-switch(BUILD_PROFILE) {
-	case("DEV"):
-		client.login(token.devToken);
-		break;
-	case("PROD"):
-		client.login(token.prodToken);
-		break;
-}
+client.login(process.env.token)
