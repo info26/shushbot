@@ -1,4 +1,4 @@
-const {secondsToHoursAndMinutes, timePracticed } = require('./TimeCalc');
+const {secondsToHoursAndMinutes, timePracticedInSeconds } = require('./TimeCalc');
 const { update, insert} = require('./../cloud/dbutils');
 
 
@@ -8,7 +8,7 @@ function userLeftorNoMore(voiceState) {
     const msgchannel = voiceState.channel.guild.channels.cache.find(ch => ch.id === sendingchannelid);
 
     //time calc
-    result = secondsToHoursAndMinutes(timePracticed(voiceState.channel.id));
+    result = secondsToHoursAndMinutes(timePracticedInSeconds(voiceState.channel.id));
     if (voiceState.channel.members.size > 0) {
         msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '$practice' will be able to practice. Room Name: " + voiceState.channel.name)
         msgchannel.send("They practiced for " + result[1] + " hours and " + result[0] + " minutes");

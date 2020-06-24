@@ -14,11 +14,16 @@ function insert(userid, time){
     var insertDoc = {
         TableName: process.env.table,
         Item: {
-            "UserId": userid,
+            "userId": userid,
             "info": {
-                "timePracticed" : time,
+                "timePracticed" : {
+                    "total" : time,
+                    "lastRep": "",
+                    "lastRepTime": time
+                }
             }
-        }
+        },
+        ConditionExpression: "attribute_not_exists(id)"
     };
 
     console.log("Adding a new item...");
@@ -30,14 +35,14 @@ function insert(userid, time){
         }
     };
 
-    return docClient.putItem(insertDoc, insertCallback);
+    docClient.put(insertDoc, insertCallback);
 }
 
 function get(userid){
     var queryDoc = {
         TableName: process.env.table,
         Key: {
-            "id": userid
+            "userId": userid
         }
     };
 
@@ -50,31 +55,53 @@ function get(userid){
         }
     };
 
-    return docClient.getItem(queryDoc, getCallback);
+    docClient.get(queryDoc, getCallback);
 }
 
-function update(userid, additionalTime){
+function update(userid, additionalTime, lastRepretoire){
+    var createDoc = {
+        TableName: process.env.table,
+        Key: {
+            "userId": userid
+        },
+        UpdateExpression: "SET info = :obj",
+        ExpressionAttributeValues: {
+            ":obj":{
+                practiceStats: {
+                    total: 0,
+                    lastRep: "",
+                    lastRepTime: 0
+                },
+            },
+        }
+    };
+
     var updateDoc = {
         TableName: process.env.table,
         Key: {
             "id": userid
         },
-        UpdateExpression: "set info.timePracticed = info.timePracticed + :val",
+        UpdateExpression: "set info.practiceStats.total = info.practiceStats.total + :val, info.practiceStats.lastRep = :lastRep, info.practiceStats.lastRepTime = :val",
         ExpressionAttributeValues: {
-            ":val:": additionalTime
+            ":val": additionalTime,
+            ":lastRep": lastRepretoire
         }
     };
 
-    console.log("Updating the item...");
     var updateCallback = function(err, data) {
         if (err) {
-            console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+            if (test.substring('provided expression refers to an attribute')) {
+                console.log("Item doesn't exist. Creating item and updating item.");
+                docClient.update(createDoc, updateCallback).promise().then(docClient.update(updateDoc, updateCallback));
+            } else { 
+                console.error("Unable to update item. Error JSON:", JSON.stringify(data, null, 2));
+            }
         } else {
-            console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
-        }
+            console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));   
+      }
     };
 
-    return docClient.updateItem(updateDoc, updateCallback);
+    docClient.update(updateDoc, updateCallback);
 }
 
 module.exports= {

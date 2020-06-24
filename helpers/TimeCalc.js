@@ -1,4 +1,4 @@
-function timePracticed(voiceChId) {
+function timePracticedInSeconds(voiceChId) {
     //this reprs milliseconds
     diff = Date.now() - whospracticing[voiceChId + "starttime"];
     //convert to seconds and return. 
@@ -15,5 +15,5 @@ function secondsToHoursAndMinutes(seconds){
 
 module.exports = {
     secondsToHoursAndMinutes,
-    timePracticed
+    timePracticedInSeconds
 }
