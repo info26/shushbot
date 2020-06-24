@@ -4,4 +4,4 @@ store
 .env.local
 .env.*.local
 .env.*
-workspace.code-workspace
+*.code-workspace
