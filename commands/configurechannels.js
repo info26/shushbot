@@ -6,6 +6,11 @@ function enablechs(msg) {
     if (msg.member.permissions.has(['MANAGE_GUILD'])) {
         var i;
         var txtCh = cmd[cmd.length - 1];
+        //make sure user inputs at least one vc and exactly one txtch
+        if(cmd.length < 3){
+            msg.reply("(X) too few commands, please add atleast one voice chat and exactly one text channel");
+            return;
+        }
         //cmd[0] is the command itself, and cmd[-1] is the text channel - so iterate though the list inbetween the two indexes 
         for (i = 1; i < cmd.length - 1; i++) {
             //update applied channels list

@@ -1,5 +1,5 @@
 const {secondsToHoursAndMinutes, timePracticedInSeconds } = require('./TimeCalc');
-const { update, insert} = require('./../cloud/dbutils');
+const { update} = require('./../cloud/dbutils');
 
 
 function userLeftorNoMore(voiceState) {
