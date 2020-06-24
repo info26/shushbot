@@ -14,7 +14,7 @@ function insert(userid, time){
     var insertDoc = {
         TableName: process.env.table,
         Item: {
-            "id": userid,
+            "UserId": userid,
             "info": {
                 "timePracticed" : time,
             }
@@ -30,7 +30,7 @@ function insert(userid, time){
         }
     };
 
-    return docClient.put(insertDoc, insertCallback);
+    return docClient.putItem(insertDoc, insertCallback);
 }
 
 function get(userid){
@@ -50,7 +50,7 @@ function get(userid){
         }
     };
 
-    return docClient.get(queryDoc, getCallback);
+    return docClient.getItem(queryDoc, getCallback);
 }
 
 function update(userid, additionalTime){
@@ -74,7 +74,7 @@ function update(userid, additionalTime){
         }
     };
 
-    return docClient.put(updateDoc, updateCallback);
+    return docClient.updateItem(updateDoc, updateCallback);
 }
 
 module.exports= {
