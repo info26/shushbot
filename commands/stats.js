@@ -1,7 +1,7 @@
 const { get } = require('./../cloud/dbutils');
 const { secondsToHoursAndMinutes } = require('../helpers/TimeCalc')
 
-function getStats(msg){
+function stats(msg){
     var cmd = msg.content.split(" ");
     //if user is looking for their own stats
     if(cmd.length < 2){
@@ -37,6 +37,10 @@ function showStats(msg, obj, user){
     var lastTime = obj.info.practiceStats.lastRepTime;
     var lastRep = obj.info.practiceStats.lastRep;
 
+    if(lastRep == null){
+        lastRep = "undefined"
+    }
+
     var totalReadable = secondsToHoursAndMinutes(total);
     var lastTimeReadable = secondsToHoursAndMinutes(lastTime);
 
@@ -44,15 +48,15 @@ function showStats(msg, obj, user){
         color: "#F99806",
         fields: [{ 
                 name: "Total Practice Time",
-                value: "your total time practiced is " + totalReadable[1] + " hours and " + totalReadable[0] + " minutes"
+                value: "your total time practiced is: " + totalReadable[1] + "h" + totalReadable[0] + "m"
             },
             {
                 name: "Last Repretoire",
-                value: "The last rep you practiced was " + lastRep
+                value: "The last rep you practiced was: " + lastRep
             },
             {
                 name: "Last Repretoire Practice Time",
-                value: "You practiced your last rep for " + lastTimeReadable[1] + " hours and " + lastTimeReadable[0] + " minutes"
+                value: "You practiced your last rep for: " + lastTimeReadable[1] + "h" + lastTimeReadable[0] + "m"
             },
         ],
         timestamp: new Date(),
@@ -67,7 +71,10 @@ function showStats(msg, obj, user){
     };
     msg.channel.send({
         embed: statsEmbed
-    });
+    })
+        .then(msg => {
+            msg.delete({timeout: 20000})
+        });
 
     module.exports = {
         showStats
@@ -75,5 +82,5 @@ function showStats(msg, obj, user){
 }
 
 module.exports = {
-    getStats
+    stats
 }

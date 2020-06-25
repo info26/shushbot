@@ -8,7 +8,7 @@ const { excuse } = require('./excuse')
 const { unexcuse } = require('./unexcuse')
 const { help } = require('./help')
 const {enablechs, disablechs} = require('./configurechannels')
-const { getStats } = require('./stats')
+const { stats } = require('./stats')
 
 module.exports = {
     practice,
@@ -22,5 +22,5 @@ module.exports = {
     help,
     enablechs,
     disablechs,
-    getStats
+    stats
 }
