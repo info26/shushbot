@@ -38,9 +38,9 @@ function insert(userid, time){
     docClient.put(insertDoc, insertCallback);
 }
 
-function get(userid, table){
+function get(userid){
     var queryDoc = {
-        TableName: table,
+        TableName: process.env.table,
         Key: {
             "userId": userid
         }

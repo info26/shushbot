@@ -1,5 +1,5 @@
 function enablechs(msg) {
-    var cmd = msg.content.split(", ");
+    var cmd = msg.replace('enablechs ','').replace(' ','').split(",");
     console.log(cmd);
 
     //make sure user calling the command is a moderator
@@ -7,12 +7,12 @@ function enablechs(msg) {
         var i;
         var txtCh = cmd[cmd.length - 1];
         //make sure user inputs at least one vc and exactly one txtch
-        if(cmd.length < 3){
+        if(cmd.length < 2){
             msg.reply("(X) too few commands, please add atleast one voice chat and exactly one text channel");
             return;
         }
-        //cmd[0] is the command itself, and cmd[-1] is the text channel - so iterate though the list inbetween the two indexes 
-        for (i = 1; i < cmd.length - 1; i++) {
+        //cmd[-1] is the text channel - so iterate though the list until just before the last element
+        for (i = 0; i < cmd.length - 1; i++) {
             //update applied channels list
             if (APPLIED_CHANNELS.includes(cmd[i])) {
                 //don't re-add/duplicate into the array - do nothing
@@ -34,7 +34,7 @@ function enablechs(msg) {
 }
 
 function disablechs(msg) {
-    var cmd = msg.content.split(", ");
+    var cmd = msg.replace('enablechs ','').replace(' ','').split(",");
     console.log(cmd);
 
     //make sure user calling the command is a moderator
@@ -47,7 +47,7 @@ function disablechs(msg) {
         else {
             var i;
             //remove voice channels from applied channels array and broadcast channels dict/map
-            for (i = 1; i < cmd.length; i++) {
+            for (i = 0; i < cmd.length; i++) {
                 if(APPLIED_CHANNELS.includes(cmd[i])) {
                     APPLIED_CHANNELS.splice(APPLIED_CHANNELS.indexOf(cmd[i]), 1);
                     delete BROADCAST_CHANNELS[cmd[i]];

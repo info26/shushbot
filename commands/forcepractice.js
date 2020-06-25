@@ -21,7 +21,7 @@ function forcepractice(msg) {
         console.log(cmd);
         const userMentioned = msg.member.guild.members.cache.find(mem => mem.id === cmd[1]);
         // mod's voice channel
-        modVoiceCh = msg.member.voice.channel;
+        var modVoiceCh = msg.member.voice.channel;
         if (userMentioned == null) {
             msg.reply("(X) Invalid user. ")
         } else if (modVoiceCh.id != userMentioned.voice.channel.id) {
