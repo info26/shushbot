@@ -17,7 +17,7 @@ function insert(userid, time){
             "userId": userid,
             "info": {
                 "timePracticed" : {
-                    "total" : time,
+                    "totalTime" : time,
                     "lastRep": "",
                     "lastRepTime": time
                 }
@@ -38,27 +38,32 @@ function insert(userid, time){
     docClient.put(insertDoc, insertCallback);
 }
 
-function get(userid){
+function get(userid, table){
     var queryDoc = {
-        TableName: process.env.table,
+        TableName: table,
         Key: {
             "userId": userid
         }
-    };
+        
+    }
 
-    console.log("getting item...");
-    var getCallback = function(err, data) {
-        if (err) {
-            console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
-        } else {
-            console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
-        }
-    };
-
-    docClient.get(queryDoc, getCallback);
+    var promise = new Promise(function(resolve, reject) {
+        console.log("Getting item...");
+        docClient.get(queryDoc, function(err, data) {
+            if (err) {
+                //console.log("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+                reject(err);
+            } else {
+                //console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
+                resolve(data);          
+            }
+        })
+    });
+    
+    return promise;
 }
 
-function update(userid, additionalTime, lastRepretoire){
+function update(userid, additionalTime, lastRepretoire) {
     var createDoc = {
         TableName: process.env.table,
         Key: {
@@ -66,11 +71,11 @@ function update(userid, additionalTime, lastRepretoire){
         },
         UpdateExpression: "SET info = :obj",
         ExpressionAttributeValues: {
-            ":obj":{
+            ":obj": {
                 practiceStats: {
-                    total: 0,
+                    totalTime: 0,
                     lastRep: "",
-                    lastRepTime: 0
+                    totalTime: 0
                 },
             },
         }
@@ -79,9 +84,9 @@ function update(userid, additionalTime, lastRepretoire){
     var updateDoc = {
         TableName: process.env.table,
         Key: {
-            "id": userid
+            "userId": userid
         },
-        UpdateExpression: "set info.practiceStats.total = info.practiceStats.total + :val, info.practiceStats.lastRep = :lastRep, info.practiceStats.lastRepTime = :val",
+        UpdateExpression: "set info.practiceStats.totalTime = info.practiceStats.totalTime + :val, info.practiceStats.lastRep = :lastRep, info.practiceStats.lastRepTime = :val",
         ExpressionAttributeValues: {
             ":val": additionalTime,
             ":lastRep": lastRepretoire
@@ -90,15 +95,18 @@ function update(userid, additionalTime, lastRepretoire){
 
     var updateCallback = function(err, data) {
         if (err) {
+            console.log("errors shan't go unnoticed! " + err);
+            //process.exit(69);
+            var test = JSON.stringify(err, null, 2)
             if (test.substring('provided expression refers to an attribute')) {
                 console.log("Item doesn't exist. Creating item and updating item.");
                 docClient.update(createDoc, updateCallback).promise().then(docClient.update(updateDoc, updateCallback));
-            } else { 
-                console.error("Unable to update item. Error JSON:", JSON.stringify(data, null, 2));
+            } else {
+                console.error("Unable to update item. Error JSON:", test);
             }
         } else {
-            console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));   
-      }
+            console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+        }
     };
 
     docClient.update(updateDoc, updateCallback);
