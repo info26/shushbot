@@ -2,7 +2,7 @@ var AWS = require("aws-sdk");
 require('dotenv-flow').config();
 
 
-AWS.Config ({
+AWS.config.update ({
     accessKeyId: process.env.accessKeyId,
     secretAccessKey: process.env.secretAccessKey,
     region: process.env.region
