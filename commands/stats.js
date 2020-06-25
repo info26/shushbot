@@ -4,7 +4,13 @@ function getStats(userId){
     get(userid, table).then(function(data){
         console.log("RES: " + JSON.stringify(data, null, 2));
         console.log(data.Item.info.practiceStats.totalTime);
+
+        showStats(data);
     }); 
+}
+
+function showStats(data){
+
 }
 
 module.exports = {
