@@ -75,7 +75,7 @@ function update(userid, additionalTime, lastRepretoire) {
                 practiceStats: {
                     totalTime: 0,
                     lastRep: "",
-                    totalTime: 0
+                    lastRepTime: 0
                 },
             },
         }

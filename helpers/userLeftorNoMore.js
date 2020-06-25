@@ -8,11 +8,14 @@ function userLeftorNoMore(voiceState) {
     const msgchannel = voiceState.channel.guild.channels.cache.find(ch => ch.id === sendingchannelid);
 
     //time calc
-    result = secondsToHoursAndMinutes(timePracticedInSeconds(voiceState.channel.id));
+    var timeInSeconds = timePracticedInSeconds(voiceState.channel.id)
+    var resultReadable = secondsToHoursAndMinutes(timeInSeconds);
     if (voiceState.channel.members.size > 0) {
         msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '$practice' will be able to practice. Room Name: " + voiceState.channel.name)
-        msgchannel.send("They practiced for " + result[1] + " hours and " + result[0] + " minutes");
+        msgchannel.send("They practiced for " + resultReadable[1] + " hours and " + resultReadable[0] + " minutes");
     }
+    //update user's time in the database
+    update(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"]);
     whospracticing[voiceState.channel.id + "piece"] = null
 
 
