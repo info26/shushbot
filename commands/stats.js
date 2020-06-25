@@ -3,6 +3,7 @@ const { secondsToHoursAndMinutes } = require('../helpers/TimeCalc')
 
 function stats(msg){
     var cmd = msg.content.split(" ");
+    console.log(msg.mentions.users.first())
     //if user is looking for their own stats
     if(cmd.length < 2){
         get(msg.author.id).then(function(data){
@@ -17,7 +18,7 @@ function stats(msg){
         //only a moderator can look at other people's stats
         if (msg.member.permissions.has(['MANAGE_GUILD'])){
             //get first mention in the message and get their stats
-            get(cmd.mentions.users.first().id).then(function(data){
+            get(msg.mentions.users.first().id).then(function(data){
                 console.log("RES: " + JSON.stringify(data, null, 2));
                 //console.log(data.Item.info.practiceStats.totalTime);
         
