@@ -70,7 +70,7 @@ function showStats(obj, user){
         }),
 
     module.exports = {
-        help
+        showStats
     }
 }
 
