@@ -67,7 +67,9 @@ else if (process.env.build_profile == "DEV") {
 
     };
 } else {
-    console.log("unknown build profile, please use DEV or PROD")
+    console.log("unknown build profile, please use DEV or PROD");
+	console.log("Please check to make sure your .env files are set up correctly. ");
+	process.exit(69); // we don't want to continue. 
 }
 
 BOT_PREFIX = "$";
