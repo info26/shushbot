@@ -36,7 +36,7 @@ function enablechs(msg) {
 }
 
 function disablechs(msg) {
-    var cmd = msg.content.replace('enablechs ','').replace(' ','').split(",");
+    var cmd = msg.content.replace('$enablechs ','').replace(' ','').split(",");
     console.log(cmd);
 
     //make sure user calling the command is a moderator

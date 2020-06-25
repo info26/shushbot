@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const { TimeCalc } = require('./../helpers/TimeCalc')
+const { secondsToHoursAndMinutes, timePracticedInSeconds } = require('./../helpers/TimeCalc')
 const { getNick } = require('../helpers/getNick')
 
 function np(msg) {
@@ -20,7 +20,7 @@ function np(msg) {
 
 
 
-        result = TimeCalc(voicechid);
+        result = secondsToHoursAndMinutes(timePracticedInSeconds(voicechid));
         if (piecename == null) {
             msg.reply(nickname + " has played for " + result[1] + " hours and " + result[0] + " minutes")
         } else {

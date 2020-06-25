@@ -10,17 +10,16 @@ function userLeftorNoMore(voiceState) {
     //time calc
     var timeInSeconds = timePracticedInSeconds(voiceState.channel.id)
     var resultReadable = secondsToHoursAndMinutes(timeInSeconds);
-    if (voiceState.channel.members.size > 0) {
-        msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '$practice' will be able to practice. Room Name: " + voiceState.channel.name)
-        msgchannel.send("They practiced for " + resultReadable[1] + " hours and " + resultReadable[0] + " minutes");
-    }
     //update user's time in the database
     update(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"]);
     //reset state of the practice room
     whospracticing[voiceState.channel.id] = "upforgrabs"
     whospracticing[voiceState.channel.id + "piece"] = null
 
-
+    if (voiceState.channel.members.size >= 0) {
+        msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '$practice' will be able to practice. Room Name: " + voiceState.channel.name)
+        msgchannel.send("They practiced for " + resultReadable[1] + " hours and " + resultReadable[0] + " minutes");
+    }
 
     //time to mute everyone who was excused by the user.
     if (typeof whospracticing[voiceState.channel.id + "excused"] !== 'undefined') {

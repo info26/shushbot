@@ -40,12 +40,11 @@ function showStats(msg, obj, user){
     var totalReadable = secondsToHoursAndMinutes(total);
     var lastTimeReadable = secondsToHoursAndMinutes(lastTime);
 
-    const helpEmbed = {
+    const statsEmbed = {
         color: "#F99806",
-        title: 'Stats for user ' + user.tag,
         fields: [{ 
                 name: "Total Practice Time",
-                value: "your total time practiced is " + lastTimeReadable[1] + " hours and " + lastTimeReadable[0] + " minutes"
+                value: "your total time practiced is " + totalReadable[1] + " hours and " + totalReadable[0] + " minutes"
             },
             {
                 name: "Last Repretoire",
@@ -53,21 +52,22 @@ function showStats(msg, obj, user){
             },
             {
                 name: "Last Repretoire Practice Time",
-                value: "You practiced your last rep for " + totalReadable[1] + " hours and " + totalReadable[0] + " minutes"
+                value: "You practiced your last rep for " + lastTimeReadable[1] + " hours and " + lastTimeReadable[0] + " minutes"
             },
         ],
         timestamp: new Date(),
         thumbnail: {
-            "url": user.avatarURL,
-
+            "url": user.displayAvatarURL()
+        },
+        author: {
+            name: user.tag,
+            icon_url: user.displayAvatarURL()
         }
+
     };
     msg.channel.send({
-        embed: helpEmbed
-    })
-        .then(msg => {
-            msg.delete({timeout: 20000})
-        }),
+        embed: statsEmbed
+    });
 
     module.exports = {
         showStats
