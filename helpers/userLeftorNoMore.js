@@ -3,8 +3,8 @@ const { update} = require('./../cloud/dbutils');
 
 
 function userLeftorNoMore(voiceState) {
-    whospracticing[voiceState.channel.id] = "upforgrabs"
-    sendingchannelid = BROADCAST_CHANNELS[voiceState.channel.id]
+    
+    var sendingchannelid = BROADCAST_CHANNELS[voiceState.channel.id]
     const msgchannel = voiceState.channel.guild.channels.cache.find(ch => ch.id === sendingchannelid);
 
     //time calc
@@ -16,6 +16,8 @@ function userLeftorNoMore(voiceState) {
     }
     //update user's time in the database
     update(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"]);
+    //reset state of the practice room
+    whospracticing[voiceState.channel.id] = "upforgrabs"
     whospracticing[voiceState.channel.id + "piece"] = null
 
 

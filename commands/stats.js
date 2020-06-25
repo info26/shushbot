@@ -9,7 +9,7 @@ function getStats(msg){
             console.log("RES: " + JSON.stringify(data, null, 2));
             //console.log(data.Item.info.practiceStats.totalTime);
     
-            showStats(data.Item, msg.author);
+            showStats(msg, data.Item, msg.author);
         }); 
     }
     //if a user is looking for other people's stats
@@ -21,7 +21,7 @@ function getStats(msg){
                 console.log("RES: " + JSON.stringify(data, null, 2));
                 //console.log(data.Item.info.practiceStats.totalTime);
         
-                showStats(data.Item, cmd.mentions.users.first());
+                showStats(msg, data.Item, cmd.mentions.users.first());
             }); 
         }
         //normal users cannot see others' stats
@@ -32,7 +32,7 @@ function getStats(msg){
 
 }
 
-function showStats(obj, user){
+function showStats(msg, obj, user){
     var total = obj.info.practiceStats.totalTime;
     var lastTime = obj.info.practiceStats.lastRepTime;
     var lastRep = obj.info.practiceStats.lastRep;
@@ -42,14 +42,14 @@ function showStats(obj, user){
 
     const helpEmbed = {
         color: "#F99806",
-        title: 'Stats for user' + user.tag,
+        title: 'Stats for user ' + user.tag,
         fields: [{ 
                 name: "Total Practice Time",
-                value: "your total time practiced is" + lastTimeReadable[1] + " hours and " + lastTimeReadable[0] + " minutes"
+                value: "your total time practiced is " + lastTimeReadable[1] + " hours and " + lastTimeReadable[0] + " minutes"
             },
             {
                 name: "Last Repretoire",
-                value: "The last rep you practiced was" + lastRep
+                value: "The last rep you practiced was " + lastRep
             },
             {
                 name: "Last Repretoire Practice Time",
