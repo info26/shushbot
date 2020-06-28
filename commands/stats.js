@@ -3,7 +3,6 @@ const { secondsToHoursAndMinutes } = require('../helpers/TimeCalc')
 
 function stats(msg){
     var cmd = msg.content.split(" ");
-    console.log(msg.mentions.users.first())
     //if user is looking for their own stats
     if(cmd.length < 2){
         get(msg.author.id).then(function(data){
@@ -22,7 +21,7 @@ function stats(msg){
                 console.log("RES: " + JSON.stringify(data, null, 2));
                 //console.log(data.Item.info.practiceStats.totalTime);
         
-                showStats(msg, data.Item, cmd.mentions.users.first());
+                showStats(msg, data.Item, msg.mentions.users.first());
             }); 
         }
         //normal users cannot see others' stats
