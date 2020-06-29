@@ -149,9 +149,34 @@ function getServerRecord(){
     return promise;
 }
 
+function resetServerTimePracticed(attribute){
+    var expression = "set practiceStats." + attribute + " = :zero"
+
+    var updateDoc = {
+        TableName: "ServerStatisticsDev",
+        Key: {
+            "id": "serverStats"
+        },
+        UpdateExpression: expression,
+        ExpressionAttributeValues: {
+            ":zero": 0
+        }
+    };
+
+    
+    docClient.update(updateDoc, function(err, data) {
+        if(err) {
+            console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("successfully reset the " + attribute + " attribute", JSON.stringify(data, null, 2));
+        }
+    })
+}
+
 module.exports= {
     getUserRecord,
     updateUserRecord,
     updateServerRecord,
-    getServerRecord
+    getServerRecord,
+    resetServerTimePracticed
 }
