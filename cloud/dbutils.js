@@ -10,17 +10,84 @@ AWS.config.update ({
 
 var docClient = new AWS.DynamoDB.DocumentClient();
 
-function insert(userid, time){
+function getUserRecord(userid){
+    var queryDoc = {
+        TableName: process.env.userStatsTable,
+        Key: {
+            "userId": userid
+        }
+        
+    }
+
+    var promise = new Promise(function(resolve, reject) {
+        console.log("Getting item...");
+        docClient.get(queryDoc, function(err, data) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);          
+            }
+        })
+    });
+    
+    return promise;
+}
+
+function updateUserRecord(userid, additionalTime, lastRepretoire) {
     var insertDoc = {
-        TableName: process.env.table,
+        TableName: process.env.userStatsTable,
         Item: {
             "userId": userid,
             "info": {
-                "timePracticed" : {
-                    "totalTime" : time,
-                    "lastRep": "",
-                    "lastRepTime": time
+                "practiceStats" : {
+                    "totalTime" : additionalTime,
+                    "lastRep": lastRepretoire,
+                    "lastRepTime": additionalTime
                 }
+            }
+        },
+        ConditionExpression: "attribute_not_exists(id)"
+    };
+
+    var updateDoc = {
+        TableName: process.env.userStatsTable,
+        Key: {
+            "userId": userid
+        },
+        UpdateExpression: "set info.practiceStats.totalTime = info.practiceStats.totalTime + :val, info.practiceStats.lastRep = :lastRep, info.practiceStats.lastRepTime = :val",
+        ExpressionAttributeValues: {
+            ":val": additionalTime,
+            ":lastRep": lastRepretoire
+        }
+    };
+
+    docClient.update(updateDoc, function(err, data){
+        if(err){
+            console.log("user with that id doesn't exist on record, adding new user");
+            docClient.put(insertDoc, function(err, data) {
+                if(err){
+                    console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+                } else {
+                    console.log("Added new user record: ", JSON.stringify(data, null, 2));
+                }
+            });
+        } else {
+            console.log("Update succeeded for user: " + userid + "record: ", JSON.stringify(data, null, 2));
+        }
+    });
+}
+
+//static/one-time use function only - or just not used if already initialized manually beforehand
+function addServerRecord(){
+    var insertDoc = {
+        TableName: process.env.serverStatsTable,
+        Item: {
+            "id": "serverStats",
+            "practiceStats" : {
+                "weeklyTotal" : 0,
+                "monthlyTotal": 0,
+                "yearlyTotal": 0,
+                "grandTotal": 0
             }
         },
         ConditionExpression: "attribute_not_exists(id)"
@@ -38,23 +105,41 @@ function insert(userid, time){
     docClient.put(insertDoc, insertCallback);
 }
 
-function get(userid){
-    var queryDoc = {
-        TableName: process.env.table,
+function updateServerRecord(additionalTime){
+    var updateDoc = {
+        TableName: process.env.serverStatsTable,
         Key: {
-            "userId": userid
+            "id": "serverStats"
+        },
+        UpdateExpression: "set practiceStats.weeklyTotal = practiceStats.weeklyTotal + :val, practiceStats.monthlyTotal = practiceStats.monthlyTotal + :val, practiceStats.yearlyTotal = practiceStats.yearlyTotal + :val, practiceStats.grandTotal = practiceStats.grandTotal + :val",
+        ExpressionAttributeValues: {
+            ":val": additionalTime
         }
-        
+    };
+
+    docClient.update(updateDoc, function(err, data) {
+        if(err){
+            console.error("Unable to update server record. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Update succeeded for server: ", JSON.stringify(data, null, 2));
+        }
+    });
+}
+
+function getServerRecord(){
+    var queryDoc = {
+        TableName: process.env.serverStatsTable,
+        Key: {
+            "id": "serverStats"
+        }   
     }
 
     var promise = new Promise(function(resolve, reject) {
         console.log("Getting item...");
         docClient.get(queryDoc, function(err, data) {
             if (err) {
-                //console.log("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
                 reject(err);
             } else {
-                //console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
                 resolve(data);          
             }
         })
@@ -63,57 +148,9 @@ function get(userid){
     return promise;
 }
 
-function update(userid, additionalTime, lastRepretoire) {
-    var createDoc = {
-        TableName: process.env.table,
-        Key: {
-            "userId": userid
-        },
-        UpdateExpression: "SET info = :obj",
-        ExpressionAttributeValues: {
-            ":obj": {
-                practiceStats: {
-                    totalTime: 0,
-                    lastRep: "",
-                    lastRepTime: 0
-                },
-            },
-        }
-    };
-
-    var updateDoc = {
-        TableName: process.env.table,
-        Key: {
-            "userId": userid
-        },
-        UpdateExpression: "set info.practiceStats.totalTime = info.practiceStats.totalTime + :val, info.practiceStats.lastRep = :lastRep, info.practiceStats.lastRepTime = :val",
-        ExpressionAttributeValues: {
-            ":val": additionalTime,
-            ":lastRep": lastRepretoire
-        }
-    };
-
-    var updateCallback = function(err, data) {
-        if (err) {
-            console.log("errors shan't go unnoticed! " + err);
-            //process.exit(69);
-            var test = JSON.stringify(err, null, 2)
-            if (test.substring('provided expression refers to an attribute')) {
-                console.log("Item doesn't exist. Creating item and updating item.");
-                docClient.update(createDoc, updateCallback).promise().then(docClient.update(updateDoc, updateCallback));
-            } else {
-                console.error("Unable to update item. Error JSON:", test);
-            }
-        } else {
-            console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
-        }
-    };
-
-    docClient.update(updateDoc, updateCallback);
-}
-
 module.exports= {
-    insert,
-    get,
-    update
+    getUserRecord,
+    updateUserRecord,
+    updateServerRecord,
+    getServerRecord
 }

@@ -6,7 +6,7 @@ const { np } = require('./np')
 const { song } = require('./song')
 const { excuse } = require('./excuse')
 const { unexcuse } = require('./unexcuse')
-const { help } = require('./help')
+const { help } = require('./views/help')
 const {enablechs, disablechs} = require('./configurechannels')
 const { stats } = require('./stats')
 

@@ -1,5 +1,5 @@
 const {secondsToHoursAndMinutes, timePracticedInSeconds } = require('./TimeCalc');
-const { update} = require('./../cloud/dbutils');
+const { updateUserRecord, updateServerRecord} = require('./../cloud/dbutils');
 
 
 function userLeftorNoMore(voiceState) {
@@ -10,8 +10,9 @@ function userLeftorNoMore(voiceState) {
     //time calc
     var timeInSeconds = timePracticedInSeconds(voiceState.channel.id)
     var resultReadable = secondsToHoursAndMinutes(timeInSeconds);
-    //update user's time in the database
-    update(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"]);
+    //update user's time in the database and server total time
+    updateUserRecord(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"]);
+    updateServerRecord(timeInSeconds);
     //reset state of the practice room
     whospracticing[voiceState.channel.id] = "upforgrabs"
     whospracticing[voiceState.channel.id + "piece"] = null
