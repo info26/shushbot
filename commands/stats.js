@@ -1,5 +1,5 @@
 const { getUserRecord, getServerRecord } = require('./../cloud/dbutils');
-const {showStats, showServerStats} = require('./views/showStats')
+const { showStats, showServerStats} = require('./views/showStats');
 
 function stats(msg){
     var cmd = msg.content.split(" ");
