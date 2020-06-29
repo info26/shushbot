@@ -57,7 +57,7 @@ function help(msg) {
     msg.channel.send({
         embed: helpEmbed,
         files: [{
-            attachment:'../../shushbot/resources/IMG_1553.jpg',
+            attachment:'../shushbot/resources/IMG_1553.jpg',
             name:'IMG_1553.jpg'
         }],  
     })

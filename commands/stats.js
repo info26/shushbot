@@ -1,5 +1,5 @@
 const { getUserRecord, getServerRecord } = require('./../cloud/dbutils');
-const { showStats, showServerStats} = require('./views/showStats');
+const { showStats, showServerStats } = require('./views/showStats');
 
 function stats(msg){
     var cmd = msg.content.split(" ");
@@ -32,7 +32,7 @@ function serverStats(msg){
     if (msg.member.permissions.has(['MANAGE_GUILD'])){
         getServerRecord().then(function(data){
             console.log("RES: " + JSON.stringify(data, null, 2));
-            showServerStats(data.Item)
+            showServerStats(data.Item);
         });
     }
     else {

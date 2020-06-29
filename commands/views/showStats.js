@@ -49,7 +49,7 @@ function showStats(msg, obj, user){
     }
 }
 
-function showServerstats(data){
+function displayServerStats(data){
 
     var weeklyReadable = secondsToHoursAndMinutes(data.practiceStats.weeklyTotal);
     var monthlyReadable = secondsToHoursAndMinutes(data.practiceStats.monthlyTotal);
@@ -85,7 +85,7 @@ function showServerstats(data){
     msg.channel.send({
         embed: serverStatsEmbed,
         files: [{
-            attachment:'../../shushbot/resources/IMG_1553.jpg',
+            attachment:'../shushbot/resources/IMG_1553.jpg',
             name:'IMG_1553.jpg'
         }],  
     })
@@ -94,11 +94,11 @@ function showServerstats(data){
         }),
 
     module.exports = {
-        showServerstats
+        displayServerStats
     }
 }
 
 module.exports = {
     showStats,
-    showServerstats
+    displayServerStats
 }
