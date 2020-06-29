@@ -41,5 +41,6 @@ function serverStats(msg){
 }
 
 module.exports = {
-    stats
+    stats,
+    serverStats
 }

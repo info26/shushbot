@@ -51,6 +51,51 @@ function showStats(msg, obj, user){
 
 function showServerstats(data){
 
+    var weeklyReadable = secondsToHoursAndMinutes(data.practiceStats.weeklyTotal);
+    var monthlyReadable = secondsToHoursAndMinutes(data.practiceStats.monthlyTotal);
+    var yearlyReadable = secondsToHoursAndMinutes(data.practiceStats.yearlyTotal);
+    var grandTotalReadable = secondsToHoursAndMinutes(data.practiceStats.grandTotal);
+
+    const serverStatsEmbed = {
+        color: "#F99806",
+        title: 'Server Practice Time Totals',
+        fields: [
+            {
+                name: "Weekly Total",
+                value: weeklyReadable[1] + "h" + weeklyReadable[0] + "m"
+            },
+            {
+                name: "Monthly Total",
+                value: monthlyReadable[1] + "h" + monthlyReadable[0] + "m"
+            },
+            {
+                name: "Yearly Total",
+                value: yearlyReadable[1] + "h" + yearlyReadable[0] + "m"
+            },
+            {
+                name: "Grand Total",
+                value: grandTotalReadable[1] + "h" + grandTotalReadable[0] + "m"
+            }
+        ],
+        timestamp: new Date(),
+        thumbnail: {
+            "url": "attachment://IMG_1553.jpg",
+        }
+    };
+    msg.channel.send({
+        embed: serverStatsEmbed,
+        files: [{
+            attachment:'../../shushbot/resources/IMG_1553.jpg',
+            name:'IMG_1553.jpg'
+        }],  
+    })
+        .then(msg => {
+            msg.delete({timeout: 20000})
+        }),
+
+    module.exports = {
+        showServerstats
+    }
 }
 
 module.exports = {
