@@ -49,8 +49,9 @@ function showStats(msg, obj, user){
     }
 }
 
-function displayServerStats(data){
+function displayServerStats(msg, data){
 
+    var dailyReadable = secondsToHoursAndMinutes(data.practiceStats.dailyTotal);
     var weeklyReadable = secondsToHoursAndMinutes(data.practiceStats.weeklyTotal);
     var monthlyReadable = secondsToHoursAndMinutes(data.practiceStats.monthlyTotal);
     var yearlyReadable = secondsToHoursAndMinutes(data.practiceStats.yearlyTotal);
@@ -60,6 +61,10 @@ function displayServerStats(data){
         color: "#F99806",
         title: 'Server Practice Time Totals',
         fields: [
+            {
+                name: "Daily Total",
+                value: dailyReadable[1] + "h" + dailyReadable[0] + "m"
+            },
             {
                 name: "Weekly Total",
                 value: weeklyReadable[1] + "h" + weeklyReadable[0] + "m"

@@ -84,6 +84,7 @@ function addServerRecord(){
         Item: {
             "id": "serverStats",
             "practiceStats" : {
+                "dailyTotal": 0,
                 "weeklyTotal" : 0,
                 "monthlyTotal": 0,
                 "yearlyTotal": 0,
@@ -111,7 +112,7 @@ function updateServerRecord(additionalTime){
         Key: {
             "id": "serverStats"
         },
-        UpdateExpression: "set practiceStats.weeklyTotal = practiceStats.weeklyTotal + :val, practiceStats.monthlyTotal = practiceStats.monthlyTotal + :val, practiceStats.yearlyTotal = practiceStats.yearlyTotal + :val, practiceStats.grandTotal = practiceStats.grandTotal + :val",
+        UpdateExpression: "set practiceStats.dailyTotal = practiceStats.dailyTotal + :val, practiceStats.weeklyTotal = practiceStats.weeklyTotal + :val, practiceStats.monthlyTotal = practiceStats.monthlyTotal + :val, practiceStats.yearlyTotal = practiceStats.yearlyTotal + :val, practiceStats.grandTotal = practiceStats.grandTotal + :val",
         ExpressionAttributeValues: {
             ":val": additionalTime
         }

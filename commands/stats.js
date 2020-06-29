@@ -1,5 +1,5 @@
 const { getUserRecord, getServerRecord } = require('./../cloud/dbutils');
-const { showStats, showServerStats } = require('./views/showStats');
+const displayStats = require('./views/showStats');
 
 function stats(msg){
     var cmd = msg.content.split(" ");
@@ -7,7 +7,7 @@ function stats(msg){
     if(cmd.length < 2){
         getUserRecord(msg.author.id).then(function(data){
             console.log("RES: " + JSON.stringify(data, null, 2));
-            showStats(msg, data.Item, msg.author);
+            displayStats.showStats(msg, data.Item, msg.author);
         }); 
     }
     //if a user is looking for other people's stats
@@ -17,7 +17,7 @@ function stats(msg){
             //get first mention in the message and get their stats
             getUserRecord(msg.mentions.users.first().id).then(function(data){
                 console.log("RES: " + JSON.stringify(data, null, 2));
-                showStats(msg, data.Item, msg.mentions.users.first());
+                displayStats.showStats(msg, data.Item, msg.mentions.users.first());
             }); 
         }
         //normal users cannot see others' stats
@@ -32,7 +32,7 @@ function serverStats(msg){
     if (msg.member.permissions.has(['MANAGE_GUILD'])){
         getServerRecord().then(function(data){
             console.log("RES: " + JSON.stringify(data, null, 2));
-            showServerStats(data.Item);
+            displayStats.displayServerStats(msg, data.Item);
         });
     }
     else {
