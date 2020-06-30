@@ -19,7 +19,7 @@ function updateUser(userid, practicedTime, lastRep) {
     return new Promise(function(resolve, reject){
         var query = { userId: userid }
         updatedvals = { $set: {"info.practiceStats.lastRep": lastRep, "info.practiceStats.lastRepTime": practicedTime}, $inc: {"info.practiceStats.totalTime": practicedTime}};
-        db.collection('users').updateOne(query, updatedvals, function(err, res){
+        db.collection('users').updateOne(query, updatedvals, {upsert: true},function(err, res){
             if (err) {
                 reject(err)
             } else {
