@@ -19,7 +19,7 @@ function updateUser(userid, practicedTime, lastRep) {
     return new Promise(function(resolve, reject){
         var query = { userId: userid }
         updatedvals = { $set: {"info.practiceStats.lastRep": lastRep, "info.practiceStats.lastRepTime": practicedTime}, $inc: {"info.practiceStats.totalTime": practicedTime}};
-        db.collection('users').updateOne(query, updatedvals, {upsert: true},function(err, res){
+        db.collection(process.env.userStatsCollection).updateOne(query, updatedvals, {upsert: true},function(err, res){
             if (err) {
                 reject(err)
             } else {
@@ -32,7 +32,7 @@ function updateUser(userid, practicedTime, lastRep) {
 
 function getUserInDb(userid) {
     return new Promise(function(resolve, reject) {
-        db.collection('users').find({
+        db.collection(process.env.userStatsCollection).find({
             userId: userid
         }).toArray(function(err, docs) {
             if (err) {
@@ -46,7 +46,7 @@ function getUserInDb(userid) {
 
 function userInDb(userid) {
     var promise = new Promise(function(resolve, reject) {
-        db.collection('users').find({
+        db.collection(process.env.userStatsCollection).find({
             userId: userid
         }).toArray(function(err, docs) {
             if (err) {
@@ -68,7 +68,7 @@ function userInDb(userid) {
 
 function insNewUser(userid){
     return new Promise(function(resolve, reject) {
-        db.collection('users').insertOne(prepRecord(userid), function(err, res){
+        db.collection(process.env.userStatsCollection).insertOne(prepRecord(userid), function(err, res){
             if(err){
                 console.log(err);
                 reject(err);
