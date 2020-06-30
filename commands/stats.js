@@ -1,4 +1,4 @@
-const {insNewUser, userInDb, getUserInDb, updateUser} = require('./../cloud/mongofuncs.js');
+const {insNewUser, userInDb, getUserInDb, updateUser, getServerRecord} = require('./../cloud/mongofuncs.js');
 var mongoConnect = require('./../cloud/mongoConnect');
 const displayStats = require('./views/showStats');
 
@@ -26,7 +26,6 @@ mongoConnect.connectToShushDB(function(err, client) {
 function stats(msg){
     var cmd = msg.content.split(" "); 
     if (cmd.length < 2) {
-
         userInDb(msg.author.id).then(data => {
             if (data == true){
                 getUserInDb(msg.author.id).then(data => {
@@ -53,14 +52,14 @@ function stats(msg){
 
 function serverStats(msg){
     if (msg.member.permissions.has(['MANAGE_GUILD'])){
-        getServerRecord()
-            .then(data => {
-                displayStats.displayServerStats(msg, data)
-            })
+            getServerRecord()
+                .then(data => {
+                    displayStats.displayServerStats(msg, data);
+                });
     } else {
         msg.reply("You do not have the permissions to see total server stats");
-    }
-}
+    };
+};
 
 /*
 function stats(msg){
@@ -120,5 +119,5 @@ function serverStats(msg){
 
 module.exports = {
     stats,
-    //serverStats
+    serverStats
 }
