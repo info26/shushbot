@@ -78,13 +78,90 @@ function insNewUser(userid){
             }
         });
     });
-}
+};
 
+function addServerRecord() {
+    return new Promise(function(resolve, reject) {
+        var serverDoc = {
+            "userId": "serverStats",
+            "practiceStats": {
+                "dailyTotal": 0,
+                "weeklyTotal" : 0,
+                "monthlyTotal": 0,
+                "yearlyTotal": 0,
+                "grandTotal": 0
+            }
+        }
+        db.collection('users').insertOne(serverDoc, function(err, res){
+            if(err){
+                console.log(err);
+                reject(err);
+            } else {
+                console.log("Created record for serverStats");
+                resolve();
+            }
+        });
+    });
+};
 
+function getServerRecord() {
+    return new Promise(function(resolve, reject) {
+        db.collection('users').find({
+            userId: "serverStats"
+        }).toArray(function(err, docs) {
+            if (err) {
+                reject(err);
+            }
+            resolve(docs[0]) // remember, this expects you to check if the user is in the db. 
+        })
+    })
+};
+
+function updateServerRecord(additionalTime){
+    return new Promise(function(resolve, reject){
+        var query = { userId: "serverStats" }
+        updatedvals = { $inc: {
+            "info.practiceStats.dailyTotal": additionalTime, 
+            "info.practiceStats.weeklyTotal": additionalTime,
+            "info.practiceStats.monthlyTotal": additionalTime,
+            "info.practiceStats.yearlyTotal": additionalTime,
+            "info.practiceStats.grandTotal": additionalTime,
+            }
+        };
+        db.collection('users').updateOne(query, updatedvals, function(err, res){
+            if (err) {
+                reject(err)
+            } else {
+                console.log("Updated serverStats")
+                resolve()
+            }
+        })
+    })
+};
+
+function resetServerTimePractice(attribute){
+    return new Promise(function(resolve, reject){
+        var query = { userId: "serverStats" };
+        var placeholder = info["practicestats." + attribute] = 0;
+        updatedvals = { $set: placeholder};
+        db.collection('users').updateOne(query, updatedvals, function(err, res){
+            if (err) {
+                reject(err)
+            } else {
+                console.log("Updated serverStats")
+                resolve()
+            }
+        })
+    })
+};
 
 module.exports = {
     insNewUser,
     userInDb,
     getUserInDb,
-    updateUser
+    updateUser,
+    getServerRecord,
+    addServerRecord,
+    updateServerRecord,
+    resetServerTimePractice
 }

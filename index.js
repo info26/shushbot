@@ -1,6 +1,7 @@
 //custom discord bot for managing server unmutes and mutes. 
 const Discord = require('discord.js');
 const filesystem = require('fs');
+const mongoo = require('./cloud/mongoConnect');
 require('dotenv-flow').config();
 
 
@@ -13,6 +14,18 @@ require('./events');
 filesystem.readFile('./store', (err, data) => {
     whospracticing = JSON.parse(data);
 });
+console.log(mongoo);
+
+mongoo.connectToShushDB(function(err) {
+	if (err) {
+	    console.log("Failed to connect to mongo!");
+	    console.log(err);
+	    process.exit(69);
+	}
+	console.log("Connected to database!");
+})
+
+
 //Paste in IDs of your voice channels that you want the bot to manage. 
 //Make sure that it is a string. 
 //DEBUG MODE enabled the !dump cmd. it prints the whospracticing variable to console. 
@@ -61,10 +74,15 @@ if (process.env.build_profile == "PROD") {
 //development/quality assurance grade: initialized with channels on test server
 else if (process.env.build_profile == "DEV") {
     APPLIED_CHANNELS = [
-
+        "691725669326913747",
+        "691719071619874816",
+        "692002216957051030",
+        "692132723921518627"
     ];
     BROADCAST_CHANNELS = {
-
+        "691725669326913747": "691808798817517600",
+        "691719071619874816": "691808874910449734",
+        "692002216957051030": "691808874910449734"
     };
 } else {
     console.log("unknown build profile, please use DEV or PROD");
