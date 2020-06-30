@@ -1,6 +1,5 @@
 function enablechs(msg) {
-    var cmd = msg.content.replace('$enablechs ','').replace(' ','').split(",");
-    //var cmd = msg.split(" ");
+    var cmd = msg.content.match(/[0-9]{16,}/g)
     
     console.log(cmd);
 
@@ -36,7 +35,7 @@ function enablechs(msg) {
 }
 
 function disablechs(msg) {
-    var cmd = msg.content.replace('$enablechs ','').replace(' ','').split(",");
+    msg.content.match(/[0-9]{16,}/g)
     console.log(cmd);
 
     //make sure user calling the command is a moderator

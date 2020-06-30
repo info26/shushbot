@@ -1,8 +1,6 @@
 const { getDb, connectToShushDB } = require('./mongoConnect');
 var mongoConnect = require('./mongoConnect');
 
-
-
 function prepRecord(userId){
     var userRecord = {
         "userId": userId,
@@ -15,6 +13,21 @@ function prepRecord(userId){
         }
     }
     return userRecord;
+}
+
+function updateUser(userid, practicedTime, lastRep) {
+    return new Promise(function(resolve, reject){
+        var query = { userId: userid }
+        updatedvals = { $set: {"info.practiceStats.lastRep": lastRep, "info.practiceStats.lastRepTime": practicedTime}, $inc: {"info.practiceStats.totalTime": practicedTime}};
+        db.collection('users').updateOne(query, updatedvals, function(err, res){
+            if (err) {
+                reject(err)
+            } else {
+                console.log("Updated")
+                resolve()
+            }
+        })
+    })
 }
 
 function getUserInDb(userid) {
@@ -72,5 +85,6 @@ function insNewUser(userid){
 module.exports = {
     insNewUser,
     userInDb,
-    getUserInDb
+    getUserInDb,
+    updateUser
 }

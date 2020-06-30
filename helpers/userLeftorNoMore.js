@@ -1,6 +1,6 @@
 const {secondsToHoursAndMinutes, timePracticedInSeconds } = require('./TimeCalc');
-const { updateUserRecord, updateServerRecord} = require('./../cloud/dbutils');
-
+const { updateUser, userInDb, insNewUser } = require('./../cloud/mongofuncs');
+var mongoConnect = require('../cloud/mongoConnect');
 
 function userLeftorNoMore(voiceState) {
     
@@ -11,11 +11,33 @@ function userLeftorNoMore(voiceState) {
     var timeInSeconds = timePracticedInSeconds(voiceState.channel.id)
     var resultReadable = secondsToHoursAndMinutes(timeInSeconds);
     //update user's time in the database and server total time
-    updateUserRecord(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"]);
-    updateServerRecord(timeInSeconds);
+    console.log(whospracticing[voiceState.channel.id])
+    mongoConnect.connectToShushDB(function(err, client ){
+        if (err){
+            console.log(err);
+            throw new Error(err);
+        }else{
+            userInDb(whospracticing[voiceState.channel.id]).then(data => {
+                if (data == true) {
+                    updateUser(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"])
+                    .then(data => {
+                        whospracticing[voiceState.channel.id] = "upforgrabs",
+                        whospracticing[voiceState.channel.id + "piece"] = null
+                    });
+                } else { 
+                    insNewUser(whospracticing[voiceState.channel.id]);
+                    updateUser(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"])
+                    .then(data => {
+                        whospracticing[voiceState.channel.id] = "upforgrabs",
+                        whospracticing[voiceState.channel.id + "piece"] = null
+                    });
+                };
+            });
+        };
+    });
+    
+    //updateServerRecord(timeInSeconds);
     //reset state of the practice room
-    whospracticing[voiceState.channel.id] = "upforgrabs"
-    whospracticing[voiceState.channel.id + "piece"] = null
 
     if (voiceState.channel.members.size >= 0) {
         msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '$practice' will be able to practice. Room Name: " + voiceState.channel.name)
