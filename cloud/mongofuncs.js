@@ -55,7 +55,7 @@ function userInDb(userid) {
 
 function insNewUser(userid){
     return new Promise(function(resolve, reject) {
-        db.collection('users').insertOne(createRecord(userid), function(err, res){
+        db.collection('users').insertOne(prepRecord(userid), function(err, res){
             if(err){
                 console.log(err);
                 reject(err);
