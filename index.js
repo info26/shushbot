@@ -15,16 +15,16 @@ filesystem.readFile('./store', (err, data) => {
     whospracticing = JSON.parse(data);
 });
 console.log(mongoo);
-setTimeout(() => {
-    mongoo.connectToShushDB(function(err) {
-        if (err) {
-            console.log("Failed to connect to mongo!");
-            console.log(err);
-            process.exit(69);
-        }
-        console.log("Connected to database!");
-    })
-}, 5000)
+
+mongoo.connectToShushDB(function(err) {
+	if (err) {
+	    console.log("Failed to connect to mongo!");
+	    console.log(err);
+	    process.exit(69);
+	}
+	console.log("Connected to database!");
+})
+
 
 //Paste in IDs of your voice channels that you want the bot to manage. 
 //Make sure that it is a string. 
