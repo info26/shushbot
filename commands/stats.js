@@ -26,39 +26,28 @@ mongoConnect.connectToShushDB(function(err, client) {
 function stats(msg){
     var cmd = msg.content.split(" "); 
     if (cmd.length < 2) {
-        mongoConnect.connectToShushDB(function(err, client){
-            if(err){
-                console.log(err);
-                throw new Error(err);
-            } else {
-                userInDb(msg.author.id).then(data => {
-                    if (data == true){
-                        getUserInDb(msg.author.id).then(data => {
-                            displayStats.showStats(msg, data, msg.author);
-                        });
-                    } else { 
-                        msg.reply("Your record doesn't exist yet, go to a practice room and practice for a bit first!");
-                    }  
-                })
-            }
+
+        userInDb(msg.author.id).then(data => {
+            if (data == true){
+                getUserInDb(msg.author.id).then(data => {
+                    displayStats.showStats(msg, data, msg.author);
+                });
+            } else { 
+                msg.reply("Your record doesn't exist yet, go to a practice room and practice for a bit first!");
+            }  
         })
+
     } else {
-        mongoConnect.connectToShushDB(function(err, client){
-            if(err){
-                console.log(err);
-                throw new Error(err);
-            } else {
-                userInDb(msg.mentions.users.first()).then(data => {
-                    if (data == true){
-                        getUserInDb(msg.mentions.users.first()).then(data => {
-                            displayStats.showStats(msg, data, msg.mentions.users.first());
-                        });
-                    } else { 
-                        msg.reply("Your record doesn't exist yet, go to a practice room and practice for a bit first!");
-                    }  
-                })
-            }
+        userInDb(msg.mentions.users.first()).then(data => {
+            if (data == true){
+                getUserInDb(msg.mentions.users.first()).then(data => {
+                    displayStats.showStats(msg, data, msg.mentions.users.first());
+                });
+            } else { 
+                msg.reply("Your record doesn't exist yet, go to a practice room and practice for a bit first!");
+            }  
         })
+
     }
 }
 

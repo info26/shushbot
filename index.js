@@ -1,6 +1,7 @@
 //custom discord bot for managing server unmutes and mutes. 
 const Discord = require('discord.js');
 const filesystem = require('fs');
+const mongoo = require('./cloud/mongoConnect');
 require('dotenv-flow').config();
 
 
@@ -13,6 +14,18 @@ require('./events');
 filesystem.readFile('./store', (err, data) => {
     whospracticing = JSON.parse(data);
 });
+console.log(mongoo);
+setTimeout(() => {
+    mongoo.connectToShushDB(function(err) {
+        if (err) {
+            console.log("Failed to connect to mongo!");
+            console.log(err);
+            process.exit(69);
+        }
+        console.log("Connected to database!");
+    })
+}, 5000)
+
 //Paste in IDs of your voice channels that you want the bot to manage. 
 //Make sure that it is a string. 
 //DEBUG MODE enabled the !dump cmd. it prints the whospracticing variable to console. 
