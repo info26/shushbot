@@ -2,7 +2,16 @@
 const Discord = require('discord.js');
 const filesystem = require('fs');
 require('dotenv-flow').config();
+var mongoConnect = require('./cloud/mongoConnect');
 
+mongoConnect.connectToShushDB(function(err, client) {
+    if(err){
+        console.log(err);
+        throw new Error(err);
+    } else {
+        console.log("Creating mongodb client");
+    }
+});
 
 client = new Discord.Client();
 //for commands. 
