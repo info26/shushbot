@@ -1,5 +1,6 @@
 const { getDb, connectToShushDB } = require('./mongoConnect');
 var mongoConnect = require('./mongoConnect');
+require('dotenv-flow').config();
 
 function prepRecord(userId){
     var userRecord = {
@@ -158,6 +159,19 @@ function resetServerTimePractice(attribute){
     })
 };
 
+function leaderboard(){
+    return new Promise(function(resolve, reject){
+        db.collection(process.env.userStatsCollection).find().sort({"info.practiceStats.totalTime": -1}).limit(10).toArray(function(err, docs){
+            if(err){
+                reject(err);
+            }
+            else{
+                resolve(docs);
+            }
+        });
+    });
+}
+
 module.exports = {
     insNewUser,
     //userInDb,
@@ -166,5 +180,6 @@ module.exports = {
     getServerRecord,
     addServerRecord,
     updateServerRecord,
-    resetServerTimePractice
+    resetServerTimePractice,
+    leaderboard
 }

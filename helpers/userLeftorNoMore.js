@@ -13,21 +13,16 @@ function userLeftorNoMore(voiceState) {
     //update user's time in the database and server total time
     console.log(whospracticing[voiceState.channel.id])
 
-    mongoConnect.connectToShushDB(function(err, client){
-        if(err) {
-            console.log(err);
-        }
-        else {
-            //this will automatically try updating, if record doesn't exist, it will add new user
-            mongofuncs.updateUser(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"])
-                .then(data => {
-                    whospracticing[voiceState.channel.id] = "upforgrabs",
-                    whospracticing[voiceState.channel.id + "piece"] = null
-                });
-            mongofuncs.updateServerRecord(timeInSeconds);
-        }
-    });
+    //this will automatically try updating, if record doesn't exist, it will add new user
+    mongofuncs.updateUser(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"])
+        .then(data => {
+            whospracticing[voiceState.channel.id] = "upforgrabs",
+            whospracticing[voiceState.channel.id + "piece"] = null
+        });
+    mongofuncs.updateServerRecord(timeInSeconds);
             
+    console.log("msgchannel: "+ msgchannel)
+    console.log(BROADCAST_CHANNELS);
     
     //updateServerRecord(timeInSeconds);
     //reset state of the practice room
