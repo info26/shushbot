@@ -74,15 +74,15 @@ if (process.env.build_profile == "PROD") {
 //development/quality assurance grade: initialized with channels on test server
 else if (process.env.build_profile == "DEV") {
     APPLIED_CHANNELS = [
-        /*"691725669326913747",
+        "691725669326913747",
         "691719071619874816",
         "692002216957051030",
-        "692132723921518627"*/
+        "692132723921518627"
     ];
     BROADCAST_CHANNELS = {
-       /* "691725669326913747": "691808798817517600",
+        "691725669326913747": "691808798817517600",
         "691719071619874816": "691808874910449734",
-        "692002216957051030": "691808874910449734"*/
+        "692002216957051030": "691808874910449734"
     };
 } else {
     console.log("unknown build profile, please use DEV or PROD");
