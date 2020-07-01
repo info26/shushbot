@@ -1,5 +1,5 @@
 const {secondsToHoursAndMinutes, timePracticedInSeconds } = require('./TimeCalc');
-const { updateUser, userInDb, insNewUser, updateServerRecord } = require('./../cloud/mongofuncs');
+const mongofuncs = require('./../cloud/mongofuncs');
 var mongoConnect = require('../cloud/mongoConnect');
 
 function userLeftorNoMore(voiceState) {
@@ -12,24 +12,22 @@ function userLeftorNoMore(voiceState) {
     var resultReadable = secondsToHoursAndMinutes(timeInSeconds);
     //update user's time in the database and server total time
     console.log(whospracticing[voiceState.channel.id])
-    userInDb(whospracticing[voiceState.channel.id]).then(data => {
-        if (data == true) {
-            updateUser(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"])
+
+    mongoConnect.connectToShushDB(function(err, client){
+        if(err) {
+            console.log(err);
+        }
+        else {
+            //this will automatically try updating, if record doesn't exist, it will add new user
+            mongofuncs.updateUser(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"])
                 .then(data => {
                     whospracticing[voiceState.channel.id] = "upforgrabs",
                     whospracticing[voiceState.channel.id + "piece"] = null
                 });
-            updateServerRecord(timeInSeconds);
-        } else { 
-            insNewUser(whospracticing[voiceState.channel.id]);
-            updateUser(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"])
-                .then(data => {
-                    whospracticing[voiceState.channel.id] = "upforgrabs",
-                    whospracticing[voiceState.channel.id + "piece"] = null
-                });
-            updateServerRecord(timeInSeconds);
-        };
+            mongofuncs.updateServerRecord(timeInSeconds);
+        }
     });
+            
     
     //updateServerRecord(timeInSeconds);
     //reset state of the practice room

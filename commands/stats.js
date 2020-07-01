@@ -1,61 +1,60 @@
-const {insNewUser, userInDb, getUserInDb, updateUser, getServerRecord} = require('./../cloud/mongofuncs.js');
+var mongofuncs = require('./../cloud/mongofuncs.js');
 var mongoConnect = require('./../cloud/mongoConnect');
 const displayStats = require('./views/showStats');
 
-/*
-mongoConnect.connectToShushDB(function(err, client) {
-    if(err){
-        console.log(err);
-        throw new Error(err);
-    } else {
-        console.log("server starting?");
-        insNewUser("testid").then(data => {
-            console.log("User added");
-        })
-        userInDb("testid").then(data => { 
-            console.log(data);
-        });
-        updateUser("testid", 40, "potato")
-        getUserInDb("testid").then(data => {
-            console.log(data);
-        })
-    }
-});
-*/
-
 function stats(msg){
     var cmd = msg.content.split(" "); 
-    if (cmd.length < 2) {
-        userInDb(msg.author.id).then(data => {
-            if (data == true){
-                getUserInDb(msg.author.id).then(data => {
-                    displayStats.showStats(msg, data, msg.author);
+    mongoConnect.connectToShushDB(function(err, client){
+        if(err) {
+            console.log(err);
+        }
+        else if (cmd.length < 2) {
+            mongofuncs.getUserInDb(msg.author.id)
+                .then(data => {
+                    if(data == null){
+                        msg.reply("Your record doesn't exist yet, go to a practice room and practice for a bit first!");
+                    }
+                    else {
+                        displayStats.showStats(msg, data, msg.author);
+                    }
+                    
+                })
+                .catch(err => {
+                    console.log(err);
                 });
-            } else { 
-                msg.reply("Your record doesn't exist yet, go to a practice room and practice for a bit first!");
-            }  
-        })
-
-    } else {
-        userInDb(msg.mentions.users.first()).then(data => {
-            if (data == true){
-                getUserInDb(msg.mentions.users.first()).then(data => {
-                    displayStats.showStats(msg, data, msg.mentions.users.first());
+        }
+        else {
+            mongofuncs.getUserInDb(msg.mentions.users.first().id)
+                .then(data => {
+                    if(data == null){
+                        msg.reply("This user's record doesn't exist yet!");
+                    } else {
+                        displayStats.showStats(msg, data, msg.mentions.users.first());
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
                 });
-            } else { 
-                msg.reply("Your record doesn't exist yet, go to a practice room and practice for a bit first!");
-            }  
-        })
-
-    }
+        }
+    });
 }
 
 function serverStats(msg){
     if (msg.member.permissions.has(['MANAGE_GUILD'])){
-            getServerRecord()
-                .then(data => {
-                    displayStats.displayServerStats(msg, data);
-                });
+        mongoConnect.connectToShushDB(function(err, client){
+            if(err){
+                console.log(err);
+            }
+            else{
+                mongofuncs.getServerRecord()
+                    .then(data => {
+                        displayStats.displayServerStats(msg, data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+        });
     } else {
         msg.reply("You do not have the permissions to see total server stats");
     };

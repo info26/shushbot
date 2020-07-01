@@ -19,7 +19,7 @@ function updateUser(userid, practicedTime, lastRep) {
     return new Promise(function(resolve, reject){
         var query = { userId: userid }
         updatedvals = { $set: {"info.practiceStats.lastRep": lastRep, "info.practiceStats.lastRepTime": practicedTime}, $inc: {"info.practiceStats.totalTime": practicedTime}};
-        db.collection(process.env.userStatsCollection).updateOne(query, updatedvals, {upsert: true},function(err, res){
+        db.collection(process.env.userStatsCollection).updateOne(query, updatedvals, {upsert: true}, function(err, res){
             if (err) {
                 reject(err)
             } else {
@@ -32,19 +32,20 @@ function updateUser(userid, practicedTime, lastRep) {
 
 function getUserInDb(userid) {
     return new Promise(function(resolve, reject) {
-        db.collection(process.env.userStatsCollection).find({
+        db.collection(process.env.userStatsCollection).findOne({
             userId: userid
-        }).toArray(function(err, docs) {
-            if (err) {
+        }, function(err, result) {
+            if(err){
                 reject(err);
+            } else {
+                resolve(result);
             }
-            resolve(docs[0]) // remember, this expects you to check if the user is in the db. 
         })
-    })
+    });
 }
 
-
-function userInDb(userid) {
+//you dont' need this function, it can be handled in the getUserInDb()
+/*function userInDb(userid) {
     var promise = new Promise(function(resolve, reject) {
         db.collection(process.env.userStatsCollection).find({
             userId: userid
@@ -64,7 +65,7 @@ function userInDb(userid) {
         })
     })
     return promise;
-}
+}*/
 
 function insNewUser(userid){
     return new Promise(function(resolve, reject) {
@@ -80,10 +81,11 @@ function insNewUser(userid){
     });
 };
 
+//one-time use function
 function addServerRecord() {
     return new Promise(function(resolve, reject) {
         var serverDoc = {
-            "userId": "serverStats",
+            "identifier": "serverStats",
             "practiceStats": {
                 "dailyTotal": 0,
                 "weeklyTotal" : 0,
@@ -92,7 +94,7 @@ function addServerRecord() {
                 "grandTotal": 0
             }
         }
-        db.collection('users').insertOne(serverDoc, function(err, res){
+        db.collection(process.env.serverStatsCollection).insertOne(serverDoc, function(err, res){
             if(err){
                 console.log(err);
                 reject(err);
@@ -106,29 +108,30 @@ function addServerRecord() {
 
 function getServerRecord() {
     return new Promise(function(resolve, reject) {
-        db.collection('users').find({
-            userId: "serverStats"
-        }).toArray(function(err, docs) {
-            if (err) {
+        db.collection(process.env.serverStatsCollection).findOne({
+            identifier: "serverStats"
+        }, function(err, result) {
+            if(err){
                 reject(err);
+            } else {
+                resolve(result);
             }
-            resolve(docs[0]) // remember, this expects you to check if the user is in the db. 
         })
-    })
-};
+    });
+}
 
 function updateServerRecord(additionalTime){
     return new Promise(function(resolve, reject){
-        var query = { userId: "serverStats" }
+        var query = { identifier: "serverStats" }
         updatedvals = { $inc: {
-            "info.practiceStats.dailyTotal": additionalTime, 
-            "info.practiceStats.weeklyTotal": additionalTime,
-            "info.practiceStats.monthlyTotal": additionalTime,
-            "info.practiceStats.yearlyTotal": additionalTime,
-            "info.practiceStats.grandTotal": additionalTime,
+            "practiceStats.dailyTotal": additionalTime, 
+            "practiceStats.weeklyTotal": additionalTime,
+            "practiceStats.monthlyTotal": additionalTime,
+            "practiceStats.yearlyTotal": additionalTime,
+            "practiceStats.grandTotal": additionalTime,
             }
         };
-        db.collection('users').updateOne(query, updatedvals, function(err, res){
+        db.collection(process.env.serverStatsCollection).updateOne(query, updatedvals, {upsert: true}, function(err, res){
             if (err) {
                 reject(err)
             } else {
@@ -141,10 +144,10 @@ function updateServerRecord(additionalTime){
 
 function resetServerTimePractice(attribute){
     return new Promise(function(resolve, reject){
-        var query = { userId: "serverStats" };
-        var placeholder = info["practicestats." + attribute] = 0;
-        updatedvals = { $set: placeholder};
-        db.collection('users').updateOne(query, updatedvals, function(err, res){
+        var query = { identifier: "serverStats" };
+        let exec = {["practiceStats." + attribute]: 0}
+        updatedvals = { $set: exec};
+        db.collection(process.env.serverStatsCollection).updateOne(query, updatedvals, function(err, res){
             if (err) {
                 reject(err)
             } else {
@@ -157,7 +160,7 @@ function resetServerTimePractice(attribute){
 
 module.exports = {
     insNewUser,
-    userInDb,
+    //userInDb,
     getUserInDb,
     updateUser,
     getServerRecord,
