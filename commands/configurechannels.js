@@ -1,30 +1,42 @@
 function enablechs(msg) {
-    var cmd = msg.content.replace('$enablechs ','').replace(' ','').split(",");
-    //var cmd = msg.split(" ");
-    
+
+    var cmd = msg.content.match(/[0-9]{16,}/g);
     console.log(cmd);
 
     //make sure user calling the command is a moderator
     if (msg.member.permissions.has(['MANAGE_GUILD'])) {
         var i;
-        var txtCh = cmd[cmd.length - 1];
+        try {
+            var txtCh = cmd[cmd.length - 1];
+        } catch {
+            msg.reply("Incorrect usage. $help for more details")
+        }
         //make sure user inputs at least one vc and exactly one txtch
         if(cmd.length < 2){
-            msg.reply("(X) too few commands, please add atleast one voice chat and exactly one text channel");
+            msg.reply("(X) too few commands, please add at least one voice chat and exactly one text channel");
+            return;
+        }
+        if (msg.guild.channels.cache.find(ch => ch.id === txtCh).type != "text") {
+            msg.reply("Invalid text channel assignment. Command usage: ```$enablechs vcId1, vcId2, ..., vcIdn, txtChId``` (Assigns voice channel ids `1` - `n` to `txtChId`).")
             return;
         }
         //cmd[-1] is the text channel - so iterate though the list until just before the last element
         for (i = 0; i < cmd.length - 1; i++) {
             //update applied channels list
-            if (APPLIED_CHANNELS.includes(cmd[i])) {
-                //don't re-add/duplicate into the array - do nothing
+            if (msg.guild.channels.cache.find(ch => ch.id === cmd[i]).type != "voice"){
+                msg.reply("Invalid voice channel ID or invalid assignments. Command usage: ```$enablechs vcId1, vcId2, ..., vcIdn, txtChId``` (Assigns voice channel ids `1` - `n` to `txtChId`).")
+                return;
+            } else {
+                if (APPLIED_CHANNELS.includes(cmd[i])) {
+                    //don't re-add/duplicate into the array - do nothing
+                }
+                else {
+                    APPLIED_CHANNELS.push(cmd[i]);
+                }
+                //now update broadcast channels map/dict
+                //if vc is already tied to a text channel, update the channel - if not - just add new key-value pair
+                BROADCAST_CHANNELS[cmd[i]] = txtCh;
             }
-            else {
-                APPLIED_CHANNELS.push(cmd[i]);
-            }
-            //now update broadcast channels map/dict
-            //if vc is already tied to a text channel, update the channel - if not - just add new key-value pair
-            BROADCAST_CHANNELS[cmd[i]] = txtCh;
         }
         msg.reply("(X) New configuration has been added or updated");
         return;
@@ -36,7 +48,7 @@ function enablechs(msg) {
 }
 
 function disablechs(msg) {
-    var cmd = msg.content.replace('$enablechs ','').replace(' ','').split(",");
+    var cmd = msg.content.match(/[0-9]{16,}/g);
     console.log(cmd);
 
     //make sure user calling the command is a moderator

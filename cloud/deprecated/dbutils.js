@@ -12,7 +12,7 @@ var docClient = new AWS.DynamoDB.DocumentClient();
 
 function getUserRecord(userid){
     var queryDoc = {
-        TableName: process.env.userStatsTable,
+        TableName: process.env.userStatsCollection,
         Key: {
             "userId": userid
         }
@@ -35,7 +35,7 @@ function getUserRecord(userid){
 
 function updateUserRecord(userid, additionalTime, lastRepretoire) {
     var insertDoc = {
-        TableName: process.env.userStatsTable,
+        TableName: process.env.userStatsCollection,
         Item: {
             "userId": userid,
             "info": {
@@ -50,7 +50,7 @@ function updateUserRecord(userid, additionalTime, lastRepretoire) {
     };
 
     var updateDoc = {
-        TableName: process.env.userStatsTable,
+        TableName: process.env.userStatsCollection,
         Key: {
             "userId": userid
         },
@@ -80,7 +80,7 @@ function updateUserRecord(userid, additionalTime, lastRepretoire) {
 //static/one-time use function only - or just not used if already initialized manually beforehand
 function addServerRecord(){
     var insertDoc = {
-        TableName: process.env.serverStatsTable,
+        TableName: process.env.serverStatsCollection,
         Item: {
             "id": "serverStats",
             "practiceStats" : {
@@ -108,7 +108,7 @@ function addServerRecord(){
 
 function updateServerRecord(additionalTime){
     var updateDoc = {
-        TableName: process.env.serverStatsTable,
+        TableName: process.env.serverStatsCollection,
         Key: {
             "id": "serverStats"
         },
@@ -129,7 +129,7 @@ function updateServerRecord(additionalTime){
 
 function getServerRecord(){
     var queryDoc = {
-        TableName: process.env.serverStatsTable,
+        TableName: process.env.serverStatsCollection,
         Key: {
             "id": "serverStats"
         }   
@@ -153,7 +153,7 @@ function resetServerTimePracticed(attribute){
     var expression = "set practiceStats." + attribute + " = :zero"
 
     var updateDoc = {
-        TableName: "ServerStatisticsDev",
+        TableName: process.env.serverStatsCollection,
         Key: {
             "id": "serverStats"
         },

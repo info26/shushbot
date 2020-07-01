@@ -1,6 +1,66 @@
-const { getUserRecord, getServerRecord } = require('./../cloud/dbutils');
+var mongofuncs = require('./../cloud/mongofuncs.js');
+var mongoConnect = require('./../cloud/mongoConnect');
 const displayStats = require('./views/showStats');
 
+function stats(msg){
+    var cmd = msg.content.split(" "); 
+    mongoConnect.connectToShushDB(function(err, client){
+        if(err) {
+            console.log(err);
+        }
+        else if (cmd.length < 2) {
+            mongofuncs.getUserInDb(msg.author.id)
+                .then(data => {
+                    if(data == null){
+                        msg.reply("Your record doesn't exist yet, go to a practice room and practice for a bit first!");
+                    }
+                    else {
+                        displayStats.showStats(msg, data, msg.author);
+                    }
+                    
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+        else {
+            mongofuncs.getUserInDb(msg.mentions.users.first().id)
+                .then(data => {
+                    if(data == null){
+                        msg.reply("This user's record doesn't exist yet!");
+                    } else {
+                        displayStats.showStats(msg, data, msg.mentions.users.first());
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    });
+}
+
+function serverStats(msg){
+    if (msg.member.permissions.has(['MANAGE_GUILD'])){
+        mongoConnect.connectToShushDB(function(err, client){
+            if(err){
+                console.log(err);
+            }
+            else{
+                mongofuncs.getServerRecord()
+                    .then(data => {
+                        displayStats.displayServerStats(msg, data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+        });
+    } else {
+        msg.reply("You do not have the permissions to see total server stats");
+    };
+};
+
+/*
 function stats(msg){
     var cmd = msg.content.split(" ");
     //if user is looking for their own stats
@@ -13,7 +73,8 @@ function stats(msg){
             .catch(function(err){
                 msg.reply("Your record doesn't exist yet, go to a practice room and practice for a bit first!");
             }); 
-    }
+        }
+
     //if a user is looking for other people's stats
     else{
         //only a moderator can look at other people's stats
@@ -51,6 +112,9 @@ function serverStats(msg){
         msg.reply("You do not have the permissions to see total server stats");
     }
 }
+*/
+
+
 
 module.exports = {
     stats,
