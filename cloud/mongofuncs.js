@@ -1,5 +1,6 @@
 const { getDb, connectToShushDB } = require('./mongoConnect');
 var mongoConnect = require('./mongoConnect');
+require('dotenv-flow').config();
 
 function prepRecord(userId){
     var userRecord = {
