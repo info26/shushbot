@@ -1,5 +1,5 @@
 function enablechs(msg) {
-    var cmd = msg.content.match(/[0-9]{16,}/g)
+    var cmd = msg.content.match(/[0-9]{16,}/g);
     
     console.log(cmd);
 
@@ -35,7 +35,7 @@ function enablechs(msg) {
 }
 
 function disablechs(msg) {
-    msg.content.match(/[0-9]{16,}/g)
+    var cmd = msg.content.match(/[0-9]{16,}/g);
     console.log(cmd);
 
     //make sure user calling the command is a moderator
