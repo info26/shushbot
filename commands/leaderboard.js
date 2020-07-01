@@ -1,7 +1,8 @@
 var mongofuncs = require('./../cloud/mongofuncs.js');
 var mongoConnect = require('./../cloud/mongoConnect');
+const { boardEmbed } = require('./views/boardEmbed');
 
-function leaderboard(){
+function leaderboard(msg){
     mongoConnect.connectToShushDB(function(err, client){
         if(err){
             console.log(err);
@@ -9,7 +10,7 @@ function leaderboard(){
         else{
             mongofuncs.leaderboard()
                 .then(data => {
-                    console.log(data)
+                    boardEmbed(msg, data)
                 })
                 .catch(err => {
                     console.log(err);
@@ -17,6 +18,7 @@ function leaderboard(){
         }
     });
 }
+
 
 module.exports = {
     leaderboard
