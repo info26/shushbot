@@ -90,7 +90,7 @@ else if (process.env.build_profile == "DEV") {
 	process.exit(69); // we don't want to continue. 
 }
 
-BOT_PREFIX = "$";
+BOT_PREFIX = "+";
 
 //set commands
 client.commands = require('./commands')
