@@ -32,13 +32,18 @@ function enablechs(msg) {
                 }
                 else {
                     APPLIED_CHANNELS.push(cmd[i]);
+                    whospracticing[cmd[i]] = "upforgrabs";
+                    var connectedMembers = msg.guild.channels.cache.find(ch => ch.id === cmd[i]).members
+                    connectedMembers.forEach(user =>
+                        user.voice.setMute(true, "Channel has been enabled.")
+                    )
                 }
                 //now update broadcast channels map/dict
                 //if vc is already tied to a text channel, update the channel - if not - just add new key-value pair
                 BROADCAST_CHANNELS[cmd[i]] = txtCh;
             }
         }
-        msg.reply("(X) New configuration has been added or updated");
+        msg.reply("New configuration has been added or updated");
         return;
     }
     else {
@@ -63,11 +68,15 @@ function disablechs(msg) {
             //remove voice channels from applied channels array and broadcast channels dict/map
             for (i = 0; i < cmd.length; i++) {
                 if(APPLIED_CHANNELS.includes(cmd[i])) {
+                    var connectedMembers = msg.guild.channels.cache.find(ch => ch.id === cmd[i]).members
+                    connectedMembers.forEach(user =>
+                        user.voice.setMute(false, "Channel has been disabled.")
+                    )
                     APPLIED_CHANNELS.splice(APPLIED_CHANNELS.indexOf(cmd[i]), 1);
                     delete BROADCAST_CHANNELS[cmd[i]];
                 }
             }
-            msg.reply("(X) valid channels have been removed from the configuration");
+            msg.reply("Valid channels have been removed from the configuration");
             return;
         }
     }
