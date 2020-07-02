@@ -1,5 +1,3 @@
-const { getDb, connectToShushDB } = require('./mongoConnect');
-var mongoConnect = require('./mongoConnect');
 require('dotenv-flow').config();
 
 function prepRecord(userId){
@@ -17,18 +15,20 @@ function prepRecord(userId){
 }
 
 function updateUser(userid, practicedTime, lastRep) {
-    return new Promise(function(resolve, reject){
-        var query = { userId: userid }
-        updatedvals = { $set: {"info.practiceStats.lastRep": lastRep, "info.practiceStats.lastRepTime": practicedTime}, $inc: {"info.practiceStats.totalTime": practicedTime}};
-        db.collection(process.env.userStatsCollection).updateOne(query, updatedvals, {upsert: true}, function(err, res){
-            if (err) {
-                reject(err)
-            } else {
-                console.log("Updated")
-                resolve()
-            }
+    if(additionalTime != null){
+        return new Promise(function(resolve, reject){
+            var query = { userId: userid }
+            updatedvals = { $set: {"info.practiceStats.lastRep": lastRep, "info.practiceStats.lastRepTime": practicedTime}, $inc: {"info.practiceStats.totalTime": practicedTime}};
+            db.collection(process.env.userStatsCollection).updateOne(query, updatedvals, {upsert: true}, function(err, res){
+                if (err) {
+                    reject(err)
+                } else {
+                    console.log("Updated")
+                    resolve()
+                }
+            })
         })
-    })
+    }
 }
 
 function getUserInDb(userid) {
@@ -122,25 +122,27 @@ function getServerRecord() {
 }
 
 function updateServerRecord(additionalTime){
-    return new Promise(function(resolve, reject){
-        var query = { identifier: "serverStats" }
-        updatedvals = { $inc: {
-            "practiceStats.dailyTotal": additionalTime, 
-            "practiceStats.weeklyTotal": additionalTime,
-            "practiceStats.monthlyTotal": additionalTime,
-            "practiceStats.yearlyTotal": additionalTime,
-            "practiceStats.grandTotal": additionalTime,
-            }
-        };
-        db.collection(process.env.serverStatsCollection).updateOne(query, updatedvals, {upsert: true}, function(err, res){
-            if (err) {
-                reject(err)
-            } else {
-                console.log("Updated serverStats")
-                resolve()
-            }
+    if(additionalTime != null){
+        return new Promise(function(resolve, reject){
+            var query = { identifier: "serverStats" }
+            updatedvals = { $inc: {
+                "practiceStats.dailyTotal": additionalTime, 
+                "practiceStats.weeklyTotal": additionalTime,
+                "practiceStats.monthlyTotal": additionalTime,
+                "practiceStats.yearlyTotal": additionalTime,
+                "practiceStats.grandTotal": additionalTime,
+                }
+            };
+            db.collection(process.env.serverStatsCollection).updateOne(query, updatedvals, {upsert: true}, function(err, res){
+                if (err) {
+                    reject(err)
+                } else {
+                    console.log("Updated serverStats")
+                    resolve()
+                }
+            })
         })
-    })
+    }
 };
 
 function resetServerTimePractice(attribute){
