@@ -1,5 +1,3 @@
-require('dotenv-flow').config();
-
 function prepRecord(userId){
     var userRecord = {
         "userId": userId,
@@ -10,7 +8,7 @@ function prepRecord(userId){
                 "totalTime": 0
             }
         }
-    }
+    };
     return userRecord;
 }
 
@@ -21,13 +19,13 @@ function updateUser(userid, practicedTime, lastRep) {
             updatedvals = { $set: {"info.practiceStats.lastRep": lastRep, "info.practiceStats.lastRepTime": practicedTime}, $inc: {"info.practiceStats.totalTime": practicedTime}};
             db.collection(process.env.userStatsCollection).updateOne(query, updatedvals, {upsert: true}, function(err, res){
                 if (err) {
-                    reject(err)
+                    reject(err);
                 } else {
-                    console.log("Updated")
-                    resolve()
+                    console.log("Updated");
+                    resolve();
                 }
-            })
-        })
+            });
+        });
     }
 }
 
@@ -41,7 +39,7 @@ function getUserInDb(userid) {
             } else {
                 resolve(result);
             }
-        })
+        });
     });
 }
 
@@ -80,7 +78,7 @@ function insNewUser(userid){
             }
         });
     });
-};
+}
 
 //one-time use function
 function addServerRecord() {
@@ -105,7 +103,7 @@ function addServerRecord() {
             }
         });
     });
-};
+}
 
 function getServerRecord() {
     return new Promise(function(resolve, reject) {
@@ -117,7 +115,7 @@ function getServerRecord() {
             } else {
                 resolve(result);
             }
-        })
+        });
     });
 }
 
@@ -140,10 +138,10 @@ function updateServerRecord(additionalTime){
                     console.log("Updated serverStats")
                     resolve()
                 }
-            })
-        })
+            });
+        });
     }
-};
+}
 
 function resetServerTimePractice(attribute){
     return new Promise(function(resolve, reject){
@@ -157,9 +155,9 @@ function resetServerTimePractice(attribute){
                 console.log("Updated serverStats")
                 resolve()
             }
-        })
-    })
-};
+        });
+    });
+}
 
 function leaderboard(){
     return new Promise(function(resolve, reject){

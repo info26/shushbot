@@ -1,4 +1,4 @@
-var mongofuncs = require('./../cloud/mongofuncs.js');
+var mongofuncs = require('./../cloud/mongofuncs');
 var mongoConnect = require('./../cloud/mongoConnect');
 const displayStats = require('./views/showStats');
 
@@ -52,13 +52,13 @@ function serverStats(msg){
                     })
                     .catch(err => {
                         console.log(err);
-                    })
+                    });
             }
         });
     } else {
         msg.reply("You do not have the permissions to see total server stats");
-    };
-};
+    }
+}
 
 /*
 function stats(msg){
