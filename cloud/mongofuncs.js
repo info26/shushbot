@@ -13,7 +13,7 @@ function prepRecord(userId){
 }
 
 function updateUser(userid, practicedTime, lastRep) {
-    if(additionalTime != null){
+    if(practicedTime != null){
         return new Promise(function(resolve, reject){
             var query = { userId: userid }
             updatedvals = { $set: {"info.practiceStats.lastRep": lastRep, "info.practiceStats.lastRepTime": practicedTime}, $inc: {"info.practiceStats.totalTime": practicedTime}};
