@@ -5,3 +5,4 @@ store
 .env.*.local
 .env.*
 *.code-workspace
+store
