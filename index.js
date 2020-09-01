@@ -2,6 +2,7 @@
 const Discord = require('discord.js');
 const filesystem = require('fs');
 const mongoo = require('./cloud/mongoConnect');
+const handlestore = require('./helpers/handleStore');
 require('dotenv-flow').config();
 
 
@@ -10,10 +11,11 @@ client = new Discord.Client();
 client.commands = new Discord.Collection();
 //register events. 
 require('./events');
-//done! waaaw11!
-filesystem.readFile('./store', (err, data) => {
-    whospracticing = JSON.parse(data);
+//update store here
+handlestore.parseDataFromStore().then(data => {
+    handlestore.syncStore(client);
 });
+
 console.log(mongoo);
 
 mongoo.connectToShushDB(function(err) {
@@ -73,17 +75,19 @@ if (process.env.build_profile == "PROD") {
 }
 //development/quality assurance grade: initialized with channels on test server
 else if (process.env.build_profile == "DEV") {
-    /*APPLIED_CHANNELS = [
-        "691725669326913747",
+    APPLIED_CHANNELS = [
+        /*"691725669326913747",
         "691719071619874816",
         "692002216957051030",
-        "692132723921518627"
+        "692132723921518627"*/
+        "691719071619874816"
     ];
     BROADCAST_CHANNELS = {
-        "691725669326913747": "691808798817517600",
+        /*"691725669326913747": "691808798817517600",
         "691719071619874816": "691808874910449734",
-        "692002216957051030": "691808874910449734"
-    };*/
+        "692002216957051030": "691808874910449734"*/
+        "691719071619874816":"691808874910449734"
+    };
 } else {
     console.log("unknown build profile, please use DEV or PROD");
 	console.log("Please check to make sure your .env files are set up correctly. ");
@@ -95,6 +99,8 @@ BOT_PREFIX = process.env.bot_prefix;
 //set commands
 client.commands = require('./commands')
 console.log(client.commands)
+
+
 
 whospracticing = {}
 client.on('ready', () => {
