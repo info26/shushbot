@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const { getNick } = require('./../helpers/getNick')
+const { userLeftorNoMore } = require('./../helpers/userLeftorNoMore')
 
 function forcepractice(msg) {
     //USE msg.content !! msg is not a string. it's a discord.js MESSAGE object. 
@@ -45,6 +46,7 @@ function forcepractice(msg) {
                 // all checks completed. 
                 userCurrPracticingId = whospracticing[modVoiceCh.id]
                 const userPlaying = msg.member.guild.members.cache.find(mem => mem.id === userCurrPracticingId);
+                userLeftorNoMore(userPlaying.voice);
                 whospracticing[modVoiceCh.id] = userMentionedCh.id
                 userPlaying.voice.setMute(true, "operation performed by moderator")
                 userMentionedCh.setMute(false, "operation performed by moderator")
