@@ -16,14 +16,14 @@ function showStats(msg, obj, user){
         color: "#F99806",
         fields: [{ 
                 name: "Total Practice Time",
-                value: "your total time practiced is: " + totalReadable[1] + "h" + totalReadable[0] + "m"
+                value: "Your total time practiced is: " + totalReadable[1] + "h" + totalReadable[0] + "m"
             },
             {
-                name: "Last Repretoire",
+                name: "Last Repertoire",
                 value: "The last rep you practiced was: " + lastRep
             },
             {
-                name: "Last Repretoire Practice Time",
+                name: "Last Repertoire Practice Time",
                 value: "You practiced your last rep for: " + lastTimeReadable[1] + "h" + lastTimeReadable[0] + "m"
             },
         ],
