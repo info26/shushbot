@@ -10,8 +10,13 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "aws-sdk": "^2.671.0",
     "discord.js": "^12.0.2",
-    "pm2": "^4.2.3"
+    "dotenv-flow": "^3.1.0",
+    "mongodb": "^3.5.9",
+    "node-cron": "^2.0.3",
+    "pm2": "^4.4.0",
+    "table": "^5.4.6"
   },
   "devDependencies": {},
   "keywords": [

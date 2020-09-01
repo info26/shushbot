@@ -38,7 +38,20 @@ function help(msg) {
             {
                 name: BOT_PREFIX + "unexcuse",
                 value: "Mutes a user once they are done giving you feedback. Usage: $unexcuse <user>"
+            },
+            {
+                name: BOT_PREFIX + "enablechs",
+                value: "this command is mod only. To enable new voicechats to the bot, or update existing voice chats with a new text chat. Usage: $enablechs vcId1, vcId2, ..., vcIdn, txtChId (Assigns vcId1 - vcIdn to txtChId)."
+            },
+            {
+                name: BOT_PREFIX + "disablechs",
+                value: "this command is mod only. To disable existing voicechats from the bot. Usage: $disablechs vcId1, vcId2, ..., vcIdn"
+            },
+            {
+                name: BOT_PREFIX + "stats",
+                value: "Gets statistics of a user. Usage: $stats [user]"
             }
+            
         ],
         timestamp: new Date(),
         thumbnail: {

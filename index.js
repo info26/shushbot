@@ -1,8 +1,10 @@
 //custom discord bot for managing server unmutes and mutes. 
-
-
 const Discord = require('discord.js');
 const filesystem = require('fs');
+const mongoo = require('./cloud/mongoConnect');
+require('dotenv-flow').config();
+
+
 client = new Discord.Client();
 //for commands. 
 client.commands = new Discord.Collection();
@@ -12,19 +14,29 @@ require('./events');
 filesystem.readFile('./store', (err, data) => {
     whospracticing = JSON.parse(data);
 });
+console.log(mongoo);
+
+mongoo.connectToShushDB(function(err) {
+	if (err) {
+	    console.log("Failed to connect to mongo!");
+	    console.log(err);
+	    process.exit(69);
+	}
+	console.log("Connected to database!");
+})
+
+
 //Paste in IDs of your voice channels that you want the bot to manage. 
 //Make sure that it is a string. 
 //DEBUG MODE enabled the !dump cmd. it prints the whospracticing variable to console. 
 DEBUG_ENABLED = true;
 //specified which channel(s) the bot manages. 
 
-BUILD_PROFILE = "PROD";
 APPLIED_CHANNELS = [];
 BROADCAST_CHANNELS = {};
-BOT_TOKEN = '';
 
 //production grade: initialized with channels on live server
-if (BUILD_PROFILE == "PROD") {
+if (process.env.build_profile == "PROD") {
     APPLIED_CHANNELS = [
         "691237976923176990",
         "690498106046939166",
@@ -58,20 +70,10 @@ if (BUILD_PROFILE == "PROD") {
         "691762889773547550": "691763754370859069",
         "691763054253178890": "691763754370859069"
     };
-
-    /*var temp = '';
-    filesystem.readFile('./../prodToken.txt', 'utf-8', (err, data) => {
-        if(err) throw err;
-        console.log(data);
-        temp = data;
-    })
-    BOT_TOKEN = temp;*/
-
-    BOT_TOKEN = 'NjkyMTg3OTcyMTQwOTI0OTY5.XoO39A.cdL-nTJJ6oTWeJuqBHZcIeEmi5c';
 }
 //development/quality assurance grade: initialized with channels on test server
-else if (BUILD_PROFILE == "DEV") {
-    APPLIED_CHANNELS = [
+else if (process.env.build_profile == "DEV") {
+    /*APPLIED_CHANNELS = [
         "691725669326913747",
         "691719071619874816",
         "692002216957051030",
@@ -81,25 +83,14 @@ else if (BUILD_PROFILE == "DEV") {
         "691725669326913747": "691808798817517600",
         "691719071619874816": "691808874910449734",
         "692002216957051030": "691808874910449734"
-    };
-
-    /*var temp = '';
-    filesystem.readFile('./../devToken.txt',  'utf8', (err, data) => {
-        if(err) throw err;
-        console.log(data);
-        temp = data;    
-        console.log(temp);  
-    })
-    BOT_TOKEN = temp;
-    console.log(BOT_TOKEN)*/
-    BOT_TOKEN = 'NjkxODIyNzIwMjkxMTc2NDU4.XoO3zw.YpDpbeh4tzqhtF3cNVLVtlGRo3M';
-
-
+    };*/
 } else {
-    console.log("unknown build profile, please use DEV or PROD")
+    console.log("unknown build profile, please use DEV or PROD");
+	console.log("Please check to make sure your .env files are set up correctly. ");
+	process.exit(69); // we don't want to continue. 
 }
 
-BOT_PREFIX = "$";
+BOT_PREFIX = process.env.bot_prefix;
 
 //set commands
 client.commands = require('./commands')
@@ -138,7 +129,4 @@ process.on('SIGINT', function() {
 
 });
 
-
-
-//UPDATE YOUR TOKEN HERE. 
-client.login(BOT_TOKEN);
+client.login(process.env.token)

@@ -1,17 +1,40 @@
-const { TimeCalc } = require('./TimeCalc');
+const {secondsToHoursAndMinutes, timePracticedInSeconds } = require('./TimeCalc');
+const mongofuncs = require('./../cloud/mongofuncs');
+var mongoConnect = require('../cloud/mongoConnect');
 
 function userLeftorNoMore(voiceState) {
-    whospracticing[voiceState.channel.id] = "upforgrabs"
-    sendingchannelid = BROADCAST_CHANNELS[voiceState.channel.id]
+    
+    var sendingchannelid = BROADCAST_CHANNELS[voiceState.channel.id]
     const msgchannel = voiceState.channel.guild.channels.cache.find(ch => ch.id === sendingchannelid);
 
     //time calc
-    result = TimeCalc(voiceState.channel.id);
-    if (voiceState.channel.members.size > 0) {
-        msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '$practice' will be able to practice. Room Name: " + voiceState.channel.name)
-        msgchannel.send("They practiced for " + result[1] + " hours and " + result[0] + " minutes");
+    var timeInSeconds = timePracticedInSeconds(voiceState.channel.id)
+    var resultReadable = secondsToHoursAndMinutes(timeInSeconds);
+    //update user's time in the database and server total time
+    console.log(whospracticing[voiceState.channel.id])
+
+    //this will automatically try updating, if record doesn't exist, it will add new user
+
+    mongofuncs.updateUser(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"])
+        .then(data => {
+            whospracticing[voiceState.channel.id] = "upforgrabs",
+            whospracticing[voiceState.channel.id + "piece"] = null
+        });
+    if(timeInSeconds != null){
+        mongofuncs.updateServerRecord(timeInSeconds);
     }
-    whospracticing[voiceState.channel.id + "piece"] = null
+    else {
+        console.log("timeinseconds is NULL so something clearly went wrong")
+    }
+            
+    console.log("msgchannel: "+ msgchannel)
+    console.log(BROADCAST_CHANNELS);
+    
+
+    if (voiceState.channel.members.size >= 0) {
+        msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '$practice' will be able to practice. Room Name: " + voiceState.channel.name)
+        msgchannel.send("They practiced for " + resultReadable[1] + " hours and " + resultReadable[0] + " minutes");
+    }
 
     //time to mute everyone who was excused by the user.
     if (typeof whospracticing[voiceState.channel.id + "excused"] !== 'undefined') {

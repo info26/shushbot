@@ -5,7 +5,11 @@ function forcepractice(msg) {
     //USE msg.content !! msg is not a string. it's a discord.js MESSAGE object. 
     cmd = msg.content.split(" ")
     console.log(cmd)
-    if (cmd.length > 2) {
+	if (APPLIED_CHANNELS.includes(msg.member.voice.channel.id) == false) {
+		msg.reply("(X) Not in a channel the bot manages")
+		return;
+	}
+    else if (cmd.length > 2) {
         msg.reply("(X) You have specified too many arguments. ")
     } else if (msg.member.voice.channel == null) {
         msg.reply("(X) You aren't in a voice channel")
@@ -21,7 +25,7 @@ function forcepractice(msg) {
         console.log(cmd);
         const userMentioned = msg.member.guild.members.cache.find(mem => mem.id === cmd[1]);
         // mod's voice channel
-        modVoiceCh = msg.member.voice.channel;
+        var modVoiceCh = msg.member.voice.channel;
         if (userMentioned == null) {
             msg.reply("(X) Invalid user. ")
         } else if (modVoiceCh.id != userMentioned.voice.channel.id) {

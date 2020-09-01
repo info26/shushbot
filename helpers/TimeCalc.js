@@ -1,16 +1,19 @@
-function TimeCalc(voicechid) {
-    // user object is the User object. and the userplaying is the user's id. 
-    //calc date. 
-    diff = Date.now() - whospracticing[voicechid + "starttime"];
+function timePracticedInSeconds(voiceChId) {
     //this reprs milliseconds
-    //convert to seconds. 
-    diff = diff / 1000;
-    //get minutes
-    hours = Math.floor(diff / 60 / 60)
-    minutes = Math.floor((diff / 60) - (hours * 60))
+    diff = Date.now() - whospracticing[voiceChId + "starttime"];
+    //convert to seconds and return. 
+    return (diff/1000);
+}
+
+function secondsToHoursAndMinutes(seconds){
+    hours = Math.floor(seconds / 60 / 60);
+    minutes = Math.floor((seconds / 60) - (hours * 60));
+
     return [minutes, hours];
 }
 
+
 module.exports = {
-    TimeCalc
+    secondsToHoursAndMinutes,
+    timePracticedInSeconds
 }
