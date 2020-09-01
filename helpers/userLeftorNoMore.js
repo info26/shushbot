@@ -14,12 +14,18 @@ function userLeftorNoMore(voiceState) {
     console.log(whospracticing[voiceState.channel.id])
 
     //this will automatically try updating, if record doesn't exist, it will add new user
+
     mongofuncs.updateUser(whospracticing[voiceState.channel.id], timeInSeconds, whospracticing[voiceState.channel.id + "piece"])
         .then(data => {
             whospracticing[voiceState.channel.id] = "upforgrabs",
             whospracticing[voiceState.channel.id + "piece"] = null
         });
-    mongofuncs.updateServerRecord(timeInSeconds);
+    if(timeInSeconds != null){
+        mongofuncs.updateServerRecord(timeInSeconds);
+    }
+    else {
+        console.log("timeinseconds is NULL so something clearly went wrong")
+    }
             
     console.log("msgchannel: "+ msgchannel)
     console.log(BROADCAST_CHANNELS);
