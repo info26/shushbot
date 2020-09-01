@@ -3,7 +3,7 @@ var mongoConnect = require('./../cloud/mongoConnect');
 const { boardEmbed } = require('./views/boardEmbed');
 
 function leaderboard(msg){
-	if msg.member.permissions.has(['MANAGE_GUILD']) == false {
+	if (msg.member.permissions.has(['MANAGE_GUILD']) == false) {
 		return;
 	} else {
 		mongoConnect.connectToShushDB(function(err, client){
