@@ -8,7 +8,7 @@ function practice(msg) {
 	}
     else if (msg.member.voice.channel == null || !msg.member.voice.channel.id in APPLIED_CHANNELS) {
         msg.reply("(X) You aren't in a voice channel")
-    } else if {
+    } else {
         // user is in a voice channel.
         practicing = whospracticing[msg.member.voice.channel.id]
 
