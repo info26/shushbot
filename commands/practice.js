@@ -15,7 +15,7 @@ function practice(msg) {
         if (practicing == msg.author.id) {
             msg.reply("(X) You are practicing")
 
-        } else if (practicing != "upforgrabs" || !msg.member.voice.channel.id in whospracticing || practicing != null) {
+        } else if (practicing.match(/[0-9]{16,}/g)) {
             msg.reply("(X) The channel already has someone practicing")
 
         } else if (practicing == "upforgrabs" || practicing == null) {
