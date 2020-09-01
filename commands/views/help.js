@@ -60,7 +60,7 @@ function help(msg) {
     }
 }
 
-function modcommands(msg){
+function mod(msg){
     const helpEmbed = {
         color: "#F99806",
         title: 'Shushbot help page',
@@ -110,7 +110,16 @@ function modcommands(msg){
         }),
 
     module.exports = {
-        modcommands
+        mod
+    }
+}
+
+function modcommands(msg){
+    if (msg.member.permissions.has(['MANAGE_GUILD'])){
+        mod(msg)
+    }
+    else{
+        msg.reply("You do not have the permissions to see total server stats");
     }
 }
 
