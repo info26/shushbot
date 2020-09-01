@@ -39,7 +39,7 @@ function stats(msg){
     });
 }
 
-function serverStats(msg){
+function serverstats(msg){
     if (msg.member.permissions.has(['MANAGE_GUILD'])){
         mongoConnect.connectToShushDB(function(err, client){
             if(err){
@@ -118,5 +118,5 @@ function serverStats(msg){
 
 module.exports = {
     stats,
-    serverStats
+    serverstats
 }

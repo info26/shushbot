@@ -6,9 +6,9 @@ const { np } = require('./np')
 const { song } = require('./song')
 const { excuse } = require('./excuse')
 const { unexcuse } = require('./unexcuse')
-const { help } = require('./views/help')
+const { help, modcommands } = require('./views/help')
 const {enablechs, disablechs} = require('./configurechannels')
-const { stats, serverStats } = require('./stats')
+const { stats, serverstats } = require('./stats')
 const {leaderboard} = require('./leaderboard')
 
 module.exports = {
@@ -24,6 +24,7 @@ module.exports = {
     enablechs,
     disablechs,
     stats,
-    serverStats,
-    leaderboard
+    serverstats,
+    leaderboard,
+    modcommands
 }
