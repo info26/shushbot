@@ -2,13 +2,13 @@ const Discord = require('discord.js')
 
 
 function practice(msg) {
-	if (APPLIED_CHANNELS.includes(newMember.channel.id) == false) {
-		console.log("(X) Not in a channel the bot manages")
+	if (APPLIED_CHANNELS.includes(msg.member.voice.channel.id) == false) {
+		msg.reply("(X) Not in a channel the bot manages")
 		return;
 	}
     else if (msg.member.voice.channel == null || !msg.member.voice.channel.id in APPLIED_CHANNELS) {
         msg.reply("(X) You aren't in a voice channel")
-    } else {
+    } else if {
         // user is in a voice channel.
         practicing = whospracticing[msg.member.voice.channel.id]
 
