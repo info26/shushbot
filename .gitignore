@@ -1,6 +1,7 @@
 node_modules/
 store
 # local .env* files
+.env
 .env.local
 .env.*.local
 .env.*

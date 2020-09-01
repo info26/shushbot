@@ -24,8 +24,6 @@ function userLeftorNoMore(voiceState) {
     console.log("msgchannel: "+ msgchannel)
     console.log(BROADCAST_CHANNELS);
     
-    //updateServerRecord(timeInSeconds);
-    //reset state of the practice room
 
     if (voiceState.channel.members.size >= 0) {
         msgchannel.send("The user who was practicing has left or does not want to practice anymore. The first person to say '$practice' will be able to practice. Room Name: " + voiceState.channel.name)
