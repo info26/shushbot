@@ -15,10 +15,10 @@ function practice(msg) {
         if (practicing == msg.author.id) {
             msg.reply("(X) You are practicing")
 
-        } else if (practicing != "upforgrabs" || !msg.member.voice.channel.id in whospracticing) {
+        } else if (practicing != "upforgrabs" || !msg.member.voice.channel.id in whospracticing || practicing != null) {
             msg.reply("(X) The channel already has someone practicing")
 
-        } else if (practicing == "upforgrabs") {
+        } else if (practicing == "upforgrabs" || practicing == null) {
             msg.reply("Ok, you're now practicing. ")
             msg.member.voice.setMute(false, "user requested to be practicing. ")
             whospracticing[msg.member.voice.channel.id] = msg.author.id;
