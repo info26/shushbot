@@ -1,10 +1,10 @@
 const { userLeftorNoMore } = require('./../helpers/userLeftorNoMore')
 
-function disconnectMembers(msg) {
+async function disconnectMembers(msg) {
     //find the parent(channel catrgory) of the text channel 
     var chCategory = msg.channel.parent;
     //get the roles that needs to be edited in that channel category
-    var roleToBeEdited = msg.guild.roles.fetch(process.env.roleToBeEdited);
+    var roleToBeEdited = await msg.guild.roles.fetch(process.env.roleToBeEdited);
     //get all the voice chats that are in this channel category
     var vcs = chCategory.children.filter(c => c.type === 'voice');
 
