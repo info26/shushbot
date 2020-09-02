@@ -9,7 +9,8 @@ function setbit(msg){
             msg.reply("bitrate range is out of bounds");
         }
         else {
-            vc.setBitrate(parseInt(cmd[1]));
+            vc.setBitrate(parseInt(cmd[1])*1000);
+            msg.reply("done, vc bitrate set to " + cmd[1]);
         }
     }
     else {
@@ -26,10 +27,11 @@ function userlimit(msg){
             msg.reply("improper arguments for this command");
         }
         else if (parseInt(cmd[1]) > 99){
-            msg.reply("userlimt range is out of bounds");
+            msg.reply("user limit range is out of bounds");
         }
         else {
             vc.setUserLimit(parseInt(cmd[1]));
+            msg.reply("done, vc limit set to " + cmd[1]);
         }
     }
     else {
