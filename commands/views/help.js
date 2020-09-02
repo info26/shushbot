@@ -33,6 +33,14 @@ function help(msg) {
                 value: "Mutes a user once they are done giving you feedback. Usage: $unexcuse <user>"
             },
             {
+                name: BOT_PREFIX + "setbit",
+                value: "Only users currently practicing can use this command, it will alter the bitrate of your practice room to your preference. Usage: $setbit <value>"
+            },
+            {
+                name: BOT_PREFIX + "userlimit",
+                value: "Only users currently practicing can use this command, it will alter the user limit of your practice room to your preference. Usage: $userlimit <value>"
+            },
+            {
                 name: BOT_PREFIX + "stats",
                 value: "Gets statistics of a user. Usage: $stats [user]"
             }
@@ -85,6 +93,14 @@ function mod(msg){
             {
                 name: BOT_PREFIX + "serverStats",
                 value: "Gets the server total statistics, accumulation of everyone's practice time for certain time intervals. Usage: $serverStats"
+            },
+            {
+                name: BOT_PREFIX + "setbit",
+                value: "Alter the bitrate of the practice room you are in to your preference. Usage: $setbit <value>"
+            },
+            {
+                name: BOT_PREFIX + "userlimit",
+                value: "Alter the user limit of the practice room you are in to your preference. Usage: $userlimit <value>"
             },
             {
                 name: BOT_PREFIX + "leaderboard",
