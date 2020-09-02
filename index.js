@@ -12,9 +12,6 @@ client.commands = new Discord.Collection();
 //register events. 
 require('./events');
 //update store here
-handlestore.parseDataFromStore().then(data => {
-    handlestore.syncStore(client);
-});
 
 console.log(mongoo);
 
@@ -106,6 +103,9 @@ whospracticing = {}
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     client.user.setPresence({ activity: { name: '$help for more info' }, status: 'online' })
+	handlestore.parseDataFromStore().then(data => {
+		handlestore.syncStore(client);
+	});
 });
 
 
@@ -132,6 +132,7 @@ process.on('SIGINT', function() {
         console.log("Saved!");
         process.exit(0);
     });
+	
 
 });
 

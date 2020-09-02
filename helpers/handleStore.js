@@ -1,20 +1,21 @@
 const filesystem = require('fs');
 
 function syncStore(client){
-    console.log("list of servers" + JSON.stringify(client.guilds.cache));
-    for(var server in client.guilds.cache){
-        voicechannels = server.channels.cache.filter(c => c.type === 'voice')
-        console.log("list of vcs" + JSON.stringify(voicechannels));
-        for(var channel in voicechannels){
+    //console.log("list of servers" + JSON.stringify(client.guilds.cache));
+	console.log("whospracticing before " + JSON.stringify(whospracticing))	
+    client.guilds.cache.forEach(servers => {
+        voicechannels = servers.channels.cache.filter(c => c.type === 'voice')
+        //console.log("list of vcs" + JSON.stringify(voicechannels));
+        voicechannels.forEach(channel => {
             if(APPLIED_CHANNELS.includes(channel.id)){
-                if (!channel.members.includes(whospracticing[channel.id]) || whospracticing[channel.id] == null){
-                    whospracticing[channel.id] = 'upforgrabs';
+                if (!channel.members.array().includes(whospracticing[channel.id]) || whospracticing[channel.id] == null){
+					whospracticing[channel.id] = 'upforgrabs';
                     whospracticing[channel.id + "piece"] = null;
-                }
+				}
             }
-        }
-        console.log(whospracticing);
-    }
+        });
+    });
+	console.log("after " + JSON.stringify(whospracticing));
 }
 
 function parseDataFromStore(){
