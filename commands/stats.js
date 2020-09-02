@@ -40,7 +40,7 @@ function stats(msg){
 }
 
 function serverstats(msg){
-    if (msg.member.permissions.has(['MANAGE_GUILD'])){
+    if (msg.member.permissions.has(['MANAGE_ROLES'])){
         mongoConnect.connectToShushDB(function(err, client){
             if(err){
                 console.log(err);

@@ -14,7 +14,7 @@ function forcepractice(msg) {
         msg.reply("(X) You have specified too many arguments. ")
     } else if (msg.member.voice.channel == null) {
         msg.reply("(X) You aren't in a voice channel")
-    } else if (msg.member.permissions.has(['MANAGE_GUILD'])) {
+    } else if (msg.member.permissions.has(['MANAGE_ROLES'])) {
         // matches all numbers from the string. 
         match = cmd[1].match(/(\d+)/);
         if (match == null) {
