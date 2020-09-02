@@ -22,7 +22,13 @@ function boardEmbed(msg, data) {
         
     }
     
-    msg.channel.send(embed)
+    msg.channel.send(embed).then(msg => {
+        msg.delete({timeout: 20000})
+    }),
+
+    module.exports = {
+        boardEmbed
+    }
 }
 
 module.exports = {

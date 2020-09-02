@@ -10,6 +10,7 @@ const { help, modcommands } = require('./views/help')
 const {enablechs, disablechs} = require('./configurechannels')
 const { stats, serverstats } = require('./stats')
 const {leaderboard} = require('./leaderboard')
+const {setbit, userlimit} = require('./manipulatechs');
 
 module.exports = {
     practice,
@@ -26,5 +27,7 @@ module.exports = {
     stats,
     serverstats,
     leaderboard,
-    modcommands
+    modcommands,
+    setbit,
+    userlimit
 }

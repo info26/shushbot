@@ -5,7 +5,7 @@ const { getNick } = require('./../helpers/getNick')
 function forcestop(msg) {
     if (msg.member.voice.channel == null) {
         msg.reply("(X) You aren't in a channel")
-    } else if (msg.member.permissions.has(['MANAGE_GUILD']) == false) {
+    } else if (msg.member.permissions.has(['MANAGE_ROLES']) == false) {
         msg.reply("(X) You don't have permission")
     } else if (whospracticing[msg.member.voice.channel.id] == null || whospracticing[msg.member.voice.channel.id] == "upforgrabs") {
         msg.reply("(X) No one is currently practicing in your channel. ")

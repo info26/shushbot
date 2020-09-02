@@ -4,7 +4,7 @@ function enablechs(msg) {
     console.log(cmd);
 
     //make sure user calling the command is a moderator
-    if (msg.member.permissions.has(['MANAGE_GUILD'])) {
+    if (msg.member.permissions.has(['ADMINISTRATOR'])) {
         var i;
         try {
             var txtCh = cmd[cmd.length - 1];
@@ -57,7 +57,7 @@ function disablechs(msg) {
     console.log(cmd);
 
     //make sure user calling the command is a moderator
-    if (msg.member.permissions.has(['MANAGE_GUILD'])) {
+    if (msg.member.permissions.has(['ADMINISTRATOR'])) {
         //make sure user does not try and delete more channels from configuration than what already exists
         if (cmd.length > APPLIED_CHANNELS.length) {
             msg.reply("(X) You have specified too many arguments. ");
