@@ -1,15 +1,23 @@
 const { userLeftorNoMore } = require('./../helpers/userLeftorNoMore')
 
 async function disconnectMembers(msg) {
-    //find the parent(channel catrgory) of the text channel 
-    var chCategory = msg.channel.parent;
-    //get the roles that needs to be edited in that channel category
-    var roleToBeEdited = await msg.guild.roles.fetch(process.env.roleToBeEdited);
-    //get all the voice chats that are in this channel category
-    var vcs = chCategory.children.filter(c => c.type === 'voice');
-
+    var cmd = msg.content.split(" ");
     //make sure the person writing the command is an admin of the server
-    if (Message.member.permissions.has(['ADMINISTRATOR'])) {
+    if (msg.member.permissions.has(['ADMINISTRATOR'])) {
+
+        //find the parent(channel catrgory) of the text channel 
+        var chCategory = msg.channel.parent;
+        //get the roles that needs to be edited in that channel category
+        var roleToBeEdited = null;
+        if(cmd.size < 2){
+            roleToBeEdited = await msg.guild.roles.fetch(process.env.roleToBeEdited);
+        } else {
+            roleToBeEdited = await msg.guild.roles.fetch(cmd[1]);
+        }
+        
+        //get all the voice chats that are in this channel category
+        var vcs = chCategory.children.filter(c => c.type === 'voice');
+
         //change channel category perms so that non-mods can't enter
         chCategory.overwritePermissions([
             {

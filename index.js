@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 const filesystem = require('fs');
 const mongoo = require('./cloud/mongoConnect');
 const handlestore = require('./helpers/handleStore');
+const crons = require('./cron/timeReset')
 require('dotenv-flow').config();
 
 
@@ -105,7 +106,8 @@ client.on('ready', () => {
     client.user.setPresence({ activity: { name: '$help for more info' }, status: 'online' })
 	handlestore.parseDataFromStore().then(data => {
 		handlestore.syncStore(client);
-	});
+    });
+    crons.startCron();
 });
 
 
