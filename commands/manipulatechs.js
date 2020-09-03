@@ -14,7 +14,7 @@ function setbit(msg){
         }
     }
     else {
-        msg.reply("You or not practicing/have permissions to execute this command")
+        msg.reply("You are not practicing. Or you don't have permissions to execute this command")
     }
 }
 
@@ -35,7 +35,7 @@ function userlimit(msg){
         }
     }
     else {
-        msg.reply("You or not practicing/have permissions to execute this command")
+        msg.reply("You are not practicing. Or you don't have permissions to execute this command")
     }
 }
 
