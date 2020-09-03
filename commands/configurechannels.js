@@ -1,3 +1,5 @@
+const userLeftorNoMore = require("../helpers/userLeftorNoMore");
+
 function enablechs(msg) {
 
     var cmd = msg.content.match(/[0-9]{16,}/g);
@@ -69,9 +71,13 @@ function disablechs(msg) {
             for (i = 0; i < cmd.length; i++) {
                 if(APPLIED_CHANNELS.includes(cmd[i])) {
                     var connectedMembers = msg.guild.channels.cache.find(ch => ch.id === cmd[i]).members
-                    connectedMembers.forEach(user =>
-                        user.voice.setMute(false, "Channel has been disabled.")
-                    )
+                    connectedMembers.forEach(user =>{
+                        user.voice.setMute(false, "Channel has been disabled.")      
+                        if(whospracticing[cmd[i]] == user.id){
+                            userLeftorNoMore(user.voice);
+                        }
+                    });
+
                     APPLIED_CHANNELS.splice(APPLIED_CHANNELS.indexOf(cmd[i]), 1);
                     delete BROADCAST_CHANNELS[cmd[i]];
                 }
