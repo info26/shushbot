@@ -1,4 +1,4 @@
-const userLeftorNoMore = require("../helpers/userLeftorNoMore");
+const helpers = require("./../helpers/userLeftorNoMore");
 
 function enablechs(msg) {
 
@@ -74,7 +74,7 @@ function disablechs(msg) {
                     connectedMembers.forEach(user =>{
                         user.voice.setMute(false, "Channel has been disabled.")      
                         if(whospracticing[cmd[i]] == user.id){
-                            userLeftorNoMore(user.voice);
+                            helpers.userLeftorNoMore(user.voice);
                         }
                     });
 
