@@ -1,7 +1,7 @@
 function setbit(msg){
     vc = msg.member.voice.channel;
     var cmd = msg.content.split(" "); 
-    if(msg.member.hasPermission('MANAGE_ROLES') || msg.author.id == whoispracticing[msg.channel.id]){
+    if(msg.member.hasPermission('MANAGE_ROLES') || whospracticing[msg.channel.id] == msg.member.id){
         if(cmd.size < 2){
             msg.reply("improper arguments for this command");
         }
@@ -22,7 +22,7 @@ function setbit(msg){
 function userlimit(msg){
     vc = msg.member.voice.channel;
     var cmd = msg.content.split(" "); 
-    if(msg.member.hasPermission('MANAGE_ROLES') || msg.author.id == whoispracticing[msg.channel.id]){
+    if(msg.member.hasPermission('MANAGE_ROLES') || whospracticing[msg.channel.id] == msg.member.id){
         if(cmd.size < 2){
             msg.reply("improper arguments for this command");
         }
