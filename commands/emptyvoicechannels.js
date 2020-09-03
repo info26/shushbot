@@ -32,7 +32,7 @@ async function disconnectMembers(msg) {
                 //for each user currently in the vc
                 vc.members.array().forEach(member => {
                     //check if they're the ones practicing
-                    if (whoispracticing[vc.id] != member.id) {
+                    if (whospracticing[vc.id] != member.id) {
                         //just kick them if they're not praciticing
                         member.voice.kick();
                     }
