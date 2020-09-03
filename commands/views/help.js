@@ -84,11 +84,11 @@ function mod(msg){
             },
             {
                 name: BOT_PREFIX + "enablechs",
-                value: "To enable new voicechats to the bot, or update existing voice chats with a new text chat. Usage: $enablechs vcId1, vcId2, ..., vcIdn, txtChId (Assigns vcId1 - vcIdn to txtChId)."
+                value: "ADMIN function only. To enable new voicechats to the bot, or update existing voice chats with a new text chat. Usage: $enablechs vcId1, vcId2, ..., vcIdn, txtChId (Assigns vcId1 - vcIdn to txtChId)."
             },
             {
                 name: BOT_PREFIX + "disablechs",
-                value: "To disable existing voicechats from the bot. Usage: $disablechs vcId1, vcId2, ..., vcIdn"
+                value: "ADMIN function only. To disable existing voicechats from the bot. Usage: $disablechs vcId1, vcId2, ..., vcIdn"
             },
             {
                 name: BOT_PREFIX + "serverStats",
@@ -105,6 +105,10 @@ function mod(msg){
             {
                 name: BOT_PREFIX + "leaderboard",
                 value: "Get the overall leaderboard of individual practice times. Use with great caution, do not use it in public channels. Usage: $leaderboard"
+            },
+            {
+                name: BOT_PREFIX + "disconnectMembers",
+                value: "ADMIN function only. Disconnect all members in that channel category in which the bot is enabled"
             }
             
         ],
