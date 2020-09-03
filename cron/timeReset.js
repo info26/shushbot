@@ -1,6 +1,14 @@
 var cron = require('node-cron');
 const mongofuncs = require('./../cloud/mongofuncs');
 
+var test = cron.schedule('*/4 * * * * *', function(task) {
+    console.log(whospracticing);
+}, {
+    scheduled: false,
+    timezone: "America/New_York"
+})
+
+
 //every day at 12am EST
 var daily = cron.schedule('0 0 0 * * *', function(task) {
     console.log("now resetting daily practicer timer");
@@ -38,6 +46,7 @@ var yearly = cron.schedule('0 0 0 1 1 *', function(task) {
 })
 
 function startCron(){
+    //test.start();
     daily.start();
     weekly.start();
     monthly.start();

@@ -11,7 +11,7 @@ const {enablechs, disablechs} = require('./configurechannels')
 const { stats, serverstats } = require('./stats')
 const {leaderboard} = require('./leaderboard')
 const {setbit, userlimit} = require('./manipulatechs');
-const {} = require('./emptyvoicechannels')
+const { disconnectMembers } = require('./emptyvoicechannels')
 
 module.exports = {
     practice,
@@ -30,5 +30,6 @@ module.exports = {
     leaderboard,
     modcommands,
     setbit,
-    userlimit
+    userlimit,
+    disconnectMembers
 }
