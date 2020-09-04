@@ -8,7 +8,9 @@ function syncStore(client){
         //console.log("list of vcs" + JSON.stringify(voicechannels));
         voicechannels.forEach(channel => {
             if(APPLIED_CHANNELS.includes(channel.id)){
-                if (!channel.members.array().includes(whospracticing[channel.id]) || whospracticing[channel.id] == null){
+                //check if previous user praciticing is still in vc
+                //prevUserPracticing = channel.members.get(whospracticing[channel.id]);
+                if (whospracticing[channel.id] == null || !channel.members.has(whospracticing[channel.id])){  //prevUserPracticing == null
 					whospracticing[channel.id] = 'upforgrabs';
                     whospracticing[channel.id + "piece"] = null;
 				}
