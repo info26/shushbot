@@ -36,6 +36,38 @@ function userLeftorNoMore(voiceState) {
         msgchannel.send("They practiced for " + resultReadable[1] + " hours and " + resultReadable[0] + " minutes");
     }
 
+    //reset the bitrate and user limit of the channel once user leaves
+    console.log("server sub tier " + voiceState.channel.guild.premiumTier)
+    var limit = 0;
+    switch(voiceState.channel.guild.premiumTier){
+        case 0:
+            console.log("case 0");
+            limit = 96000;
+            break;
+        case 1:
+            console.log("case 1");
+            limit = 128000;
+            break;
+        case 2:
+            console.log("case 2");
+            limit = 256000;
+            break;
+        case 3:
+            console.log("case 3");
+            limit = 384000;
+            
+    }
+    console.log(limit);
+    //this is not working
+    //liteally hardcoding it and its not working
+    voiceState.channel.setBitrate(48000)
+        .then(vc => console.log(`Set bitrate to ${vc.bitrate}bps for ${vc.name}`))
+        .catch(console.error);
+
+    //but this is working...
+    voiceState.channel.setUserLimit(0); //this works perfectly fine 
+    
+
     //time to mute everyone who was excused by the user.
     if (typeof whospracticing[voiceState.channel.id + "excused"] !== 'undefined') {
         membersExcused = whospracticing[voiceState.channel.id + "excused"]
