@@ -39,21 +39,25 @@ function forcepractice(msg) {
             } else if (whospracticing[modVoiceCh.id] == "upforgrabs" || whospracticing[modVoiceCh.id] == null) {
                 userMentionedCh.setMute(false, "operation performed by moderator")
                     //update whospracticing
-                whospracticing[modVoiceCh.id] = userMentionedCh.id
-                msg.reply("Done. ")
+                whospracticing[modVoiceCh.id] = userMentionedCh.id       
                 whospracticing[modVoiceCh.id + "piece"] = null;
+                whospracticing[modVoiceCh.id + "starttime"] = Date.now();
+                msg.reply("Done. ")
             } else {
                 // all checks completed. 
                 userCurrPracticingId = whospracticing[modVoiceCh.id]
                 const userPlaying = msg.member.guild.members.cache.find(mem => mem.id === userCurrPracticingId);
                 userLeftorNoMore(userPlaying.voice);
+
                 whospracticing[modVoiceCh.id] = userMentionedCh.id
+                whospracticing[modVoiceCh.id + "piece"] = null;
+                whospracticing[modVoiceCh.id + "starttime"] = Date.now();
+
                 userPlaying.voice.setMute(true, "operation performed by moderator")
                 userMentionedCh.setMute(false, "operation performed by moderator")
                 nickUserP = getNick(userMentioned)
                 msg.reply("Done. " + nickUserP + " is now practicing because of a mod's request. ")
-                whospracticing[modVoiceCh.id + "piece"] = null;
-                whospracticing[modVoiceCh.id + "starttime"] = Date.now();
+
 
                 //ok we need to update who is unmuted. aka excused people. 
                 if (typeof whospracticing[modVoiceCh.id + "excused"] !== 'undefined') {
