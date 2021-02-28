@@ -5,3 +5,4 @@ This repository contain's code for a bot to automatically mute and unmute users 
 
 # some notes:
  - 'store' contains a temp data file, to save practicing data between restarts. 
+
